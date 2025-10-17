@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+import { useEffect, useState, useContext } from 'react';
+import Navigation from './navigation/navigation.component';
+import { UserContext } from "./contexts/user.content"
+import Authentication from './authentication/authentication.component';
+import { Routes, Route, data } from 'react-router-dom';
+import Home from './Home';
+// import Admin from './Admin';
 
 function App() {
+
+  const { currentUser } = useContext(UserContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+    <Route path='/' element={<Navigation/>}>
+      <Route index element={<Home/>}/>
+      <Route path='auth' element={<Authentication/>}/>
+    </Route>
+  </Routes>
   );
 }
 

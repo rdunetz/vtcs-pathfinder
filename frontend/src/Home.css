@@ -1,0 +1,89 @@
+.Home {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    min-height: 90vh;
+    background-color: #F9FAFB;
+    /* background-image: url(../public/image0.webp);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed; */
+  }
+  
+  .Home-main {
+    text-align: center;
+    max-width: 80%;
+    padding: 2rem;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 24px rgba(44, 62, 80, 0.1);
+    /* background-image: url(../public/image0.webp);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed; */
+  }
+  
+  .Home-title {
+    font-weight: 700;
+    color: #2C3E50;
+    margin-bottom: 1rem;
+  }
+  
+  .Home-title .accent {
+    color: #E67E22;
+    font-weight: 500;
+  }
+  
+  .Home-subtitle {
+    color: #7F8C8D;
+    margin-bottom: 2rem;
+  }
+  
+  .Home-button {
+    /* background-color: #E67E22 !important; */
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 2rem !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .Home-button:hover {
+    /* background-color: #cf711f !important; */
+    background-color: #535353 !important;
+  }
+  
+  .Home-image {
+    margin-top: 2rem;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 3px solid #2C3E50;
+  }
+  
+  /* Keyframes for fade + slide */
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Apply to elements */
+  .animate-fade-slide {
+    opacity: 0; /* default hidden */
+    animation: fadeSlideUp 0.8s ease-out forwards;
+  }
+  
+  @media (max-width: 768px) {
+    .Home-main {
+      background: none;
+      box-shadow: none;
+    }
+  }
