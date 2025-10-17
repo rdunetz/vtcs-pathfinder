@@ -41,8 +41,8 @@
   }
   
   .Home-button {
-    /* background-color: #E67E22 !important; */
-    background-color: #000000 !important;
+    background-color: #E67E22 !important;
+    /* background-color: #000000 !important; */
     color: #FFFFFF !important;
     font-weight: 600 !important;
     padding: 0.75rem 2rem !important;
@@ -51,8 +51,9 @@
   }
   
   .Home-button:hover {
-    /* background-color: #cf711f !important; */
-    background-color: #535353 !important;
+    background-color: #cf711f !important;
+    /* background-color: #535353 !important; */
+    /* background-color: #E67E22 !important; */
   }
   
   .Home-image {
