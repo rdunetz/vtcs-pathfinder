@@ -2,6 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const { db } = require("./db"); // Import db from db/index.js
 
+// Import routes
+const coursesRouter = require("./routes/courses");
+const plansRouter = require("./routes/plan");
+const usersRouter = require("./routes/users");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -23,19 +28,10 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Get all courses (test)
-app.get("/api/courses", async (req, res) => {
-  try {
-    const snapshot = await db.collection("courses").get();
-    const courses = [];
-    snapshot.forEach((doc) => {
-      courses.push({ id: doc.id, ...doc.data() });
-    });
-    res.json(courses);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// API Routes
+app.use("/api/courses", coursesRouter);
+app.use("/api/plans", plansRouter);
+app.use("/api/users", usersRouter);
 
 // 404 handler
 app.use((req, res) => {
@@ -52,4 +48,8 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
+  console.log(`📚 API Endpoints:`);
+  console.log(`   - Courses: http://localhost:${PORT}/api/courses`);
+  console.log(`   - Plans: http://localhost:${PORT}/api/plans`);
+  console.log(`   - Users: http://localhost:${PORT}/api/users`);
 });
