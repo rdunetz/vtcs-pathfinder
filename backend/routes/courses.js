@@ -14,7 +14,7 @@ const {
 // Query params: category, semester, search
 router.get("/", getAllCourses);
 
-// GET courses grouped by category
+// GET courses grouped by category (BEFORE /:id route!)
 router.get("/by-category", getCoursesByCategory);
 
 // GET a single course by ID

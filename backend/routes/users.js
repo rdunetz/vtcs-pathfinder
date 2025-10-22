@@ -10,6 +10,9 @@ const {
   getUserProgress,
 } = require("../controllers/usersController");
 
+// GET user progress summary (BEFORE /:id route!)
+router.get("/:id/progress", getUserProgress);
+
 // GET user profile by ID
 router.get("/:id", getUserProfile);
 
@@ -27,8 +30,5 @@ router.post("/:id/completed-courses", addCompletedCourse);
 
 // DELETE remove a completed course
 router.delete("/:id/completed-courses/:courseCode", removeCompletedCourse);
-
-// GET user progress summary
-router.get("/:id/progress", getUserProgress);
 
 module.exports = router;

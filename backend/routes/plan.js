@@ -15,6 +15,9 @@ const {
 // GET all plans for a user
 router.get("/user/:userId", getUserPlans);
 
+// GET validate a plan against requirements (BEFORE /:id route!)
+router.get("/:id/validate", validatePlan);
+
 // GET a specific plan by ID
 router.get("/:id", getPlanById);
 
@@ -35,8 +38,5 @@ router.post("/:id/remove-course", removeCourseFromPlan);
 
 // POST move a course between semesters
 router.post("/:id/move-course", moveCourseBetweenSemesters);
-
-// GET validate a plan against requirements
-router.get("/:id/validate", validatePlan);
 
 module.exports = router;
