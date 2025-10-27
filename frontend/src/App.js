@@ -7,6 +7,8 @@ import { UserContext } from "./contexts/user.content"
 import Authentication from './authentication/authentication.component';
 import { Routes, Route, data } from 'react-router-dom';
 import Home from './Home';
+import Plans from './components/plans/plans.component';
+import Dashboard from './components/dashboard/dashboard.component';
 // import Admin from './Admin';
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
     <Route path='/' element={<Navigation/>}>
       <Route index element={<Home/>}/>
       <Route path='auth' element={<Authentication/>}/>
+      <Route path='plans' element={<Plans/>}/>
+      <Route path='dashboard' element={<Dashboard/>}/>
     </Route>
   </Routes>
   );
