@@ -29,7 +29,8 @@ router.put("/:id", updateCourse);
 // DELETE a course
 router.delete("/:id", deleteCourse);
 
-// POST check prerequisites for a course
+// GET/POST check prerequisites for a course (supports both methods)
+router.get("/:id/check-prerequisites", checkPrerequisites);
 router.post("/:id/check-prerequisites", checkPrerequisites);
 
 module.exports = router;

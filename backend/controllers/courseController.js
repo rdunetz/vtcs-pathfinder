@@ -252,11 +252,23 @@ const getCoursesByCategory = async (req, res) => {
 
 /**
  * Check prerequisites for a course
+ * Accepts completedCourses as query parameter (comma-separated) or JSON body
  */
 const checkPrerequisites = async (req, res) => {
   try {
     const { id } = req.params;
-    const { completedCourses = [] } = req.body;
+
+    // Support both query params (GET) and body (POST) for flexibility
+    let completedCourses = [];
+    if (req.query.completedCourses) {
+      // GET request: parse comma-separated string
+      completedCourses = req.query.completedCourses
+        .split(",")
+        .map((c) => c.trim());
+    } else if (req.body && req.body.completedCourses) {
+      // POST request: use array from body
+      completedCourses = req.body.completedCourses;
+    }
 
     const doc = await db.collection("courses").doc(id).get();
 
