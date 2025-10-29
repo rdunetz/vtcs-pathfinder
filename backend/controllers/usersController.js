@@ -62,7 +62,6 @@ const createUserProfile = async (req, res) => {
       expectedGraduation: "",
       completedCourses: [],
       currentCourses: [],
-      interests: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
