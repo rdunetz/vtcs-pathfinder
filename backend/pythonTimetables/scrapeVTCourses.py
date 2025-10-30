@@ -3,35 +3,49 @@ from bs4 import BeautifulSoup
 
 def getAllCSVTCourses():
     """
-    Scrapes the Virginia Tech CS course catalog and returns a dictionary
-    mapping course numbers (e.g., 'CS4894') to credit hours (e.g., 3).
-    Variable-credit courses (like '1-19 credits') are stored as tuples.
+    Scrape the VT CS catalog and return a list of courses.
+    Each item: {
+        "code": "CS2114",
+        "title": "Software Design and Data Structures",
+        "credits": 3 or (low, high)
+    }
     """
     url = "https://catalog.vt.edu/undergraduate/course-descriptions/cs/"
-    response = requests.get(url)
+    resp = requests.get(url, timeout=15)
+    if resp.status_code != 200:
+        raise ConnectionError(f"Failed to fetch catalog page, status code {resp.status_code}")
 
-    course_dict = {}
+    soup = BeautifulSoup(resp.text, "html.parser")
+    courses = []
 
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
+    for block in soup.find_all("div", class_="courseblock"):
+        code_span = block.find("span", class_="detail-code")
+        title_span = block.find("span", class_="detail-title")
+        credit_span = block.find("span", class_="detail-hours_html")
+        if not code_span or not title_span or not credit_span:
+            continue
 
-        for block in soup.find_all("div", class_="courseblock"):
-            number_span = block.find("span", class_="detail-code")
-            credit_span = block.find("span", class_="detail-hours_html")
+        code = code_span.get_text(strip=True).replace(" ", "")
+        title = title_span.get_text(strip=True)
 
-            if number_span and credit_span:
-                course_number = number_span.get_text(strip=True).replace(" ", "")
-                credit_text = credit_span.get_text(strip=True)
+        credit_text = credit_span.get_text(strip=True)
+        credits = None
+        # Expect formats like "(3 credits)" or "(1-19 credits)"
+        if "(" in credit_text and "credits" in credit_text.lower():
+            first_token = credit_text.strip().lstrip("(").rstrip(")").split()[0]
+            if "-" in first_token:
+                low, high = [int(x) for x in first_token.split("-")]
+                credits = (low, high)
+            else:
+                try:
+                    credits = int(first_token)
+                except ValueError:
+                    credits = None
 
-                # Match forms like (3 credits) or (1-19 credits)
-                if "(" in credit_text and "credits" in credit_text.lower():
-                    credit_value = credit_text.strip("()").split()[0]
-                    if "-" in credit_value:
-                        low, high = [int(x) for x in credit_value.split("-")]
-                        course_dict[course_number] = (low, high)
-                    else:
-                        course_dict[course_number] = int(credit_value)
-    else:
-        raise ConnectionError(f"Failed to fetch catalog page, status code {response.status_code}")
+        courses.append({
+            "code": code,
+            "title": title,
+            "credits": credits
+        })
 
-    return course_dict
+    return courses
