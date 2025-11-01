@@ -27,7 +27,7 @@
   .Home-title {
     font-weight: 700;
     color: #2C3E50;
-    margin-bottom: 1rem;
+    margin-bottom: 0 !important;
   }
   
   .Home-title .accent {
@@ -57,11 +57,11 @@
   }
   
   .Home-image {
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     max-width: 100%;
     height: auto;
     border-radius: 12px;
-    border: 3px solid #2C3E50;
+    /* border: 3px solid #2C3E50; */
   }
   
   /* Keyframes for fade + slide */

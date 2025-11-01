@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
+import RouteImage from './assets/route.jpg'
 
 function Home() {
 
@@ -18,6 +19,13 @@ function Home() {
                 </Typography>
 
                 <Divider className='animate-fade-slide' />
+
+
+                <div style={{ height: '200px', overflow: 'hidden', justifyContent: 'center', display: 'flex'}}>
+                    <img src={RouteImage} alt="Route" className="Home-image animate-fade-slide" />
+                </div>
+
+                {/* <Divider className='animate-fade-slide' /> */}
 
                 <br/>
 

@@ -1,0 +1,76 @@
+/* Container spacing for layout */
+.course-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    z-index: 1000;
+}
+
+/* Card styling */
+.course-card {
+    padding: 20px;
+    border-radius: 20px !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.cs-course-card {
+    padding: 20px;
+    border-radius: 20px !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: rgba(223, 114, 150, 0.1) !important;
+    border: 2px solid #861F41;
+}
+
+.math-course-card {
+    padding: 20px;
+    border-radius: 20px !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: rgba(26, 143, 30, 0.1) !important;
+    border: 2px solid #1a8f1e;
+}
+
+/* Hover effect */
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Typography styling — ensures each is rendered on its own line */
+.course-label,
+.course-title,
+.course-credits {
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* Label */
+.course-label {
+    font-weight: 700 !important;
+    /* color: #861F41; */
+}
+
+/* Title */
+.course-title {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Credits */
+.course-credits {
+    color: #757575;
+}
+
+/* Button styling */
+.course-button {
+    margin-top: 10px;
+    background-color: #861F41 !important; /* VT burnt orange */
+    color: white;
+    font-weight: 600;
+}
+
+.course-button:hover {
+    background-color: #ac3e62 !important; /* darker burnt orange */
+}
