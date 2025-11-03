@@ -23,6 +23,7 @@ const SignInForm = () => {
 
     const signInWithGoogle = async () => {
         await signInWithGooglePopup();
+        navigate("/plans");
     }
 
     const handleSubmit = async (event) => {
@@ -33,7 +34,7 @@ const SignInForm = () => {
 
             resetFormFields();
 
-            navigate("/chat");
+            navigate("/plans");
 
         } catch(error) {
             if (error.code == "auth/invalid-credential") {

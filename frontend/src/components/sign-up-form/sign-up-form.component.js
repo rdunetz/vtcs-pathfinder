@@ -4,6 +4,7 @@ import { confirmPasswordReset } from "firebase/auth";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss'
 import Button from "../button/button.component";
+import { useNavigate } from "react-router-dom";
 
 
 const defaultFormFields = {
@@ -16,6 +17,8 @@ const defaultFormFields = {
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
+
+    const navigate = useNavigate();
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
@@ -35,6 +38,8 @@ const SignUpForm = () => {
             await createUserDocumentFromAuth(user, { displayName });
 
             resetFormFields();
+
+            navigate("/plans");
 
         } catch(error) {
 

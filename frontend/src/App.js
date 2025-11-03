@@ -17,13 +17,16 @@ function App() {
 
   return (
     <Routes>
-    <Route path='/' element={<Navigation/>}>
-      <Route index element={<Home/>}/>
+      {/* Routes WITHOUT navbar (Landing and Auth) */}
+      <Route path='/' element={<Home/>}/>
       <Route path='auth' element={<Authentication/>}/>
-      <Route path='plans' element={<Plans/>}/>
-      <Route path='dashboard' element={<Dashboard/>}/>
-    </Route>
-  </Routes>
+
+      {/* Routes WITH navbar */}
+      <Route element={<Navigation/>}>
+        <Route path='plans' element={<Plans/>}/>
+        <Route path='plans/:planId' element={<Dashboard/>}/>
+      </Route>
+    </Routes>
   );
 }
 
