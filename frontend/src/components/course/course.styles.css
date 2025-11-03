@@ -32,6 +32,41 @@
     border: 2px solid #1a8f1e;
 }
 
+/* Course content layout with icons */
+.course-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: -4px;
+}
+
+.course-icon-button {
+    color: #757575 !important;
+    padding: 4px !important;
+    transition: color 0.2s ease, background-color 0.2s ease !important;
+}
+
+.course-icon-button:hover {
+    color: #333 !important;
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.course-delete-button:hover {
+    color: #d32f2f !important;
+    background-color: rgba(211, 47, 47, 0.08) !important;
+}
+
 /* Hover effect */
 .course-card:hover {
     transform: translateY(-5px);

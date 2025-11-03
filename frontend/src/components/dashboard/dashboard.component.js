@@ -4,7 +4,7 @@ import Course from '../course/course.component';
 import SemesterBox from '../semester/semester.component';
 import axios from 'axios';
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import { Typography, Container, Paper, TextField } from '@mui/material';
+import { Typography, Container, Paper, TextField, LinearProgress, Box } from '@mui/material';
 
 const Dashboard = (params) => {
 
@@ -58,6 +58,34 @@ const Dashboard = (params) => {
 
     };
 
+    const handleDeleteCourse = (semesterKey, courseToDelete) => {
+        // Remove course from semester
+        setSemesters(prev => ({
+            ...prev,
+            [semesterKey]: prev[semesterKey].filter(c => c.id !== courseToDelete.id)
+        }));
+
+        // Add course back to available courses list
+        setCourses(prev => [...prev, courseToDelete]);
+    };
+
+    // Calculate total credits from all semesters
+    const calculateTotalCredits = () => {
+        let total = 0;
+        Object.values(semesters).forEach(semesterCourses => {
+            semesterCourses.forEach(course => {
+                // Parse credits as number to avoid string concatenation
+                const credits = parseInt(course.credits) || 0;
+                total += credits;
+            });
+        });
+        return total;
+    };
+
+    const totalCredits = calculateTotalCredits();
+    const TOTAL_REQUIRED_CREDITS = 123;
+    const progressPercentage = Math.min((totalCredits / TOTAL_REQUIRED_CREDITS) * 100, 100);
+
     return (
         <DndContext
             onDragStart={(event) => {
@@ -105,7 +133,13 @@ const Dashboard = (params) => {
                                     )}
                                 >
                                     {courseList.map((course, idx) => (
-                                        <Course key={idx} course={course} draggable={false} overlay={false} />
+                                        <Course
+                                            key={idx}
+                                            course={course}
+                                            draggable={false}
+                                            overlay={false}
+                                            onDelete={() => handleDeleteCourse(semesterKey, course)}
+                                        />
                                     ))}
                                 </SemesterBox>
                             ))}
@@ -116,9 +150,45 @@ const Dashboard = (params) => {
                         <Typography variant="h6" className="panel-header">
                             Progress Overview
                         </Typography>
-                        <Typography variant="body1">
-                            Track your overall completion progress.
-                        </Typography>
+
+                        <Box className="progress-section">
+                            <Typography variant="subtitle1" className="progress-title">
+                                Overall Progress
+                            </Typography>
+
+                            <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, mb: 1 }}>
+                                <Box sx={{ width: '100%', mr: 1 }}>
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={progressPercentage}
+                                        sx={{
+                                            height: 12,
+                                            borderRadius: 6,
+                                            backgroundColor: 'rgba(134, 31, 65, 0.15)',
+                                            '& .MuiLinearProgress-bar': {
+                                                backgroundColor: '#861F41',
+                                                borderRadius: 6,
+                                            }
+                                        }}
+                                    />
+                                </Box>
+                                <Box sx={{ minWidth: 50 }}>
+                                    <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>
+                                        {Math.round(progressPercentage)}%
+                                    </Typography>
+                                </Box>
+                            </Box>
+
+                            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                                <strong>{totalCredits}</strong> / {TOTAL_REQUIRED_CREDITS} credits
+                            </Typography>
+
+                            <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
+                                {TOTAL_REQUIRED_CREDITS - totalCredits > 0
+                                    ? `${TOTAL_REQUIRED_CREDITS - totalCredits} credits remaining`
+                                    : 'Degree requirements met! 🎉'}
+                            </Typography>
+                        </Box>
                     </Paper>
 
                 </Container>

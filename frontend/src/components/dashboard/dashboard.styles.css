@@ -121,3 +121,18 @@
     border-radius: 20px !important;
     flex-shrink: 0; /* Don't shrink */
 }
+
+/* Progress Section Styling */
+.progress-section {
+    padding: 16px;
+    background-color: rgba(134, 31, 65, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(134, 31, 65, 0.1);
+    margin-top: 16px;
+}
+
+.progress-title {
+    font-weight: 700 !important;
+    color: #861F41;
+    margin-bottom: 8px !important;
+}
