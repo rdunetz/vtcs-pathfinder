@@ -218,6 +218,24 @@ class InvalidRequestException(Exception):
 class InvalidSearchException(Exception):
     pass
 
+def parse_semester(sem_str: str) -> Semester:
+    """
+    Convert a human string like 'Spring', 'summer', 'FALL', 'Winter' to Semester enum.
+    Accepts common abbreviations: 'Sp', 'Su', 'Fa', 'Wi'.
+    """
+    if not isinstance(sem_str, str):
+        raise TypeError("Semester must be a string like 'Spring' or 'Fall'.")
+    s = sem_str.strip().lower()
+    aliases = {
+        'spring': Semester.SPRING, 'sp': Semester.SPRING,
+        'summer': Semester.SUMMER, 'su': Semester.SUMMER,
+        'fall':   Semester.FALL,   'fa': Semester.FALL, 'autumn': Semester.FALL,
+        'winter': Semester.WINTER, 'wi': Semester.WINTER,
+    }
+    try:
+        return aliases[s]
+    except KeyError:
+        raise ValueError(f"Unknown semester: {sem_str!r}. Expected one of Spring/Summer/Fall/Winter.")
 
 def make_banner_request(crn: str, year: str, semester: Semester,
                         subject: str, code: str) -> Dict[str, str]:
@@ -265,8 +283,8 @@ def make_banner_request(crn: str, year: str, semester: Semester,
         }
 
 
-def get_crn(year: str, semester: Semester, crn: str) -> Course:
-    crn_search = search_timetable(year, semester, crn=crn)
+def search_crn(year: str, semester: str, crn: str) -> Course:
+    crn_search = search_timetable(year, parse_semester(semester), crn=crn)
     return crn_search[0] if crn_search else None
 
 
@@ -343,3 +361,214 @@ def _make_request(request_type: str, request_data: Dict[str, str] = None) -> str
 
     else:
         raise ValueError('Invalid request type')
+    
+def get_crns_for_course_id(year: str, semester: str, course_id: str) -> List[str]:
+    """
+    Given a course_id like 'CS2114', return all CRNs for that course in the given term.
+    """
+    m = re.fullmatch(r'([A-Za-z]+)\s*[-:]?\s*(\d{4})', course_id.strip())
+    if not m:
+        raise ValueError(f"Invalid course_id format: {course_id!r}. Expected like 'CS2114' or 'CS-2114'.")
+    subject = m.group(1).upper()
+    code = m.group(2)
+    
+    courses = search_timetable(
+        year=year,
+        semester=parse_semester(semester),
+        subject=subject,
+        code=code,
+        campus=Campus.BLACKSBURG,      # adjust if you want to include Virtual campus
+        status=Status.ALL,             # or Status.OPEN to only get open sections
+        modality=Modality.ALL,         # filter if needed
+        section_type=SectionType.ALL,  # filter if needed
+    )
+    return [c.get_crn() for c in courses]
+
+import functools
+import re
+import requests
+from typing import Dict, List
+import time
+
+# Reuse one session for connection pooling (TLS + TCP reuse)
+_session = requests.Session()  # safe for single-process, single-thread typical use [web:27]
+
+# Optional: short-lived cache to avoid repeated identical term queries during a run
+def _lru_ttl_cache(ttl_seconds=120, maxsize=256):
+    def decorator(func):
+        @functools.lru_cache(maxsize=maxsize)
+        def cached(args_key):
+            value = func(*args_key)
+            return (value, time.time() + ttl_seconds)
+        def wrapper(*args):
+            key = tuple(args)
+            value, expires = cached(key)
+            if time.time() > expires:
+                # refresh
+                cached.cache_clear()
+                value, expires = cached(key)
+            return value
+        wrapper.cache_clear = cached.cache_clear
+        return wrapper
+    return decorator
+
+# Narrow helper to call timetable with connection reuse
+def _make_request_with_session(request_type: str, request_data: Dict[str, str] = None) -> str:
+    url = 'https://apps.es.vt.edu/ssb/HZSKVTSC.P_ProcRequest'
+    if request_type == 'POST':
+        # Coerce Enum values early (mirrors original)
+        for r in list(request_data.keys()):
+            v = request_data[r]
+            request_data[r] = (v.value if hasattr(v, "value") else v)
+        resp = _session.post(url, data=request_data, timeout=15)  # reuse socket [web:27]
+        text = resp.text
+        if 'THERE IS AN ERROR WITH YOUR REQUEST' in text:
+            raise InvalidRequestException('Invalid search parameters provided.')
+        if 'There was a problem with your request' in text:
+            if 'NO SECTIONS FOUND FOR THIS INQUIRY' in text:
+                return ''
+            else:
+                m = re.search(r'<b class=red_msg><li>(.+)</b>', text)
+                raise InvalidSearchException(m.group(1) if m else 'Unknown error')
+        return text
+    elif request_type == 'GET':
+        return _session.get(url, timeout=15).text
+    else:
+        raise ValueError('Invalid request type')
+
+# Lightweight Banner comments fetch with session reuse and cache
+@functools.lru_cache(maxsize=512)  # cache by (crn, year, sem, subj, code)
+def _banner_comments_cached(crn: str, year: str, semester_value: str, subject: str, code: str) -> Dict[str, str]:
+    url = (
+        f"https://selfservice.banner.vt.edu/ssb/HZSKVTSC.P_ProcComments?"
+        f"CRN={crn}&TERM={semester_value}&YEAR={year}&SUBJ={subject}&CRSE={code}&history=N"
+    )
+    try:
+        r = _session.get(url, timeout=10)  # pooled [web:27]
+        r.raise_for_status()
+        html = r.text
+
+        def extract_field(label_pattern):
+            m = re.search(
+                rf'<td[^>]*>{label_pattern}</td>\s*<td[^>]*class="pldefault"[^>]*>(.*?)</td>',
+                html,
+                re.DOTALL | re.IGNORECASE
+            )
+            if not m:
+                return None
+            text = re.sub(r'<.*?>', '', m.group(1))
+            text = re.sub(r'\s+', ' ', text).strip()
+            return text
+
+        prerequisites = extract_field(r'Prerequisites:?')
+        catalog_description = extract_field(r'Catalog Description:?')
+        comments = extract_field(r'Comments:?')
+
+        return {
+            "prerequisites": prerequisites or "No prerequisites found.",
+            "catalogDescription": catalog_description or "No catalog description found.",
+            "comments": comments or "No comments found."
+        }
+    except Exception as e:
+        err = f"Error retrieving data: {e}"
+        return {"prerequisites": err, "catalogDescription": err, "comments": err}
+
+# Optimized searchID
+def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = True) -> dict:
+    """
+    Optimized:
+      - Reuses a persistent requests.Session.
+      - Avoids repeated parsing work via minimal changes.
+      - Caches Banner comments per course/CRN.
+      - Optional fetch_banner to skip Banner call when not needed.
+
+    Returns the same shape as before, with keys:
+      year, semester, courseId, code, name, creditHours, prerequisites, catalogDescription, comments, sections[]
+    """
+    sem = parse_semester(semester_str)
+    m = re.fullmatch(r'([A-Za-z]+)\s*[-:]?\s*(\d{4})', course_id.strip())
+    if not m:
+        raise ValueError(f"Invalid course_id: {course_id!r}. Expected like 'CS3414' or 'CS-3414'.")
+    subject, code = m.group(1).upper(), m.group(2)
+
+    # Use existing search_timetable, but let it use our pooled _make_request path by monkey-patching if desired.
+    # Easiest safe win: call as-is (since it calls _make_request in this file). Swap in our session-backed helper.
+    global _make_request
+    _make_request = _make_request_with_session  # replace within this module scope for pooled connections [web:27]
+
+    sections = search_timetable(
+        year=year,
+        semester=sem,
+        subject=subject,
+        code=code,
+        campus=Campus.BLACKSBURG,
+        status=Status.ALL,
+        modality=Modality.ALL,
+        section_type=SectionType.ALL,
+    )
+
+    if not sections:
+        return {
+            "year": year,
+            "semester": semester_str,
+            "courseId": course_id,
+            "code": f"{subject}{code}",
+            "name": None,
+            "creditHours": None,
+            "prerequisites": None if fetch_banner else None,
+            "catalogDescription": None if fetch_banner else None,
+            "comments": None if fetch_banner else None,
+            "sections": [],
+        }
+
+    first = sections[0]
+
+    # Conditionally fetch Banner metadata once (cached)
+    if fetch_banner:
+        bc = _banner_comments_cached(
+            first.get_crn(),
+            first.get_year(),
+            first.get_semester().value,
+            first.get_subject(),
+            first.get_code()
+        )  # cached by args [web:40][web:27]
+        prereqs = bc["prerequisites"]
+        catalog_desc = bc["catalogDescription"]
+        comments = bc["comments"]
+    else:
+        prereqs = None
+        catalog_desc = None
+        comments = None
+
+    section_entries: List[Dict] = []
+    for c in sections:
+        sched_list = []
+        for day, meetings in c.get_schedule().items():
+            for start, end, location in meetings:
+                sched_list.append({
+                    "day": day.value,
+                    "start": start,
+                    "end": end,
+                    "location": location,
+                })
+        section_entries.append({
+            "crn": c.get_crn(),
+            "type": c.get_type().name,
+            "modality": (c.get_modality().name if c.get_modality() else None),
+            "capacity": c.get_capacity(),
+            "instructor": c.get_professor(),
+            "schedule": sched_list,
+        })
+
+    return {
+        "year": year,
+        "semester": semester_str,
+        "courseId": course_id,
+        "code": f"{first.get_subject()}{first.get_code()}",
+        "name": first.get_name(),
+        "creditHours": first.get_credit_hours(),
+        "prerequisites": prereqs,
+        "catalogDescription": catalog_desc,
+        "comments": comments,
+        "sections": section_entries,
+    }
