@@ -4,7 +4,14 @@ import Course from '../course/course.component';
 import SemesterBox from '../semester/semester.component';
 import axios from 'axios';
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import { Typography, Container, Paper, TextField, LinearProgress, Box } from '@mui/material';
+import { 
+    Typography, 
+    Container, 
+    Paper, 
+    TextField, 
+    LinearProgress, 
+    Box
+} from '@mui/material';
 
 const Dashboard = (params) => {
 
@@ -12,6 +19,7 @@ const Dashboard = (params) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [courses, setCourses] = useState([]);
     const [activeCourse, setActiveCourse] = useState(null);
+    const [originalCoursesOrder, setOriginalCoursesOrder] = useState([]); // Store original order
     const [semesters, setSemesters] = useState({
         fall2025: [],
         spring2026: [],
@@ -32,6 +40,7 @@ const Dashboard = (params) => {
         axios.get(process.env.REACT_APP_BACKEND + "/courses")
             .then(res => {
                 setCourses(res.data.data);
+                setOriginalCoursesOrder(res.data.data); // Store original order
             })
             .catch(err => {
                 console.error("Failed to fetch courses", err);
@@ -55,7 +64,6 @@ const Dashboard = (params) => {
         }));
 
         setCourses((prev) => prev.filter((c) => c.id !== active.id));
-
     };
 
     const handleDeleteCourse = (semesterKey, courseToDelete) => {
@@ -65,8 +73,18 @@ const Dashboard = (params) => {
             [semesterKey]: prev[semesterKey].filter(c => c.id !== courseToDelete.id)
         }));
 
-        // Add course back to available courses list
-        setCourses(prev => [...prev, courseToDelete]);
+        // Add course back at its original position
+        setCourses(prev => {
+            // Find the original index of the course being deleted
+            const originalIndex = originalCoursesOrder.findIndex(
+                c => (c.id || c.code) === (courseToDelete.id || courseToDelete.code)
+            );
+            // Insert the course at the found position
+                const newCourses = [...prev];
+                newCourses.splice(originalIndex, 0, courseToDelete);
+                return newCourses;
+            
+        });
     };
 
     // Calculate total credits from all semesters
@@ -124,25 +142,37 @@ const Dashboard = (params) => {
                         </Typography>
 
                         <div className="semesters">
-                            {Object.entries(semesters).map(([semesterKey, courseList]) => (
-                                <SemesterBox
-                                    key={semesterKey}
-                                    id={semesterKey}
-                                    title={semesterKey.replace(/(\D+)(\d+)/, (_, s, y) =>
-                                        `${s.charAt(0).toUpperCase() + s.slice(1)} ${y}`
-                                    )}
-                                >
-                                    {courseList.map((course, idx) => (
-                                        <Course
-                                            key={idx}
-                                            course={course}
-                                            draggable={false}
-                                            overlay={false}
-                                            onDelete={() => handleDeleteCourse(semesterKey, course)}
-                                        />
-                                    ))}
-                                </SemesterBox>
-                            ))}
+                            {Object.entries(semesters).map(([semesterKey, courseList]) => {
+                                // Calculate total credits for this semester
+                                const semesterCredits = courseList.reduce((total, course) => {
+                                    const credits = parseInt(course.credits);
+                                    return total + credits;
+                                }, 0);
+                                
+                                const semesterTitle = semesterKey.replace(/(\D+)(\d+)/, (_, s, y) =>
+                                    `${s.charAt(0).toUpperCase() + s.slice(1)} ${y}`
+                                );
+                                
+                                return (
+                                    <SemesterBox
+                                        key={semesterKey}
+                                        id={semesterKey}
+                                        title={semesterTitle}
+                                        credits={semesterCredits}
+                                        creditLimit={19}
+                                    >
+                                        {courseList.map((course, idx) => (
+                                            <Course
+                                                key={idx}
+                                                course={course}
+                                                draggable={false}
+                                                overlay={false}
+                                                onDelete={() => handleDeleteCourse(semesterKey, course)}
+                                            />
+                                        ))}
+                                    </SemesterBox>
+                                );
+                            })}
                         </div>
                     </Paper>
 

@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import { Typography, Paper } from '@mui/material';
+import { Typography, Paper, Box } from '@mui/material';
 
-const SemesterBox = ({ id, title, children }) => {
+const SemesterBox = ({ id, title, children, credits = 0, creditLimit = 19 }) => {
     
     const { setNodeRef, isOver } = useDroppable({ id });
 
@@ -18,7 +18,21 @@ const SemesterBox = ({ id, title, children }) => {
         border: isOver ? "2px dashed #ff9800" : "2px dashed transparent",
         }}
     >
-        <Typography variant="subtitle1">{title}</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                {title}
+            </Typography>
+            <Typography 
+                variant="body2" 
+                color={credits > creditLimit ? "error" : "text.secondary"}
+                sx={{ 
+                    fontWeight: credits > creditLimit ? 600 : 400,
+                    fontSize: '0.875rem'
+                }}
+            >
+                {credits} / {creditLimit} credits
+            </Typography>
+        </Box>
         <div>{children}</div>
     </Paper>
     );
