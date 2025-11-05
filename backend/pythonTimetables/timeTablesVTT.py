@@ -7,9 +7,14 @@ from pandas import read_html
 import pandas.core.series
 import requests
 
+import functools
+import time
+
 '''
 
+
 I'll Document all this later dont worry -Armen
+
 
 '''
 
@@ -218,6 +223,7 @@ class InvalidRequestException(Exception):
 class InvalidSearchException(Exception):
     pass
 
+
 def parse_semester(sem_str: str) -> Semester:
     """
     Convert a human string like 'Spring', 'summer', 'FALL', 'Winter' to Semester enum.
@@ -236,6 +242,7 @@ def parse_semester(sem_str: str) -> Semester:
         return aliases[s]
     except KeyError:
         raise ValueError(f"Unknown semester: {sem_str!r}. Expected one of Spring/Summer/Fall/Winter.")
+
 
 def make_banner_request(crn: str, year: str, semester: Semester,
                         subject: str, code: str) -> Dict[str, str]:
@@ -292,7 +299,7 @@ def get_semesters() -> Set[Tuple[str, str]]:
     semester_dct = {'Spring': Semester.SPRING, 'Summer': Semester.SUMMER,
                     'Fall': Semester.FALL, 'Winter': Semester.WINTER}
     return set((semester_dct[m.group(1)], m.group(2)) for m in re.finditer(
-        r'<OPTION VALUE="\\d{6}">([A-Z][a-z]+) (\\d+)</OPTION>',
+        r'<OPTION VALUE="\d{6}">([A-Z][a-z]+) (\d+)</OPTION>',
         _make_request(request_type='GET')))
 
 
@@ -361,7 +368,8 @@ def _make_request(request_type: str, request_data: Dict[str, str] = None) -> str
 
     else:
         raise ValueError('Invalid request type')
-    
+
+
 def get_crns_for_course_id(year: str, semester: str, course_id: str) -> List[str]:
     """
     Given a course_id like 'CS2114', return all CRNs for that course in the given term.
@@ -371,7 +379,7 @@ def get_crns_for_course_id(year: str, semester: str, course_id: str) -> List[str
         raise ValueError(f"Invalid course_id format: {course_id!r}. Expected like 'CS2114' or 'CS-2114'.")
     subject = m.group(1).upper()
     code = m.group(2)
-    
+
     courses = search_timetable(
         year=year,
         semester=parse_semester(semester),
@@ -384,14 +392,8 @@ def get_crns_for_course_id(year: str, semester: str, course_id: str) -> List[str
     )
     return [c.get_crn() for c in courses]
 
-import functools
-import re
-import requests
-from typing import Dict, List
-import time
-
 # Reuse one session for connection pooling (TLS + TCP reuse)
-_session = requests.Session()  # safe for single-process, single-thread typical use [web:27]
+_session = requests.Session()  # safe for single-process, single-thread typical use
 
 # Optional: short-lived cache to avoid repeated identical term queries during a run
 def _lru_ttl_cache(ttl_seconds=120, maxsize=256):
@@ -412,6 +414,7 @@ def _lru_ttl_cache(ttl_seconds=120, maxsize=256):
         return wrapper
     return decorator
 
+
 # Narrow helper to call timetable with connection reuse
 def _make_request_with_session(request_type: str, request_data: Dict[str, str] = None) -> str:
     url = 'https://apps.es.vt.edu/ssb/HZSKVTSC.P_ProcRequest'
@@ -420,7 +423,7 @@ def _make_request_with_session(request_type: str, request_data: Dict[str, str] =
         for r in list(request_data.keys()):
             v = request_data[r]
             request_data[r] = (v.value if hasattr(v, "value") else v)
-        resp = _session.post(url, data=request_data, timeout=15)  # reuse socket [web:27]
+        resp = _session.post(url, data=request_data, timeout=15)  # reuse socket
         text = resp.text
         if 'THERE IS AN ERROR WITH YOUR REQUEST' in text:
             raise InvalidRequestException('Invalid search parameters provided.')
@@ -436,6 +439,7 @@ def _make_request_with_session(request_type: str, request_data: Dict[str, str] =
     else:
         raise ValueError('Invalid request type')
 
+
 # Lightweight Banner comments fetch with session reuse and cache
 @functools.lru_cache(maxsize=512)  # cache by (crn, year, sem, subj, code)
 def _banner_comments_cached(crn: str, year: str, semester_value: str, subject: str, code: str) -> Dict[str, str]:
@@ -444,7 +448,7 @@ def _banner_comments_cached(crn: str, year: str, semester_value: str, subject: s
         f"CRN={crn}&TERM={semester_value}&YEAR={year}&SUBJ={subject}&CRSE={code}&history=N"
     )
     try:
-        r = _session.get(url, timeout=10)  # pooled [web:27]
+        r = _session.get(url, timeout=10)  # pooled
         r.raise_for_status()
         html = r.text
 
@@ -473,7 +477,50 @@ def _banner_comments_cached(crn: str, year: str, semester_value: str, subject: s
         err = f"Error retrieving data: {e}"
         return {"prerequisites": err, "catalogDescription": err, "comments": err}
 
-# Optimized searchID
+
+def _get_pathways_for_course(year: str, semester: Semester, subject: str, code: str) -> List[str]:
+    """
+    Fetch pathway information for a course by parsing the timetable HTML.
+    Returns a list of pathway codes (e.g., ['AR01', 'G02', 'G06A']).
+    """
+    term_year = ((str(int(year) - 1) if semester == Semester.WINTER else year)
+                 + semester.value)
+
+    try:
+        # Make request to get the raw HTML for this subject+code
+        request_data = {
+            'CAMPUS': Campus.BLACKSBURG.value,
+            'TERMYEAR': term_year,
+            'CORE_CODE': Pathway.ALL.value,
+            'subj_code': subject,
+            'SCHDTYPE': SectionType.ALL.value,
+            'CRSE_NUMBER': code,
+            'crn': '',
+            'open_only': Status.ALL.value,
+            'sess_code': Modality.ALL.value
+        }
+        html = _make_request(request_type='POST', request_data=request_data)
+        if not html:
+            return []
+
+        # Pathway code patterns: AR01..AR07 (CLE) and G01A/G01F/G02/G06D... (GenEd)
+        pathway_pattern = r'\b(AR\d{2}|G\d{2}[A-Z]?)\b'
+        found = re.findall(pathway_pattern, html)
+
+        # Deduplicate while preserving order
+        seen = set()
+        out = []
+        for p in found:
+            if p not in seen:
+                seen.add(p)
+                out.append(p)
+        return out
+
+    except Exception:
+        return []
+
+
+# Optimized searchID with pathways
 def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = True) -> dict:
     """
     Optimized:
@@ -482,8 +529,10 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
       - Caches Banner comments per course/CRN.
       - Optional fetch_banner to skip Banner call when not needed.
 
-    Returns the same shape as before, with keys:
-      year, semester, courseId, code, name, creditHours, prerequisites, catalogDescription, comments, sections[]
+    Returns:
+      dict with keys:
+        year, semester, courseId, subject, code, name, creditHours,
+        prerequisites, catalogDescription, comments, pathways, sections[]
     """
     sem = parse_semester(semester_str)
     m = re.fullmatch(r'([A-Za-z]+)\s*[-:]?\s*(\d{4})', course_id.strip())
@@ -491,10 +540,9 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
         raise ValueError(f"Invalid course_id: {course_id!r}. Expected like 'CS3414' or 'CS-3414'.")
     subject, code = m.group(1).upper(), m.group(2)
 
-    # Use existing search_timetable, but let it use our pooled _make_request path by monkey-patching if desired.
-    # Easiest safe win: call as-is (since it calls _make_request in this file). Swap in our session-backed helper.
+    # Ensure timetable requests use the pooled session-backed request helper
     global _make_request
-    _make_request = _make_request_with_session  # replace within this module scope for pooled connections [web:27]
+    _make_request = _make_request_with_session
 
     sections = search_timetable(
         year=year,
@@ -512,12 +560,14 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
             "year": year,
             "semester": semester_str,
             "courseId": course_id,
+            "subject": subject,
             "code": f"{subject}{code}",
             "name": None,
             "creditHours": None,
             "prerequisites": None if fetch_banner else None,
             "catalogDescription": None if fetch_banner else None,
             "comments": None if fetch_banner else None,
+            "pathways": [],
             "sections": [],
         }
 
@@ -531,7 +581,7 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
             first.get_semester().value,
             first.get_subject(),
             first.get_code()
-        )  # cached by args [web:40][web:27]
+        )
         prereqs = bc["prerequisites"]
         catalog_desc = bc["catalogDescription"]
         comments = bc["comments"]
@@ -539,6 +589,9 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
         prereqs = None
         catalog_desc = None
         comments = None
+
+    # Pathways for this course (across its listings)
+    pathways = _get_pathways_for_course(year, sem, subject, code)
 
     section_entries: List[Dict] = []
     for c in sections:
@@ -564,11 +617,13 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
         "year": year,
         "semester": semester_str,
         "courseId": course_id,
+        "subject": subject,
         "code": f"{first.get_subject()}{first.get_code()}",
         "name": first.get_name(),
         "creditHours": first.get_credit_hours(),
         "prerequisites": prereqs,
         "catalogDescription": catalog_desc,
         "comments": comments,
+        "pathways": pathways,
         "sections": section_entries,
     }

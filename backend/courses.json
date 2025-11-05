@@ -12,7 +12,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "An exploration of basic ideas of computational thinking focusing on the perspectives, thought processes, and skills that underlie computational approaches to problem formulation and problem solving. Applications of computational tools to investigate complex, large-scale problems in a variety of knowledge domains. Basic introduction to algorithms and a practical programming language. Examination of the societal and ethical implications of computational systems."
+    "description": "An exploration of basic ideas of computational thinking focusing on the perspectives, thought processes, and skills that underlie computational approaches to problem formulation and problem solving. Applications of computational tools to investigate complex, large-scale problems in a variety of knowledge domains. Basic introduction to algorithms and a practical programming language. Examination of the societal and ethical implications of computational systems.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS1044",
@@ -27,7 +38,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Fundamental concepts underlying software solutions of many problems. Structured data, statement sequencing, logic control, input/output, and functions. The course will be taught using a structured approach to programming. Partially duplicates 1344."
+    "description": "Fundamental concepts underlying software solutions of many problems. Structured data, statement sequencing, logic control, input/output, and functions. The course will be taught using a structured approach to programming. Partially duplicates 1344.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS1054",
@@ -42,7 +64,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS1064",
@@ -57,7 +80,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Introduction to programming in Python contextualized with scientific and engineering problems. Computational problem-solving skills and software solutions in addition to Python language fundamentals. The basics of control flow with loops and conditionals, state tracing and manipulation, simple and complex types, organization of code using functional and object-oriented coding strategies, and data processing. Create, interpret, and debug programs. Ethically debate important issues in computing culture."
+    "description": "Introduction to programming in Python contextualized with scientific and engineering problems. Computational problem-solving skills and software solutions in addition to Python language fundamentals. The basics of control flow with loops and conditionals, state tracing and manipulation, simple and complex types, organization of code using functional and object-oriented coding strategies, and data processing. Create, interpret, and debug programs. Ethically debate important issues in computing culture.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS1114",
@@ -72,7 +106,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Fundamental concepts of programming from an object-oriented perspective. Basic software engineering principles and programming skills in a programming language that supports the object-oriented paradigm. Simple data types, control structures, array and string data structures, basic algorithms, testing and debugging. A basic model of the computer as an abstract machine. Modeling and problem-solving skills applicable to programming at this level. Partially duplicates 1054, 1124, and 1705."
+    "description": "Fundamental concepts of programming from an object-oriented perspective. Basic software engineering principles and programming skills in a programming language that supports the object-oriented paradigm. Simple data types, control structures, array and string data structures, basic algorithms, testing and debugging. A basic model of the computer as an abstract machine. Modeling and problem-solving skills applicable to programming at this level. Partially duplicates 1054, 1124, and 1705.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS1944",
@@ -91,7 +136,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "An introduction to academic and career planning for computer science majors."
+    "description": "An introduction to academic and career planning for computer science majors.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2064",
@@ -108,7 +164,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Advanced uses of control flow and data processing, data structures, computational techniques, object-oriented programming, and modern data science pipelines. Creating, interpreting, and debugging complex programs. Problems and projects contextualized for scientists and engineers. Implementation of Python programs in data science and production environments, production of object-oriented solutions to complex problems, and ethical implications of technological change."
+    "description": "Advanced uses of control flow and data processing, data structures, computational techniques, object-oriented programming, and modern data science pipelines. Creating, interpreting, and debugging complex programs. Problems and projects contextualized for scientists and engineers. Implementation of Python programs in data science and production environments, production of object-oriented solutions to complex problems, and ethical implications of technological change.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2104",
@@ -130,7 +197,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "This course introduces the student to a broad range of heuristics for solving problems in a range of settings that are relevant to computation. Emphasis on problem-solving techniques that aid programmers and computer scientists. Heuristics for solving problems in the small (classical math and word problems), generating potential solutions to real-life problems encountered in the profession, problem solving through computation, and problem solving in teams."
+    "description": "This course introduces the student to a broad range of heuristics for solving problems in a range of settings that are relevant to computation. Emphasis on problem-solving techniques that aid programmers and computer scientists. Heuristics for solving problems in the small (classical math and word problems), generating potential solutions to real-life problems encountered in the profession, problem solving through computation, and problem solving in teams.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2114",
@@ -148,7 +226,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "A programming-intensive exploration of software design concepts and implementation techniques. Builds on knowledge of fundamental object-oriented programming. Advanced object-oriented software design, ethics in computing, algorithm development and analysis, and classic data structures. Includes a team-based software project."
+    "description": "A programming-intensive exploration of software design concepts and implementation techniques. Builds on knowledge of fundamental object-oriented programming. Advanced object-oriented software design, ethics in computing, algorithm development and analysis, and classic data structures. Includes a team-based software project.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2144",
@@ -163,7 +252,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS2164",
@@ -178,7 +268,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Introduction to multiple analytical perspectives on contemporary security environments, including political, legal, ethical, technical, environmental and historical and cultural perspectives relative to the conception, design and implementation of security solutions, practices, and policies. Emphasizes applying and analyzing the effectiveness of diverse procedures, tools and policies used in security and privacy solutions, decision-making, risk management and operational policy to mitigate local, national, international and global threats."
+    "description": "Introduction to multiple analytical perspectives on contemporary security environments, including political, legal, ethical, technical, environmental and historical and cultural perspectives relative to the conception, design and implementation of security solutions, practices, and policies. Emphasizes applying and analyzing the effectiveness of diverse procedures, tools and policies used in security and privacy solutions, decision-making, risk management and operational policy to mitigate local, national, international and global threats.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2304",
@@ -195,7 +296,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Guided self-study in a specific programming system, its syntax and applications. Based on prior knowledge of the programming process and experience in programming with some high-level language. Systems include JavaScript, C++, CUDA, Ruby, SQL, FORTRAN, UNIX, etc. May be taken three times for credit with different system each time. May be taken only twice for CS major or minor credit."
+    "description": "Guided self-study in a specific programming system, its syntax and applications. Based on prior knowledge of the programming process and experience in programming with some high-level language. Systems include JavaScript, C++, CUDA, Ruby, SQL, FORTRAN, UNIX, etc. May be taken three times for credit with different system each time. May be taken only twice for CS major or minor credit.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2505",
@@ -212,7 +324,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "An introduction to the design and operation of digital computers. Works up from the logic gate level to combinational and sequential circuits, information representation, computer arithmetic, arithmetic/logic units, control unit design, basic computer organization, relationships between high level programming languages and instruction set architectures. A grade of C or better is required in CS prerequisite. Corequisites: MATH 2534 or MATH 3034."
+    "description": "An introduction to the design and operation of digital computers. Works up from the logic gate level to combinational and sequential circuits, information representation, computer arithmetic, arithmetic/logic units, control unit design, basic computer organization, relationships between high level programming languages and instruction set architectures. A grade of C or better is required in CS prerequisite. Corequisites: MATH 2534 or MATH 3034.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2506",
@@ -234,7 +357,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "An introduction to the design and operation of digital computers. Instruction formats and construction, addressing modes, instruction execution, memory hierarchy operation and performance, pipelining, input/output, and the relationships between high level programming languages and machine language. A grade of C or better is required in CS pre-requisite 2505 and 2114."
+    "description": "An introduction to the design and operation of digital computers. Instruction formats and construction, addressing modes, instruction execution, memory hierarchy operation and performance, pipelining, input/output, and the relationships between high level programming languages and machine language. A grade of C or better is required in CS pre-requisite 2505 and 2114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2964",
@@ -250,7 +384,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2974",
@@ -266,7 +411,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS2984",
@@ -282,7 +438,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS3114",
@@ -304,7 +461,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Advanced data structures and analysis of data structure and algorithm performance. Sorting, searching, hashing, and advanced tree structures and algorithms. File system organization and access methods. Ethical issues in the context of data analysis and software performance. Course projects require advanced problem-solving, design, and implementation skills."
+    "description": "Advanced data structures and analysis of data structure and algorithm performance. Sorting, searching, hashing, and advanced tree structures and algorithms. File system organization and access methods. Ethical issues in the context of data analysis and software performance. Course projects require advanced problem-solving, design, and implementation skills.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3214",
@@ -324,7 +492,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Introduction to computer systems as they are relevant to application programmers today, with emphasis on operating system principles. Operating system design and architectures; processes; threads, synchronization techniques, deadlock; CPU scheduling; system call interfaces, system level I/O and file management; shell programming; separate compilation, loading and linking; inter-process communication (IPC); virtual and physical memory management and garbage collection; network protocols and programming; virtualization; performance analysis and optimization. A grade of C or better is required in CS pre-requisites 2506 and 2114."
+    "description": "Introduction to computer systems as they are relevant to application programmers today, with emphasis on operating system principles. Operating system design and architectures; processes; threads, synchronization techniques, deadlock; CPU scheduling; system call interfaces, system level I/O and file management; shell programming; separate compilation, loading and linking; inter-process communication (IPC); virtual and physical memory management and garbage collection; network protocols and programming; virtualization; performance analysis and optimization. A grade of C or better is required in CS pre-requisites 2506 and 2114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3274",
@@ -344,7 +523,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Theory and practice of software reverse engineering, static and dynamic analysis techniques and tools, reverse engineering of malware, obfuscated binaries, communications and command and control analysis, reverse engineering of non-binary software."
+    "description": "Theory and practice of software reverse engineering, static and dynamic analysis techniques and tools, reverse engineering of malware, obfuscated binaries, communications and command and control analysis, reverse engineering of non-binary software.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3304",
@@ -361,7 +551,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "This course in programming language constructs emphasizes the run-time behavior of programs. The languages are studied from two points of view: (1) the fundamental elements of languages and their inclusion in commercially available systems; and (2) the differences between implementations of common elements in languages. A grade of C or better required in CS prerequisite 3114."
+    "description": "This course in programming language constructs emphasizes the run-time behavior of programs. The languages are studied from two points of view: (1) the fundamental elements of languages and their inclusion in commercially available systems; and (2) the differences between implementations of common elements in languages. A grade of C or better required in CS prerequisite 3114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3314",
@@ -376,7 +577,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS3414",
@@ -400,7 +602,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Computational methods for numerical solution of non-linear equations, differential equations, approximations, iterations, methods of least squares, and other topics. A grade of C or better required in CS prerequisite 1044 or 1705. A student can earn credit for at most one of 3414 and MATH 4404."
+    "description": "Computational methods for numerical solution of non-linear equations, differential equations, approximations, iterations, methods of least squares, and other topics. A grade of C or better required in CS prerequisite 1044 or 1705. A student can earn credit for at most one of 3414 and MATH 4404.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3604",
@@ -421,7 +634,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Studies the ethical, social, and professional concerns of the computer science field. Covers the social impact of the computer, implications and effects of computers on society, and the responsibilities of computer professionals in directing the emerging technology. The topics are studied through case studies of reliable, risk-free technologies, and systems that provide user friendly processes. Specific studies are augmented by an overview of the history of computing, interaction with industrial partners and computing professionals, and attention to the legal and ethical responsibilities of professionals. This is a web-supported course, incorporating writing intensive exercises, making extensive use of active learning technologies. A grade of C or better required in CS prerequisite 3114."
+    "description": "Studies the ethical, social, and professional concerns of the computer science field. Covers the social impact of the computer, implications and effects of computers on society, and the responsibilities of computer professionals in directing the emerging technology. The topics are studied through case studies of reliable, risk-free technologies, and systems that provide user friendly processes. Specific studies are augmented by an overview of the history of computing, interaction with industrial partners and computing professionals, and attention to the legal and ethical responsibilities of professionals. This is a web-supported course, incorporating writing intensive exercises, making extensive use of active learning technologies. A grade of C or better required in CS prerequisite 3114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3634",
@@ -438,7 +662,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Survey of computer science concepts and tools that enable computational science and data analytics. Data structure design and implementation. Analysis of data structure and algorithm performance. Introduction to high-performance computer architectures and parallel computation. Basic operating systems concepts that influence the performance of large-scale computational modeling and data analytics. Software development and software tools for computational modeling. Not for CS major credit."
+    "description": "Survey of computer science concepts and tools that enable computational science and data analytics. Data structure design and implementation. Analysis of data structure and algorithm performance. Introduction to high-performance computer architectures and parallel computation. Basic operating systems concepts that influence the performance of large-scale computational modeling and data analytics. Software development and software tools for computational modeling. Not for CS major credit.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3654",
@@ -465,7 +700,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Basic principles and techniques in data analytics; methods for the collection of, storing, accessing, and manipulating standard-size and large datasets; data visualization; and identifying sources of bias."
+    "description": "Basic principles and techniques in data analytics; methods for the collection of, storing, accessing, and manipulating standard-size and large datasets; data visualization; and identifying sources of bias.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3704",
@@ -482,7 +728,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Explores the principles of software design in detail, with an emphasis on software engineering aspects. Includes exposure of software lifecycle activities including design, coding, testing, debugging, and maintenance, highlighting how design affects these activities. Peer reviews, designing for software reuse, CASE tools, and writing software to specifications are also covered. A grade of C or better required in CS prerequisite 3114."
+    "description": "Explores the principles of software design in detail, with an emphasis on software engineering aspects. Includes exposure of software lifecycle activities including design, coding, testing, debugging, and maintenance, highlighting how design affects these activities. Peer reviews, designing for software reuse, CASE tools, and writing software to specifications are also covered. A grade of C or better required in CS prerequisite 3114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3714",
@@ -500,7 +757,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Technologies and concepts underlying software development for mobile devices (handheld computers). Mobile computing platforms, including architecture, operating system, and programming environment. Software design patterns and structuring for mobile applications. Network-centric mobile software development. Data persistence. Programming for mobile device components such as cameras, recorders, accelerometer, gyroscope and antennas. Location-aware software development. A grade of C or better required in CS prerequisite."
+    "description": "Technologies and concepts underlying software development for mobile devices (handheld computers). Mobile computing platforms, including architecture, operating system, and programming environment. Software design patterns and structuring for mobile applications. Network-centric mobile software development. Data persistence. Programming for mobile device components such as cameras, recorders, accelerometer, gyroscope and antennas. Location-aware software development. A grade of C or better required in CS prerequisite.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3724",
@@ -520,7 +788,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Survey of human-computer interaction concepts, theory, and practice. Basic components of human-computer interaction. Interdisciplinary underpinnings. Informed and critical evaluation of computer-based technology. User-oriented perspective, rather than system-oriented, with two thrusts: human (cognitive, social) and technological (input/output, interactions styles, devices). Design guidelines, evaluation methods, participatory design, communication between users and system developers. A grade of C or better required in CS prerequisite 2114."
+    "description": "Survey of human-computer interaction concepts, theory, and practice. Basic components of human-computer interaction. Interdisciplinary underpinnings. Informed and critical evaluation of computer-based technology. User-oriented perspective, rather than system-oriented, with two thrusts: human (cognitive, social) and technological (input/output, interactions styles, devices). Design guidelines, evaluation methods, participatory design, communication between users and system developers. A grade of C or better required in CS prerequisite 2114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3744",
@@ -542,7 +821,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Design and implementation of object-oriented graphical user interfaces (GUI) and two-dimensional computer graphics systems. Implementation methodologies including callbacks, handlers, event listeners, design patterns, layout managers, and architectural models. Mathematical foundations of computer graphics applied to fundamental algorithms for clipping, scan conversion, affine and convex linear transformations, projections, viewing, structuring, and modeling. A grade of C or better is required in CS pre-requisite 2114."
+    "description": "Design and implementation of object-oriented graphical user interfaces (GUI) and two-dimensional computer graphics systems. Implementation methodologies including callbacks, handlers, event listeners, design patterns, layout managers, and architectural models. Mathematical foundations of computer graphics applied to fundamental algorithms for clipping, scan conversion, affine and convex linear transformations, projections, viewing, structuring, and modeling. A grade of C or better is required in CS pre-requisite 2114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3754",
@@ -560,7 +850,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Fundamentals of cloud software development, including design patterns, application programming interfaces, and underlying middleware technologies. Development of distributed multi-tiered enterprise software applications that run on a server computer and are accessed using a web browser over the Internet on a network-connected computer such as desktop, laptop, or handheld computer (tablet, smartphone, or mobile device. A grade of C or better is required in prerequisite."
+    "description": "Fundamentals of cloud software development, including design patterns, application programming interfaces, and underlying middleware technologies. Development of distributed multi-tiered enterprise software applications that run on a server computer and are accessed using a web browser over the Internet on a network-connected computer such as desktop, laptop, or handheld computer (tablet, smartphone, or mobile device. A grade of C or better is required in prerequisite.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3824",
@@ -575,7 +876,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS3900",
@@ -590,7 +892,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Application of academic knowledge and skills to in a work-based experience aligned with post-graduation goals using research-based learning processes. Satisfactory completion of work-based experience often in the form of internship, undergraduate research, co-op, or study abroad; self-evaluation; reflection; and showcase of learning. Pre: Departmental approval of 3900 plan."
+    "description": "Application of academic knowledge and skills to in a work-based experience aligned with post-graduation goals using research-based learning processes. Satisfactory completion of work-based experience often in the form of internship, undergraduate research, co-op, or study abroad; self-evaluation; reflection; and showcase of learning. Pre: Departmental approval of 3900 plan.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3954",
@@ -605,7 +918,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS3984",
@@ -621,7 +945,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4014",
@@ -636,7 +961,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "This course focuses on social perspectives of algorithms and implications to factors such as class, gender, race, ethnicity, geography, and disability status. Students will be guided to think critically about the impacts of computing in society, as well as the role of social values in their design. Topics will focus on computing technologies involved in critical contemporary and global concerns including machine learning, privacy, and the infrastructure that describes the social and technical context for algorithms. Pre: Junior Standing"
+    "description": "This course focuses on social perspectives of algorithms and implications to factors such as class, gender, race, ethnicity, geography, and disability status. Students will be guided to think critically about the impacts of computing in society, as well as the role of social values in their design. Topics will focus on computing technologies involved in critical contemporary and global concerns including machine learning, privacy, and the infrastructure that describes the social and technical context for algorithms. Pre: Junior Standing",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4094",
@@ -654,7 +990,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Senior capstone project course integrating computer science knowledge and skills acquired in previous courses. Team-based approach to solving open-ended computer science problems that address real-world problems in a variety of application areas, including approaches to problem formulation, requirements definition, design, and implementation. Communicating and presenting team results using both written and oral methods."
+    "description": "Senior capstone project course integrating computer science knowledge and skills acquired in previous courses. Team-based approach to solving open-ended computer science problems that address real-world problems in a variety of application areas, including approaches to problem formulation, requirements definition, design, and implementation. Communicating and presenting team results using both written and oral methods.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4104",
@@ -673,7 +1020,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Data structures and algorithms from an analytical perspective. Theoretical analysis of algorithm efficiency. Comparing algorithms with respect to space and run-time requirements. Analytical methods for describing theoretical and practical bounds on performance. Constraints affecting problem solvability. A grade of C or better is required in CS prerequisite 3114."
+    "description": "Data structures and algorithms from an analytical perspective. Theoretical analysis of algorithm efficiency. Comparing algorithms with respect to space and run-time requirements. Analytical methods for describing theoretical and practical bounds on performance. Constraints affecting problem solvability. A grade of C or better is required in CS prerequisite 3114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4114",
@@ -691,7 +1049,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "The course presents a study of formal languages and the correspondence between language classes and the automata that recognize them. Formal definitions of grammars and acceptors, deterministic and nondeterministic systems, grammar ambiguity, finite state and push-down automata, and normal forms will be discussed."
+    "description": "The course presents a study of formal languages and the correspondence between language classes and the automata that recognize them. Formal definitions of grammars and acceptors, deterministic and nondeterministic systems, grammar ambiguity, finite state and push-down automata, and normal forms will be discussed.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4124",
@@ -706,7 +1075,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4134",
@@ -723,7 +1093,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Quantum states and quantum phenomena. Quantum communication concepts such as superdense coding, teleportation, and complexity. Classical and quantum circuits and gate sets for computation. Quantum algorithms and comparison to classical algorithms. Quantum computational complexity theory and complexity classes. Quantum information concepts such as density operators, measurements, and quantum channels. Error correction, the stabilizer formalism, and fault-tolerance. The adiabatic theorem and adiabatic quantum computation. Entanglement and entanglement measures."
+    "description": "Quantum states and quantum phenomena. Quantum communication concepts such as superdense coding, teleportation, and complexity. Classical and quantum circuits and gate sets for computation. Quantum algorithms and comparison to classical algorithms. Quantum computational complexity theory and complexity classes. Quantum information concepts such as density operators, measurements, and quantum channels. Error correction, the stabilizer formalism, and fault-tolerance. The adiabatic theorem and adiabatic quantum computation. Entanglement and entanglement measures.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4144",
@@ -738,7 +1119,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4164",
@@ -757,7 +1139,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Identification and analysis of complex, real-world security problems and threats to people, organizations, and nations across multiple domains, roles and future scenarios. Crisis communication, decision making tools, ethical principles and problem-solving methods to respond, assess options, plan, scope, and communicate before, during and after conflicts, disasters and attacks. Use of an experiential learning facility, and participation in a reality-based team simulation of cascading security and disaster events."
+    "description": "Identification and analysis of complex, real-world security problems and threats to people, organizations, and nations across multiple domains, roles and future scenarios. Crisis communication, decision making tools, ethical principles and problem-solving methods to respond, assess options, plan, scope, and communicate before, during and after conflicts, disasters and attacks. Use of an experiential learning facility, and participation in a reality-based team simulation of cascading security and disaster events.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4204",
@@ -774,7 +1167,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Hardware and software techniques for the display of graphical information. 2D and 3D geometry and transformations, clipping and windowing, software systems. Interactive graphics, shading, hidden surface elimination, perspective depth. Modeling and realism."
+    "description": "Hardware and software techniques for the display of graphical information. 2D and 3D geometry and transformations, clipping and windowing, software systems. Interactive graphics, shading, hidden surface elimination, perspective depth. Modeling and realism.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4224",
@@ -792,7 +1196,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Design and internal organization of the Linux operating system kernel. Kernel subsystems, boot process, memory management, process and thread model, scheduling, interrupt and exception handling, virtual file system and the concrete file system, block I/O and I/O scheduler, network stack, and device drivers. Modification of existing kernel code. Design, implementation, test and evaluation of new kernel modules. Kernel and full software stack debugging techniques, and virtualization as an aid for operating system development and debug. Software engineering techniques to analyze, modify and run a large, complex open-source code base."
+    "description": "Design and internal organization of the Linux operating system kernel. Kernel subsystems, boot process, memory management, process and thread model, scheduling, interrupt and exception handling, virtual file system and the concrete file system, block I/O and I/O scheduler, network stack, and device drivers. Modification of existing kernel code. Design, implementation, test and evaluation of new kernel modules. Kernel and full software stack debugging techniques, and virtualization as an aid for operating system development and debug. Software engineering techniques to analyze, modify and run a large, complex open-source code base.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4234",
@@ -807,7 +1222,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4254",
@@ -822,7 +1238,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4264",
@@ -841,7 +1258,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Survey of computer problems and fundamental computer security design principles and models for software systems. Cryptographic models and methods. Modern cyber security techniques for robust computer operating systems, software, web applications, large-scale networks and data protection. Privacy models and techniques. Contemporary computer and network security examples. A grade of C or better is required in prerequisites."
+    "description": "Survey of computer problems and fundamental computer security design principles and models for software systems. Cryptographic models and methods. Modern cyber security techniques for robust computer operating systems, software, web applications, large-scale networks and data protection. Privacy models and techniques. Contemporary computer and network security examples. A grade of C or better is required in prerequisites.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4274",
@@ -856,7 +1284,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4284",
@@ -871,7 +1300,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4304",
@@ -886,7 +1316,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4414",
@@ -901,7 +1332,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4504",
@@ -920,7 +1352,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Overview of the structure, elements and analysis of modern enterprise computers. Performance evaluation of commercial computing. Past and emerging technology trends. Impact of parallelism at multiple levels of computer architecture. Memory and storage. Fundamental computer system descriptions, Amdahls Law, Flynns Taxonomy. A grade of C or better required in prerequisites."
+    "description": "Overview of the structure, elements and analysis of modern enterprise computers. Performance evaluation of commercial computing. Past and emerging technology trends. Impact of parallelism at multiple levels of computer architecture. Memory and storage. Fundamental computer system descriptions, Amdahls Law, Flynns Taxonomy. A grade of C or better required in prerequisites.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4604",
@@ -937,7 +1380,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Emphasis on introduction of the basic data base models, corresponding logical and physical data structures, comparisons of models, logical data design, and data base usage. Terminology, historical evolution, relationships, implementation, data base personnel, future trends, applications, performance considerations, data integrity. Senior standing required. A grade of C or better required in CS prerequisite 3114."
+    "description": "Emphasis on introduction of the basic data base models, corresponding logical and physical data structures, comparisons of models, logical data design, and data base usage. Terminology, historical evolution, relationships, implementation, data base personnel, future trends, applications, performance considerations, data integrity. Senior standing required. A grade of C or better required in CS prerequisite 3114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4624",
@@ -952,7 +1406,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4634",
@@ -967,7 +1422,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4644",
@@ -982,7 +1438,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4654",
@@ -1005,7 +1462,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "A technical analytics course. Covers supervised and unsupervised learning strategies, including regression, generalized linear models, regulations, dimension reduction methods, tree-based methods for classification, and clustering. Upper-level analytical methods shown in practice: e.g., advanced naive Bayes and neural networks."
+    "description": "A technical analytics course. Covers supervised and unsupervised learning strategies, including regression, generalized linear models, regulations, dimension reduction methods, tree-based methods for classification, and clustering. Upper-level analytical methods shown in practice: e.g., advanced naive Bayes and neural networks.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4664",
@@ -1020,7 +1488,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4704",
@@ -1035,7 +1504,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4774",
@@ -1056,7 +1526,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Project-based design course in human-computer interaction. Team-based, end-to-end, integrative interface design project drawn from interdisciplinary areas of student expertise, e.g., virtual reality, augmented reality, embodied cognition, visualization, semiotic engineering, game design, personal information management, mobile computing, design tools, educational technology, and digital democracy. Not for CS major credit. Senior standing."
+    "description": "Project-based design course in human-computer interaction. Team-based, end-to-end, integrative interface design project drawn from interdisciplinary areas of student expertise, e.g., virtual reality, augmented reality, embodied cognition, visualization, semiotic engineering, game design, personal information management, mobile computing, design tools, educational technology, and digital democracy. Not for CS major credit. Senior standing.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4784",
@@ -1071,7 +1552,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4804",
@@ -1088,7 +1570,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Overview of the areas of problem solving, game playing, and computer vision. Search trees and/or graphs, game trees, block world vision, syntactic pattern recognition, object matching, natural language, and robotics. Senior standing required. A grade of C or better required in CS prerequisite 3114."
+    "description": "Overview of the areas of problem solving, game playing, and computer vision. Search trees and/or graphs, game trees, block world vision, syntactic pattern recognition, object matching, natural language, and robotics. Senior standing required. A grade of C or better required in CS prerequisite 3114.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4824",
@@ -1112,7 +1605,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Algorithms and principles involved in machine learning; focus on perception problems arising in computer vision, natural language processing and robotics; fundamentals of representing uncertainty, learning from data, supervised learning, ensemble methods, unsupervised learning, structured models, learning theory and reinforcement learning; design and analysis of machine perception systems; design and implementation of a technical project applied to real-world datasets (images, text, robotics). A grade of C- or better in prerequisites."
+    "description": "Algorithms and principles involved in machine learning; focus on perception problems arising in computer vision, natural language processing and robotics; fundamentals of representing uncertainty, learning from data, supervised learning, ensemble methods, unsupervised learning, structured models, learning theory and reinforcement learning; design and analysis of machine perception systems; design and implementation of a technical project applied to real-world datasets (images, text, robotics). A grade of C- or better in prerequisites.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4884",
@@ -1127,7 +1631,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4894",
@@ -1145,7 +1650,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Advanced undergraduate topics in the design, development, use, and impact of computer science solutions or software systems. Topics may include blockchain systems, DevOps, new programming languages, social media software, software as a service, micro-services, and end user programming systems. May be repeated 2 times with different content for a maximum of 9 credits."
+    "description": "Advanced undergraduate topics in the design, development, use, and impact of computer science solutions or software systems. Topics may include blockchain systems, DevOps, new programming languages, social media software, software as a service, micro-services, and end user programming systems. May be repeated 2 times with different content for a maximum of 9 credits.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4944",
@@ -1162,13 +1678,25 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4954",
     "name": "Study Abroad",
     "credits": [
-      3
+      1,
+      19
     ],
     "prerequisites": [],
     "corequisites": [],
@@ -1177,7 +1705,8 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4964",
@@ -1193,7 +1722,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4974",
@@ -1209,7 +1749,18 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
     "code": "CS4984",
@@ -1225,7 +1776,8 @@
       "Fall",
       "Spring"
     ],
-    "description": ""
+    "description": "",
+    "pathways": []
   },
   {
     "code": "CS4994",
@@ -1241,6 +1793,191 @@
       "Fall",
       "Spring"
     ],
-    "description": "Description Not Found"
+    "description": "Description Not Found",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH1225",
+    "name": "Calculus of a Single Variable",
+    "credits": [
+      4
+    ],
+    "prerequisites": [
+      "MATH1214"
+    ],
+    "corequisites": [],
+    "category": "MATH",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "1225-1226: CALCULUS OF A SINGLE VARIABLE Quantitative and computational thinking to address relevant intercultural and global issues. Unified calculus course covering techniques of differential and integral calculus for functions of one variable. Constitutes the standard first-year mathematics courses for science and engineering. 1225: limits, continuity, differentiation, transcendental functions, applications of differentiation, introduction to integration. Assumes 2 units of high school algebra, 1 unit of geometry, 1/2 unit each of trigonometry and precalculus, and placement by Math Dept. 1226: techniques and applications of integration, trapezoidal and Simpson’s rules, improper integrals, sequences and series, power series, parametric curves and polar coordinates, software-based techniques. A student can earn credit for at most one of 1025 and 1225. A student can earn credit for at most one of 1525 and 1225. A student can earn credit for at most one of 1026 and 1226. Pre: Grade of at least C- in 1225 for 1226.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH1226",
+    "name": "Calculus of a Single Variable",
+    "credits": [
+      4
+    ],
+    "prerequisites": [
+      "MATH1225"
+    ],
+    "corequisites": [],
+    "category": "MATH",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "1225-1226: CALCULUS OF A SINGLE VARIABLE Quantitative and computational thinking to address relevant intercultural and global issues. Unified calculus course covering techniques of differential and integral calculus for functions of one variable. Constitutes the standard first-year mathematics courses for science and engineering. 1225: limits, continuity, differentiation, transcendental functions, applications of differentiation, introduction to integration. Assumes 2 units of high school algebra, 1 unit of geometry, 1/2 unit each of trigonometry and precalculus, and placement by Math Dept. 1226: techniques and applications of integration, trapezoidal and Simpson’s rules, improper integrals, sequences and series, power series, parametric curves and polar coordinates, software-based techniques. A student can earn credit for at most one of 1025 and 1225. A student can earn credit for at most one of 1525 and 1225. A student can earn credit for at most one of 1026 and 1226. Pre: Grade of at least C- in 1225 for 1226.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH2214",
+    "name": "Intro Diff Equations",
+    "credits": [
+      3
+    ],
+    "prerequisites": [
+      "MATH2114",
+      "MATH1226"
+    ],
+    "corequisites": [],
+    "category": "MATH",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Unified course in ordinary differential equations. First-order equations, second-and-higher-order constant coefficient linear equations, systems of first-order linear equations, and numerical methods. Mathematical models describing motion and cooling, predator-prey population models, SIR-models, mechanical vibrations, electric circuits, rates of chemical reactions, radioactive decay. Quantitative and computational thinking to address relevant intercultural and global issues. A student can earn credit for at most one of 2214 and 2406H. A student can earn credit for at most one of 2214 and CMDA 2006.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH2534",
+    "name": "Intro Discrete Math",
+    "credits": [
+      3
+    ],
+    "prerequisites": [
+      "CS1114",
+      "ECE1574",
+      "ECE1004",
+      "CS2064"
+    ],
+    "corequisites": [],
+    "category": "MATH",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Emphasis on topics relevant to computer science. Topics include logic, propositional calculus, set theory, relations, functions, mathematical induction, elementary number theory and Boolean algebra. Does not carry credit for mathematics majors, but may be used as though it were a 3000-level elective course for the mathematics minor. Two units of high school algebra, one unit of geometry, one-half unit each of trigonometry and precalculus mathematics required. 2534 may not be taken by math majors for credit without special permission. A student can earn credit for at most one of 2534 and 3034.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "STAT3704",
+    "name": "Stat for Eng Apps",
+    "credits": [
+      2
+    ],
+    "prerequisites": [
+      "MATH2224",
+      "MATH2204",
+      "CMDA2005"
+    ],
+    "corequisites": [],
+    "category": "STAT",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Introduction to statistical methodology with emphasis on engineering experimentation: probability distributions, estimation, hypothesis testing, regression, and analysis of variance. Only one of the courses 3704, 4604, 4705, and 4714 may be taken for credit.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH2204",
+    "name": "Intro Multivariable Calculus",
+    "credits": [
+      3
+    ],
+    "prerequisites": [
+      "MATH1226"
+    ],
+    "corequisites": [],
+    "category": "MATH",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Calculus for functions for several variables. Planes and surfaces, continuity, differentiation, chain rule, extreme values, Lagrange multipliers, double and triple integrals and applications, software-based techniques. A student can earn credit for at most one of 2204 and 2406H. A student can earn credit for at most one of 2024 and 2204. A student can earn credit for at most one of 2204 and CMDA 2005.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   }
 ]

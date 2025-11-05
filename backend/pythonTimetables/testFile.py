@@ -1,4 +1,4 @@
-from scrapeVTCourses import getAllCSVTCourses
+from scrapeVTCourses import getAllCSVTCourses, get_cs_bs_required_courses
 from timeTablesVTT import *
 
 
@@ -57,7 +57,7 @@ courses = search_timetable(
 print("="*100)
 
 dict1 = searchID("2026", "Spring", "CS4944")
-
+print(dict1)
 if not dict1["sections"]:
     print("No sections found.")
 else:
@@ -71,3 +71,14 @@ else:
         print(f"  CRN: {sec['crn']}, Type: {sec['type']}, Modality: {sec['modality']}, Instructor: {sec['instructor']}, Capacity: {sec['capacity']}")
         for mtg in sec["schedule"]:
             print(f"    {mtg['day']}: {mtg['start']}–{mtg['end']} @ {mtg['location']}")
+
+
+courses = get_cs_bs_required_courses() #doesnt work
+print(f"Found {len(courses)} required courses:")
+# show first 10
+for c in courses[:10]:
+    print(f" - {c['code']}: {c['title']}")
+if len(courses) > 10:
+    print(" ...")
+    print("Sample full objects:")
+    print(courses[:3])
