@@ -87,24 +87,14 @@
     background-color: rgba(134, 31, 65, 0.5);
 }
 
-/* .semesters {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    flex: 1; 
-    overflow-y: auto;
-    min-height: 0;
-    padding-right: 8px;
-} */
-
 .semesters {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: min-content;
     gap: 16px;
-    flex: 1; /* Take up remaining space /
+    flex: 1; /* Take up remaining space */
     overflow-y: auto;
-    min-height: 0; / Important for flex scrolling */
+    min-height: 0; /* Important for flex scrolling */
     padding-right: 8px;
     align-content: start;
 }
