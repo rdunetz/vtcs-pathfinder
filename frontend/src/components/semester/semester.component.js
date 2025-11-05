@@ -9,16 +9,13 @@ const SemesterBox = ({ id, title, children, credits = 0, creditLimit = 19 }) => 
     <Paper
         ref={setNodeRef}
         sx={{
-            minHeight: '140px',    // The desired starting height
-            height: "auto",        // allow growth with content
-            flexGrow: 0,           // DON'T force it to fill remaining space
-            padding: 2,
-            marginBottom: 2,
-            borderRadius: "20px",
-            backgroundColor: '#f9f9f9',
-            width: "auto",
-            border: isOver ? "2px dashed #ff9800" : "2px dashed transparent",
-            overflow: "visible",   // ensure children don't get clipped
+        minHeight: "140px",
+        padding: 2,
+        marginBottom: 2,
+        borderRadius: "20px",
+        backgroundColor: '#f9f9f9',
+        width: 'auto',
+        border: isOver ? "2px dashed #ff9800" : "2px dashed transparent",
         }}
     >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>

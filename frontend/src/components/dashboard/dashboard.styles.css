@@ -2,8 +2,7 @@
     padding: 0;
     background-color: #f9f9f9;
     min-height: calc(100vh - 64px); /* Full height minus navbar */
-    /* height: calc(100vh - 64px); */
-    height: auto;
+    height: calc(100vh - 64px);
     max-width: 100% !important;
     margin: 0 !important;
 }
@@ -29,12 +28,11 @@
     padding: 24px;
     border-radius: 8px;
     height: calc(100vh - 96px); /* Full height minus navbar and padding */
-    /* height: auto; */
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     background-color: white;
     display: flex;
     flex-direction: column;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .dashboard-panel:nth-child(1) {
@@ -43,9 +41,6 @@
 
 .dashboard-panel:nth-child(2) {
     width: 50%;
-    display: flex;
-    flex-direction: column;
-    min-height: 0; /* <-- REQUIRED FOR SCROLLING CHILD */
 }
 
 .dashboard-panel:nth-child(3) {
@@ -92,28 +87,15 @@
     background-color: rgba(134, 31, 65, 0.5);
 }
 
-/* DON'T TOUCH */
 .semesters {
-    display: flex;
-    flex-wrap: wrap;              /* allow rows */
-    gap: 16px;                    /* space between items (works in modern browsers) */
-    align-items: stretch;         /* make items same height in a row */
-    padding: 0 8px;               /* example padding — box-sizing handles it */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    flex: 1; /* Take up remaining space */
     overflow-y: auto;
-    box-sizing: border-box;       /* include padding in width calculations */
-    min-height: 0;                /* allow children to shrink inside flex containers */
-    margin-top: 12px;
-  }
-  
-  /* DON'T TOUCH */
-  /* children: exactly 2 per row, accounting for gap */
-  .semesters > * {
-    box-sizing: border-box;                       /* include padding/border in width */
-    flex: 0 0 calc((100% - 16px) / 2);            /* exactly two per row with gap */
-    max-width: calc((100% - 16px) / 2);           /* prevent expansion */
-    min-width: 0;                                 /* allow shrink for overflow content */
-  }
-  
+    min-height: 0; /* Important for flex scrolling */
+    padding-right: 8px;
+}
 
 .semesters::-webkit-scrollbar {
     width: 8px;
