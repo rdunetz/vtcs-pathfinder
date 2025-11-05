@@ -75,7 +75,7 @@
 
 /* Typography styling — ensures each is rendered on its own line */
 .course-label,
-.course-title,
+.course-name,
 .course-credits {
     display: block;
     margin-bottom: 6px;
@@ -88,7 +88,7 @@
 }
 
 /* Title */
-.course-title {
+.course-name {
     font-weight: 500;
     color: #333;
 }

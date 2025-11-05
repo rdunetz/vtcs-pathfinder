@@ -15,6 +15,8 @@ function App() {
 
   const { currentUser } = useContext(UserContext);
 
+  console.log(currentUser)
+
   return (
     <Routes>
       {/* Routes WITHOUT navbar (Landing and Auth) */}

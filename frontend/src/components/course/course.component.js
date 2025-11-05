@@ -1,9 +1,9 @@
 import './course.styles.css';
 import React, { useState } from 'react';
-import { 
-    Typography, 
-    Container, 
-    Paper, 
+import {
+    Typography,
+    Container,
+    Paper,
     IconButton,
     Dialog,
     DialogTitle,
@@ -18,30 +18,30 @@ import { InfoOutlined, DeleteOutline } from '@mui/icons-material';
 import { useDraggable } from "@dnd-kit/core";
 
 const Course = ({ course, draggable, overlay, onDelete }) => {
-    const { id, title, credits, category } = course;
+    const { id, name, credits, category } = course;
     const [modalOpen, setModalOpen] = useState(false);
 
-        const { attributes, listeners, setNodeRef, transform, isDragging } =
-          useDraggable({ id: course.id, disabled: !draggable });
-      
-        const style = {
-            // transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
-            cursor: overlay ? "grabbing" : draggable ? "grab" : "default",
-            opacity: isDragging ? 0.7 : 1,
-        };
+    const { attributes, listeners, setNodeRef, transform, isDragging } =
+        useDraggable({ id: course.id, disabled: !draggable });
+
+    const style = {
+        // transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
+        cursor: overlay ? "grabbing" : draggable ? "grab" : "default",
+        opacity: isDragging ? 0.7 : 1,
+    };
 
     const type = () => {
 
         switch (category) {
             case 'CS':
-              return "cs-course-card";
+                return "cs-course-card";
             case 'MATH':
-              return "math-course-card";
+                return "math-course-card";
             case 'ENGLISH':
-              return "english-course-card"
+                return "english-course-card"
             default:
-              return "course-card";
-          }
+                return "course-card";
+        }
     }
 
     return (
@@ -51,12 +51,15 @@ const Course = ({ course, draggable, overlay, onDelete }) => {
                     <Paper className={type()} elevation={3}>
                         <div className="course-content">
                             <div className="course-info">
-                                <Typography variant="h6" className="course-label">
-                                    {id}
+                                <Typography variant="body1">
+                                    <span style={{ fontWeight: 600 }}>{id}</span>
+                                    {" – "}
+                                    <span style={{ fontSize: "0.9em", fontWeight: 500 }}>{name}</span>
                                 </Typography>
-                                <Typography variant="subtitle1" className="course-title">
-                                    {title}
-                                </Typography>
+
+                                {/* <Typography variant="p" className="course-name">
+                                    {name}
+                                </Typography> */}
                                 <Typography variant="subtitle2" className="course-credits">
                                     {credits} credits
                                 </Typography>
@@ -93,8 +96,8 @@ const Course = ({ course, draggable, overlay, onDelete }) => {
             </div>
 
             {/* Course Info Modal */}
-            <Dialog 
-                open={modalOpen} 
+            <Dialog
+                open={modalOpen}
                 onClose={() => setModalOpen(false)}
                 maxWidth="sm"
                 fullWidth
@@ -115,20 +118,20 @@ const Course = ({ course, draggable, overlay, onDelete }) => {
                 <DialogContent>
                     <Box sx={{ mt: 1 }}>
                         <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-                            <Chip 
-                                label={`${Array.isArray(course.credits) ? course.credits[0] : (course.credits || 'N/A')} Credits`} 
-                                color="primary" 
+                            <Chip
+                                label={`${Array.isArray(course.credits) ? course.credits[0] : (course.credits || 'N/A')} Credits`}
+                                color="primary"
                                 size="small"
                             />
-                            <Chip 
-                                label={course.category || 'General'} 
-                                color="secondary" 
+                            <Chip
+                                label={course.category || 'General'}
+                                color="secondary"
                                 size="small"
                             />
                             {course.semesters && course.semesters.length > 0 && (
-                                <Chip 
-                                    label={`Available: ${course.semesters.join(', ')}`} 
-                                    variant="outlined" 
+                                <Chip
+                                    label={`Available: ${course.semesters.join(', ')}`}
+                                    variant="outlined"
                                     size="small"
                                 />
                             )}
