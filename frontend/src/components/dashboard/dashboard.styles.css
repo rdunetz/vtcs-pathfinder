@@ -2,7 +2,8 @@
     padding: 0;
     background-color: #f9f9f9;
     min-height: calc(100vh - 64px); /* Full height minus navbar */
-    height: calc(100vh - 64px);
+    /* height: calc(100vh - 64px); */
+    height: auto;
     max-width: 100% !important;
     margin: 0 !important;
 }
