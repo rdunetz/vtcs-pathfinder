@@ -33,4 +33,9 @@ router.delete("/:id", deleteCourse);
 router.get("/:id/check-prerequisites", checkPrerequisites);
 router.post("/:id/check-prerequisites", checkPrerequisites);
 
+// Timetable-backed lookups (before /:id)
+router.get('/search/by-id', searchCourseID);   // expects year, semester, courseId as query params
+router.get('/search/by-crn', searchCourseCRN); // expects year, semester, crn as query params
+
+
 module.exports = router;

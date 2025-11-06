@@ -70,6 +70,8 @@ def course_from_search(
     """
     Convert the searchID aggregated dict + catalog fallbacks into the target schema.
     Credits source-of-truth: search_dict['creditHours'] if present/valid; fallback to catalog_credits.
+    Category: use search_dict['subject'] if available, otherwise extract from code.
+    Includes 'pathways' passthrough from searchID output.
     """
     code = search_dict.get("code") or search_dict.get("courseId") or ""
     name_raw = search_dict.get("name") or fallback_title or ""
@@ -100,24 +102,52 @@ def course_from_search(
 
     description = search_dict.get("catalogDescription") or ""
 
+    # Extract category from subject field, or fallback to parsing from code
+    category = search_dict.get("subject")
+    if not category and code:
+        # Fallback: extract subject prefix from code (e.g., "CS3414" -> "CS")
+        m = re.match(r'^([A-Z]{2,4})', code.upper())
+        if m:
+            category = m.group(1)
+        else:
+            category = "CS"  # ultimate fallback
+    elif not category:
+        category = "CS"  # default if nothing else available
+
+    # NEW: pathways list from searchID (default to [])
+    pathways = search_dict.get("pathways") or []
+    if isinstance(pathways, str):
+        pathways = [p.strip() for p in pathways.split(',') if p.strip()]
+
     return {
         "code": code,
         "name": name,
         "credits": credits_list,             # [x] or [x, y] or None
         "prerequisites": prereq_list,
         "corequisites": [],
-        "category": "CS",
+        "category": category,
         "semesters": ["Fall", "Spring"],
         "description": description,
+        "pathways": pathways,                # <- included in JSON output
         # "sections": search_dict.get("sections", []),  # uncomment if you want sections in the JSON
     }
 
 def main() -> None:
     print(f"Starting course generation for {SEMESTER_STR} {YEAR}...")
     catalog_courses = getAllCSVTCourses()
-    total = len(catalog_courses)
-    print(f"Discovered {total} CS catalog courses to process.")
+    print(f"Discovered {len(catalog_courses)} CS catalog courses to process.")
+    MATH_courses = [{"code": "MATH1225", "title": "Calculus of a Single Variable", "credits": 3}, 
+                    {"code": "MATH1226", "title": "Calculus of a Single Variable II", "credits": 3},
+                    {"code": "MATH2214", "title": "Introduction to Differential Equations", "credits": 3},
+                    {"code": "MATH2534", "title": "Introduction to Linear Algebra", "credits": 3},
+                    {"code": "STAT3704", "title": "Descriptive statistics, probability, and inference.", "credits": 3},
+                    {"code": "MATH2204", "title": "multi", "credits": None}]
+    print("Adding MATH & STATS Courses")
+    for c in MATH_courses:
+        catalog_courses.append(c)
+        print(f'Added: {c["code"]}')
 
+    total = len(catalog_courses)
     results: List[Dict[str, Any]] = []
     processed = 0
     skipped = 0
@@ -159,7 +189,9 @@ def main() -> None:
             name_preview = (record['name'] or '')[:60]
             cr = record['credits']
             cr_str = f"{cr}" if cr is not None else "None"
-            print(f"  -> OK: {course_code} | title: '{name_preview}' | credits: {cr_str}")
+            cat = record['category']
+            pws = record.get('pathways') or []
+            print(f"  -> OK: {course_code} | category: {cat} | title: '{name_preview}' | credits: {cr_str} | pathways: {pws}")
 
         except Exception as e:
             skipped += 1
