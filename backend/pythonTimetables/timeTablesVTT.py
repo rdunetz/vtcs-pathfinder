@@ -290,10 +290,79 @@ def make_banner_request(crn: str, year: str, semester: Semester,
         }
 
 
-def search_crn(year: str, semester: str, crn: str) -> Course:
+def searchcrn(year: str, semester: str, crn: str) -> Course:
     crn_search = search_timetable(year, parse_semester(semester), crn=crn)
     return crn_search[0] if crn_search else None
 
+def searchCRNData(year: str, semester: str, crn: str) -> dict:
+    """
+    Return a JSON-serializable dict with all data about the class for a given CRN.
+    Shape harmonizes with searchID where reasonable.
+
+    Keys:
+      year, semester, courseId, subject, code, name, creditHours,
+      prerequisites, catalogDescription, comments, pathways, sections[]
+    """
+    sem = parse_semester(semester)
+    course = searchcrn(year, semester, crn)
+    if course is None:
+        return {
+            "year": year,
+            "semester": semester,
+            "courseId": None,
+            "subject": None,
+            "code": None,
+            "name": None,
+            "creditHours": None,
+            "prerequisites": None,
+            "catalogDescription": None,
+            "comments": None,
+            "pathways": [],
+            "sections": [],
+        }
+
+    # Build schedule list as in searchID
+    sched_list = []
+    for day, meetings in course.get_schedule().items():
+        for start, end, location in meetings:
+            sched_list.append({
+                "day": day.value if hasattr(day, "value") else str(day),
+                "start": start,
+                "end": end,
+                "location": location,
+            })
+
+    # Banner data (cached)
+    banner = _banner_comments_cached(
+        course.get_crn(),
+        course.get_year(),
+        course.get_semester().value if hasattr(course.get_semester(), "value") else str(course.get_semester()),
+        course.get_subject(),
+        course.get_code()
+    )
+
+    # Optional: pathways via subject+code for this single course
+    pathways = _get_pathways_for_course(year, sem, course.get_subject(), course.get_code())
+
+    return {
+        "year": course.get_year(),
+        "semester": semester,
+        "courseId": f"{course.get_subject()}{course.get_code()}",
+        "subject": course.get_subject(),
+        "code": f"{course.get_subject()}{course.get_code()}",
+        "name": course.get_name(),
+        "creditHours": course.get_credit_hours(),
+        "prerequisites": banner.get("prerequisites"),
+        "catalogDescription": banner.get("catalogDescription"),
+        "comments": banner.get("comments"),
+        "pathways": pathways,
+        "crn": course.get_crn(),
+        "type": course.get_type().name if hasattr(course.get_type(), "name") else str(course.get_type()),
+        "modality": (course.get_modality().name if course.get_modality() and hasattr(course.get_modality(), "name") else None),
+        "capacity": course.get_capacity(),
+        "instructor": course.get_professor(),
+        "schedule": sched_list,
+    }
 
 def get_semesters() -> Set[Tuple[str, str]]:
     semester_dct = {'Spring': Semester.SPRING, 'Summer': Semester.SUMMER,

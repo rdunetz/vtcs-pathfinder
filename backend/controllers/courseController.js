@@ -1,4 +1,9 @@
 const { db } = require("../db");
+const { spawn } = require("child_process");
+
+// Allow configuring interpreter and pythonpath via env
+const PY_INTERPRETER = process.env.PY_INTERPRETER || "python"; // 'python3' on mac/linux, 'python' on Windows
+const PYTHONPATH = process.env.PYTHONPATH || ""; // e.g., ".;./pythonTimetables" on Windows, ".:./pythonTimetables" on Linux/Mac
 
 /**
  * Get all courses with optional filtering
@@ -311,36 +316,79 @@ const checkPrerequisites = async (req, res) => {
   }
 };
 
-// Timetable-backed search: by courseId or CRN
-const { spawn } = require('child_process');
-
+// ---------- Timetable bridge (Python subprocess) ----------
 function callTimetablePython(funcName, argsObj) {
   return new Promise((resolve, reject) => {
-    const py = spawn('python3', ['-c', `
-import json, sys
-from timeTablesVTT import searchID, searchcrn
+    const code = `
+import json, sys, os, math
+from enum import Enum
+
+# Try package import first; fallback to sys.path injection
+try:
+    from pythonTimetables.timeTablesVTT import searchID, searchCRNData
+except ModuleNotFoundError:
+    base = os.getcwd()
+    pkg = os.path.join(base, "pythonTimetables")
+    if pkg not in sys.path:
+        sys.path.insert(0, pkg)
+    from timeTablesVTT import searchID, searchCRNData
+
+def to_jsonable(obj):
+    # Normalize float NaN/Inf from pandas to None to keep strict JSON
+    if isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return None
+        return obj
+    # Enums -> stable string or value
+    if isinstance(obj, Enum):
+        return getattr(obj, "value", str(obj))
+    # Custom objects -> dict of attrs
+    if hasattr(obj, "__dict__"):
+        return { k: to_jsonable(v) for k, v in obj.__dict__.items() }
+    # Iterables
+    if isinstance(obj, (list, tuple, set)):
+        return [to_jsonable(x) for x in obj]
+    # Dicts
+    if isinstance(obj, dict):
+        return { k: to_jsonable(v) for k, v in obj.items() }
+    # Primitives/other -> string or unchanged
+    return obj
+
 args = json.loads(sys.stdin.read())
 try:
     if "${funcName}" == "searchID":
         res = searchID(args["year"], args["semester"], args["courseId"], True)
-    elif "${funcName}" == "searchcrn":
-        res = searchcrn(args["year"], args["semester"], args["crn"])
-        if hasattr(res, "__dict__"):
-            res = res.__dict__
+    elif "${funcName}" == "searchCRNData":
+        res = searchCRNData(args["year"], args["semester"], args["crn"])
     else:
         res = {"error": "Unknown function"}
-    print(json.dumps(res, ensure_ascii=False))
+    print(json.dumps(to_jsonable(res), ensure_ascii=False))
 except Exception as e:
     print(json.dumps({"error": str(e)}))
-`]);
-    let out = '';
-    let err = '';
-    py.stdout.on('data', d => out += d.toString());
-    py.stderr.on('data', d => err += d.toString());
-    py.on('close', code => {
+`;
+
+    const env = { ...process.env };
+    if (PYTHONPATH) {
+      const sep = process.platform === "win32" ? ";" : ":";
+      env.PYTHONPATH = env.PYTHONPATH ? `${PYTHONPATH}${sep}${env.PYTHONPATH}` : PYTHONPATH;
+    }
+
+    const py = spawn(PY_INTERPRETER, ["-c", code], { env });
+
+    let out = "";
+    let err = "";
+    const timer = setTimeout(() => { try { py.kill("SIGKILL"); } catch (_) {} }, 20000);
+
+    py.stdout.on("data", d => out += d.toString());
+    py.stderr.on("data", d => err += d.toString());
+    py.on("close", code => {
+      clearTimeout(timer);
       if (code !== 0 && !out) return reject(new Error(err || `Python exited ${code}`));
-      try { resolve(JSON.parse(out)); } catch (e) { reject(e); }
+      try { resolve(JSON.parse(out)); } catch (e) {
+        reject(new Error(`Failed to parse Python output: ${e.message}. Raw: ${out || err}`));
+      }
     });
+
     py.stdin.write(JSON.stringify(argsObj));
     py.stdin.end();
   });
@@ -349,11 +397,13 @@ except Exception as e:
 // GET /api/courses/search/by-id?year=2026&semester=Fall&courseId=CS-2114
 const searchCourseID = async (req, res) => {
   try {
-    const { year, semester, courseId } = req.query;
+    let { year, semester, courseId } = req.query;
     if (!year || !semester || !courseId) {
       return res.status(400).json({ success: false, error: "year, semester, and courseId are required" });
     }
-    const data = await callTimetablePython('searchID', { year, semester, courseId });
+    // Normalize courseId like "CS2114" or "CS-2114"
+    courseId = String(courseId).trim();
+    const data = await callTimetablePython("searchID", { year, semester, courseId });
     if (data?.error) return res.status(502).json({ success: false, error: data.error });
     return res.json({ success: true, data });
   } catch (error) {
@@ -363,50 +413,23 @@ const searchCourseID = async (req, res) => {
 };
 
 // GET /api/courses/search/by-crn?year=2026&semester=Fall&crn=91234
+// GET /api/courses/search/by-crn?year=2026&semester=Fall&crn=91234
 const searchCourseCRN = async (req, res) => {
   try {
-    const { year, semester, crn } = req.query;
+    let { year, semester, crn } = req.query;
     if (!year || !semester || !crn) {
       return res.status(400).json({ success: false, error: "year, semester, and crn are required" });
     }
-    const raw = await callTimetablePython('searchcrn', { year, semester, crn });
-    if (raw?.error) return res.status(502).json({ success: false, error: raw.error });
-
-    // Optional normalization to match searchID shape
-    let data = raw;
-    if (raw && raw.coursedata) {
-      data = {
-        year,
-        semester,
-        courseId: `${raw.coursedata.subject}${raw.coursedata.code}`,
-        subject: raw.coursedata.subject,
-        code: `${raw.coursedata.subject}${raw.coursedata.code}`,
-        name: raw.coursedata.name,
-        creditHours: raw.coursedata.credithours,
-        prerequisites: raw.bannerinfo?.prerequisites,
-        catalogDescription: raw.bannerinfo?.catalogdescription,
-        comments: raw.bannerinfo?.comments,
-        pathways: [],
-        sections: [
-          {
-            crn: raw.coursedata.crn,
-            type: raw.coursedata.sectiontype,
-            modality: raw.coursedata.modality,
-            capacity: raw.coursedata.capacity,
-            instructor: raw.coursedata.professor,
-            schedule: Object.entries(raw.coursedata.schedule || {}).flatMap(([day, meetings]) =>
-              Array.from(meetings).map(m => ({ day, start: m[0], end: m[1], location: m[2] }))
-            ),
-          },
-        ],
-      };
-    }
+    crn = String(crn).trim();
+    const data = await callTimetablePython("searchCRNData", { year, semester, crn });
+    if (data?.error) return res.status(502).json({ success: false, error: data.error });
     return res.json({ success: true, data });
   } catch (error) {
     console.error("Error searchCourseCRN:", error);
     return res.status(500).json({ success: false, error: "Failed to search by CRN", message: error.message });
   }
 };
+
 
 module.exports = {
   getAllCourses,
@@ -419,4 +442,3 @@ module.exports = {
   searchCourseID,
   searchCourseCRN,
 };
-

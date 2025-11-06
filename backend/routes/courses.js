@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const {
   getAllCourses,
   getCourseById,
@@ -8,7 +9,14 @@ const {
   deleteCourse,
   getCoursesByCategory,
   checkPrerequisites,
+  searchCourseCRN,
+  searchCourseID,
 } = require("../controllers/courseController");
+
+
+// Timetable-backed lookups MUST be before '/:id'
+router.get('/search/by-id', searchCourseID);
+router.get('/search/by-crn', searchCourseCRN);
 
 // GET all courses with optional filtering
 // Query params: category, semester, search
@@ -32,10 +40,5 @@ router.delete("/:id", deleteCourse);
 // GET/POST check prerequisites for a course (supports both methods)
 router.get("/:id/check-prerequisites", checkPrerequisites);
 router.post("/:id/check-prerequisites", checkPrerequisites);
-
-// Timetable-backed lookups (before /:id)
-router.get('/search/by-id', searchCourseID);   // expects year, semester, courseId as query params
-router.get('/search/by-crn', searchCourseCRN); // expects year, semester, crn as query params
-
 
 module.exports = router;

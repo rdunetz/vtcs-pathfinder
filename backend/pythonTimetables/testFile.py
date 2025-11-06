@@ -1,9 +1,9 @@
-from scrapeVTCourses import getAllCSVTCourses, get_cs_bs_required_courses
+from scrapeVTCourses import getAllCSVTCourses
 from timeTablesVTT import *
 
 
 # Example use of timeTables
-course = search_crn(year='2026', semester="Spring", crn='13390')
+course = searchcrn(year='2026', semester="Spring", crn='13390')
 if course:
     print(f"Course: {course.get_subject()}-{course.get_code()} {course.get_name()}")
     print(f"CRN: {course.get_crn()}")
@@ -20,7 +20,10 @@ if course:
     print(f"Comments: {course.get_comments()}")
 else:
     print("No course found for the provided CRN.")
+print("="*100)
 
+course2 = searchCRNData(year='2026', semester="Spring", crn='13390')
+print(course2)
 
 print("="*100)
 
@@ -71,14 +74,3 @@ else:
         print(f"  CRN: {sec['crn']}, Type: {sec['type']}, Modality: {sec['modality']}, Instructor: {sec['instructor']}, Capacity: {sec['capacity']}")
         for mtg in sec["schedule"]:
             print(f"    {mtg['day']}: {mtg['start']}–{mtg['end']} @ {mtg['location']}")
-
-
-courses = get_cs_bs_required_courses() #doesnt work
-print(f"Found {len(courses)} required courses:")
-# show first 10
-for c in courses[:10]:
-    print(f" - {c['code']}: {c['title']}")
-if len(courses) > 10:
-    print(" ...")
-    print("Sample full objects:")
-    print(courses[:3])
