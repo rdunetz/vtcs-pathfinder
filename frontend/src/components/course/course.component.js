@@ -18,7 +18,7 @@ import { InfoOutlined, DeleteOutline } from '@mui/icons-material';
 import { useDraggable } from "@dnd-kit/core";
 
 const Course = ({ course, draggable, overlay, onDelete }) => {
-    const { id, title, credits, category } = course;
+    const { id, name, credits, category } = course;
     const [modalOpen, setModalOpen] = useState(false);
 
         const { attributes, listeners, setNodeRef, transform, isDragging } =
@@ -51,11 +51,10 @@ const Course = ({ course, draggable, overlay, onDelete }) => {
                     <Paper className={type()} elevation={3}>
                         <div className="course-content">
                             <div className="course-info">
-                                <Typography variant="h6" className="course-label">
-                                    {id}
-                                </Typography>
-                                <Typography variant="subtitle1" className="course-title">
-                                    {title}
+                                <Typography variant="body1">
+                                    <span style={{ fontWeight: 600 }}>{id}</span>
+                                    {" – "}
+                                    <span style={{ fontSize: "0.9em", fontWeight: 400 }}>{name}</span>
                                 </Typography>
                                 <Typography variant="subtitle2" className="course-credits">
                                     {credits} credits

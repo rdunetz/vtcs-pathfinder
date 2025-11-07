@@ -11,8 +11,9 @@ import Menu from '@mui/material/Menu';
 import Typography from "@mui/material/Typography";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from "@mui/material/Toolbar";
+import axios from "axios";
 
-const Navigation = (props) => {
+const Navigation = ({ plan }) => {
 
   const appName = "VTCS Pathfinder"
 
@@ -28,7 +29,8 @@ const Navigation = (props) => {
   const isOnPlansPage = location.pathname === '/plans';
 
   // For now, we'll use a placeholder for plan name - this should come from props or context later
-  const planName = "Main Plan"; // TODO: Get actual plan name from route params or context
+  // const planName = window.location.pathname.replace("/plans/", "").replace(/-/g, " ");
+  const planName = plan.name;
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,6 +53,13 @@ const Navigation = (props) => {
   const handleSavePlan = () => {
     // TODO: Implement save plan functionality
     console.log("Save plan clicked");
+    axios.put(process.env.REACT_APP_BACKEND + "/plans/" + plan.id, plan)
+      .then(res => {
+        navigate('/plans');
+      })
+      .catch(err => {
+        console.error("Failed to fetch courses", err);
+      });
   }
 
   return (

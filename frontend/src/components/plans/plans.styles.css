@@ -1,0 +1,53 @@
+/* Container spacing */
+.plans-container {
+    padding: 0;
+    background-color: #f9f9f9;
+    min-height: calc(100vh - 64px); /* Full height minus navbar */
+    /* height: calc(100vh - 64px); */
+    height: auto;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-top: 30px;
+}
+
+/* Card styling */
+.plans-card {
+    padding: 24px;
+    width: 70%;
+    justify-self: center;
+    border-radius: 12px;
+    border-top: 6px solid #861F41;
+}
+
+/* Row with title + add button */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Add button styling */
+.add-plan-btn {
+    border: solid 2px #600020;
+    color: #800000;
+    transition: transform 0.2s ease;
+}
+
+.add-plan-btn:hover {
+    transform: scale(1.15);
+    color: #600020;
+}
+
+/* Description */
+.plans-description {
+    margin-bottom: 24px;
+}
+
+/* Test button styling */
+.test-plan-btn {
+    background-color: #800000 !important;
+}
+
+.test-plan-btn:hover {
+    background-color: #600020 !important;
+}

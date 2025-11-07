@@ -45,11 +45,11 @@ function Home() {
                 </Typography>
 
                 <Divider className='animate-fade-slide' />
+                <br/>
 
-
-                <div style={{ height: '200px', overflow: 'hidden', justifyContent: 'center', display: 'flex'}}>
+                {/* <div style={{ height: '200px', overflow: 'hidden', justifyContent: 'center', display: 'flex'}}>
                     <img src={RouteImage} alt="Route" className="Home-image animate-fade-slide" />
-                </div>
+                </div> */}
 
                 {/* <Divider className='animate-fade-slide' /> */}
 

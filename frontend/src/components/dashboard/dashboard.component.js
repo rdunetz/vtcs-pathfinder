@@ -4,32 +4,26 @@ import Course from '../course/course.component';
 import SemesterBox from '../semester/semester.component';
 import axios from 'axios';
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import { 
-    Typography, 
-    Container, 
-    Paper, 
-    TextField, 
-    LinearProgress, 
+import {
+    Typography,
+    Container,
+    Paper,
+    TextField,
+    LinearProgress,
     Box
 } from '@mui/material';
 
-const Dashboard = (params) => {
+const Dashboard = ({ plan, setPlan }) => {
 
-    const { plan } = params;
     const [searchTerm, setSearchTerm] = useState("");
     const [courses, setCourses] = useState([]);
     const [activeCourse, setActiveCourse] = useState(null);
     const [originalCoursesOrder, setOriginalCoursesOrder] = useState([]); // Store original order
-    const [semesters, setSemesters] = useState({
-        fall2025: [],
-        spring2026: [],
-        fall2026: [],
-        spring2027: [],
-        fall2027: [],
-        spring2028: [],
-        fall2028: [],
-        spring2029: []
-    });
+    const [semesters, setSemesters] = useState(plan.semesters || {});
+
+    useEffect(() => {
+        setSemesters(plan.semesters || {});
+    }, [plan.semesters]);
 
     useEffect(() => {
 
@@ -48,9 +42,24 @@ const Dashboard = (params) => {
 
     }, []);
 
-    const filteredCourses = courses.filter(course =>
+    // Build a Set of course IDs already placed in semesters
+    const usedCourseIds = new Set(
+        Object.values(semesters || {})
+            .flat()
+            .map(course => course.id)
+    );
+
+    // Only show courses that are NOT in semesters
+    const availableCourses = courses.filter(course => !usedCourseIds.has(course.id));
+
+    // Apply search filter to *availableCourses*, not `courses`
+    const filteredCourses = availableCourses.filter(course =>
         course.id.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    // const filteredCourses = courses.filter(course =>
+    //     course.id.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
 
     const handleDragEnd = (event) => {
         const { over, active } = event;
@@ -58,20 +67,41 @@ const Dashboard = (params) => {
 
         const droppedCourse = courses.find(c => c.id === active.id);
 
-        setSemesters(prev => ({
-            ...prev,
-            [over.id]: [...prev[over.id], droppedCourse]
-        }));
+        setSemesters(prev => {
+            const updated = {
+                ...prev,
+                [over.id]: [...prev[over.id], droppedCourse]
+            };
+
+            // update plan here using the newly computed semesters
+            setPlan(prevPlan => ({
+                ...prevPlan,
+                semesters: updated
+            }));
+
+            return updated; // return updated semesters to update state
+        });
+
 
         setCourses((prev) => prev.filter((c) => c.id !== active.id));
     };
 
     const handleDeleteCourse = (semesterKey, courseToDelete) => {
         // Remove course from semester
-        setSemesters(prev => ({
-            ...prev,
-            [semesterKey]: prev[semesterKey].filter(c => c.id !== courseToDelete.id)
-        }));
+        setSemesters(prev => {
+            const updated = {
+                ...prev,
+                [semesterKey]: prev[semesterKey].filter(c => c.id !== courseToDelete.id)
+            };
+
+            setPlan(prevPlan => ({
+                ...prevPlan,
+                semesters: updated
+            }));
+
+            return updated;
+        });
+
 
         // Add course back at its original position
         setCourses(prev => {
@@ -80,15 +110,20 @@ const Dashboard = (params) => {
                 c => (c.id || c.code) === (courseToDelete.id || courseToDelete.code)
             );
             // Insert the course at the found position
-                const newCourses = [...prev];
-                newCourses.splice(originalIndex, 0, courseToDelete);
-                return newCourses;
-            
+            const newCourses = [...prev];
+            newCourses.splice(originalIndex, 0, courseToDelete);
+            return newCourses;
+
         });
     };
 
     // Calculate total credits from all semesters
     const calculateTotalCredits = () => {
+
+        if (!semesters || Object.keys(semesters).length === 0) {
+            return;
+        }
+
         let total = 0;
         Object.values(semesters).forEach(semesterCourses => {
             semesterCourses.forEach(course => {
@@ -142,17 +177,17 @@ const Dashboard = (params) => {
                         </Typography>
 
                         <div className="semesters">
-                            {Object.entries(semesters).map(([semesterKey, courseList]) => {
+                            {semesters && Object.keys(semesters).length !== 0 && Object.entries(semesters).map(([semesterKey, courseList]) => {
                                 // Calculate total credits for this semester
                                 const semesterCredits = courseList.reduce((total, course) => {
                                     const credits = parseInt(course.credits);
                                     return total + credits;
                                 }, 0);
-                                
+
                                 const semesterTitle = semesterKey.replace(/(\D+)(\d+)/, (_, s, y) =>
                                     `${s.charAt(0).toUpperCase() + s.slice(1)} ${y}`
                                 );
-                                
+
                                 return (
                                     <SemesterBox
                                         key={semesterKey}

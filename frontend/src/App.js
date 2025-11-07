@@ -15,16 +15,28 @@ function App() {
 
   const { currentUser } = useContext(UserContext);
 
+  // load plan from localStorage (only on first render)
+  const [plan, setPlan] = useState(() => {
+    const saved = localStorage.getItem("userPlan");
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  // save plan to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("userPlan", JSON.stringify(plan));
+  }, [plan]);
+
+
   return (
     <Routes>
       {/* Routes WITHOUT navbar (Landing and Auth) */}
-      <Route path='/' element={<Home/>}/>
-      <Route path='auth' element={<Authentication/>}/>
+      <Route path='/' element={<Home />} />
+      <Route path='auth' element={<Authentication />} />
 
       {/* Routes WITH navbar */}
-      <Route element={<Navigation/>}>
-        <Route path='plans' element={<Plans/>}/>
-        <Route path='plans/:planId' element={<Dashboard/>}/>
+      <Route element={<Navigation plan={plan} />}>
+        <Route path='plans' element={<Plans setPlan={setPlan} />} />
+        <Route path='plans/:planId' element={<Dashboard plan={plan} setPlan={setPlan} />} />
       </Route>
     </Routes>
   );
