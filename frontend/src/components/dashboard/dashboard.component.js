@@ -102,19 +102,27 @@ const Dashboard = ({ plan, setPlan }) => {
             return updated;
         });
 
-
-        // Add course back at its original position
         setCourses(prev => {
-            // Find the original index of the course being deleted
-            const originalIndex = originalCoursesOrder.findIndex(
+            const newCourses = [...prev];
+        
+            // Check if course already exists in list (by id or code)
+            const exists = newCourses.some(
                 c => (c.id || c.code) === (courseToDelete.id || courseToDelete.code)
             );
-            // Insert the course at the found position
-            const newCourses = [...prev];
-            newCourses.splice(originalIndex, 0, courseToDelete);
+        
+            if (!exists) {
+                // Find the original index of the course being deleted
+                const originalIndex = originalCoursesOrder.findIndex(
+                    c => (c.id || c.code) === (courseToDelete.id || courseToDelete.code)
+                );
+        
+                // Insert the course at the found position
+                newCourses.splice(originalIndex, 0, courseToDelete);
+            }
+        
             return newCourses;
-
         });
+        
     };
 
     // Calculate total credits from all semesters
