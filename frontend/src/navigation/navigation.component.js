@@ -50,16 +50,11 @@ const Navigation = ({ plan }) => {
     navigate('/plans');
   }
 
-  const handleSavePlan = () => {
-    // TODO: Implement save plan functionality
-    console.log("Save plan clicked");
-    axios.put(process.env.REACT_APP_BACKEND + "/plans/" + plan.id, plan)
-      .then(res => {
-        navigate('/plans');
-      })
-      .catch(err => {
-        console.error("Failed to fetch courses", err);
-      });
+  const handleExportPlan = () => {
+    // TODO: Implement export to PDF functionality
+    console.log("Export plan clicked");
+    alert("Export to PDF coming soon!");
+    // Future: Generate and download PDF of the plan
   }
 
   return (
@@ -110,13 +105,13 @@ const Navigation = ({ plan }) => {
               </div>
             )}
 
-            {/* Right side: Save button (only on editor) + User menu */}
+            {/* Right side: Export button (only on editor) + User menu */}
             <div style={{ display: "flex", alignItems: "center", gap: 15, flex: 1, justifyContent: "flex-end" }}>
-              {/* Save Plan button - only show on plan editor */}
+              {/* Export Plan button - only show on plan editor */}
               {currentUser && isOnPlanEditor && (
                 <Button
                   variant="outlined"
-                  onClick={handleSavePlan}
+                  onClick={handleExportPlan}
                   sx={{
                     color: "white",
                     borderColor: "white",
@@ -127,7 +122,7 @@ const Navigation = ({ plan }) => {
                     }
                   }}
                 >
-                  Save Plan
+                  Export
                 </Button>
               )}
 

@@ -8,8 +8,9 @@ const getUserPlans = async (req, res) => {
     const { userId } = req.params;
 
     const snapshot = await db
+      .collection("users")
+      .doc(userId)
       .collection("plans")
-      .where("userId", "==", userId)
       .get();
 
     const plans = [];
@@ -34,12 +35,26 @@ const getUserPlans = async (req, res) => {
 
 /**
  * Get a specific plan by ID
+ * Note: Now requires userId to be passed in the request body or query params
  */
 const getPlanById = async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId } = req.query; // Get userId from query params
 
-    const doc = await db.collection("plans").doc(id).get();
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: "userId is required",
+      });
+    }
+
+    const doc = await db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id)
+      .get();
 
     if (!doc.exists) {
       return res.status(404).json({
@@ -67,7 +82,7 @@ const getPlanById = async (req, res) => {
  */
 const createPlan = async (req, res) => {
   try {
-    const { userId, name, semesters } = req.body;
+    const { userId, name, semesters, template } = req.body;
 
     if (!userId || !name) {
       return res.status(400).json({
@@ -76,27 +91,27 @@ const createPlan = async (req, res) => {
       });
     }
 
-    // Default 4-year plan structure (8 semesters)
-    const defaultSemesters = semesters || [
-      { year: 1, term: "Fall", courses: [] },
-      { year: 1, term: "Spring", courses: [] },
-      { year: 2, term: "Fall", courses: [] },
-      { year: 2, term: "Spring", courses: [] },
-      { year: 3, term: "Fall", courses: [] },
-      { year: 3, term: "Spring", courses: [] },
-      { year: 4, term: "Fall", courses: [] },
-      { year: 4, term: "Spring", courses: [] },
-    ];
+    if (!semesters) {
+      return res.status(400).json({
+        success: false,
+        error: "semesters object is required",
+      });
+    }
 
     const plan = {
-      userId,
       name,
-      semesters: defaultSemesters,
+      semesters: semesters,
+      template: template || "none",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    const docRef = await db.collection("plans").add(plan);
+    // Store in subcollection: users/{userId}/plans/{planId}
+    const docRef = await db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .add(plan);
 
     res.status(201).json({
       success: true,
@@ -119,9 +134,22 @@ const createPlan = async (req, res) => {
 const updatePlan = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+    const { userId, ...updates } = req.body;
 
-    const doc = await db.collection("plans").doc(id).get();
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: "userId is required",
+      });
+    }
+
+    const planRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id);
+
+    const doc = await planRef.get();
 
     if (!doc.exists) {
       return res.status(404).json({
@@ -130,15 +158,14 @@ const updatePlan = async (req, res) => {
       });
     }
 
-    // Don't allow userId or createdAt changes
-    delete updates.userId;
+    // Don't allow createdAt changes
     delete updates.createdAt;
 
     updates.updatedAt = new Date().toISOString();
 
-    await db.collection("plans").doc(id).update(updates);
+    await planRef.update(updates);
 
-    const updatedDoc = await db.collection("plans").doc(id).get();
+    const updatedDoc = await planRef.get();
 
     res.json({
       success: true,
@@ -161,8 +188,22 @@ const updatePlan = async (req, res) => {
 const deletePlan = async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId } = req.body;
 
-    const doc = await db.collection("plans").doc(id).get();
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: "userId is required",
+      });
+    }
+
+    const planRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id);
+
+    const doc = await planRef.get();
 
     if (!doc.exists) {
       return res.status(404).json({
@@ -171,7 +212,7 @@ const deletePlan = async (req, res) => {
       });
     }
 
-    await db.collection("plans").doc(id).delete();
+    await planRef.delete();
 
     res.json({
       success: true,
@@ -193,17 +234,23 @@ const deletePlan = async (req, res) => {
 const addCourseToPlan = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseCode, year, term } = req.body;
+    const { userId, courseCode, year, term } = req.body;
 
-    if (!courseCode || year === undefined || !term) {
+    if (!userId || !courseCode || year === undefined || !term) {
       return res.status(400).json({
         success: false,
         error:
-          "Missing required fields: courseCode, year, and term are required",
+          "Missing required fields: userId, courseCode, year, and term are required",
       });
     }
 
-    const planDoc = await db.collection("plans").doc(id).get();
+    const planRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id);
+
+    const planDoc = await planRef.get();
 
     if (!planDoc.exists) {
       return res.status(404).json({
@@ -248,12 +295,12 @@ const addCourseToPlan = async (req, res) => {
     // Add course to semester
     semesters[semesterIndex].courses.push(courseCode);
 
-    await db.collection("plans").doc(id).update({
+    await planRef.update({
       semesters,
       updatedAt: new Date().toISOString(),
     });
 
-    const updatedDoc = await db.collection("plans").doc(id).get();
+    const updatedDoc = await planRef.get();
 
     res.json({
       success: true,
@@ -276,17 +323,23 @@ const addCourseToPlan = async (req, res) => {
 const removeCourseFromPlan = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseCode, year, term } = req.body;
+    const { userId, courseCode, year, term } = req.body;
 
-    if (!courseCode || year === undefined || !term) {
+    if (!userId || !courseCode || year === undefined || !term) {
       return res.status(400).json({
         success: false,
         error:
-          "Missing required fields: courseCode, year, and term are required",
+          "Missing required fields: userId, courseCode, year, and term are required",
       });
     }
 
-    const planDoc = await db.collection("plans").doc(id).get();
+    const planRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id);
+
+    const planDoc = await planRef.get();
 
     if (!planDoc.exists) {
       return res.status(404).json({
@@ -315,12 +368,12 @@ const removeCourseFromPlan = async (req, res) => {
       (code) => code !== courseCode
     );
 
-    await db.collection("plans").doc(id).update({
+    await planRef.update({
       semesters,
       updatedAt: new Date().toISOString(),
     });
 
-    const updatedDoc = await db.collection("plans").doc(id).get();
+    const updatedDoc = await planRef.get();
 
     res.json({
       success: true,
@@ -343,9 +396,10 @@ const removeCourseFromPlan = async (req, res) => {
 const moveCourseBetweenSemesters = async (req, res) => {
   try {
     const { id } = req.params;
-    const { courseCode, fromYear, fromTerm, toYear, toTerm } = req.body;
+    const { userId, courseCode, fromYear, fromTerm, toYear, toTerm } = req.body;
 
     if (
+      !userId ||
       !courseCode ||
       fromYear === undefined ||
       !fromTerm ||
@@ -358,7 +412,13 @@ const moveCourseBetweenSemesters = async (req, res) => {
       });
     }
 
-    const planDoc = await db.collection("plans").doc(id).get();
+    const planRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id);
+
+    const planDoc = await planRef.get();
 
     if (!planDoc.exists) {
       return res.status(404).json({
@@ -395,12 +455,12 @@ const moveCourseBetweenSemesters = async (req, res) => {
       semesters[toIndex].courses.push(courseCode);
     }
 
-    await db.collection("plans").doc(id).update({
+    await planRef.update({
       semesters,
       updatedAt: new Date().toISOString(),
     });
 
-    const updatedDoc = await db.collection("plans").doc(id).get();
+    const updatedDoc = await planRef.get();
 
     res.json({
       success: true,
@@ -423,8 +483,22 @@ const moveCourseBetweenSemesters = async (req, res) => {
 const validatePlan = async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId } = req.query;
 
-    const planDoc = await db.collection("plans").doc(id).get();
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: "userId is required",
+      });
+    }
+
+    const planRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("plans")
+      .doc(id);
+
+    const planDoc = await planRef.get();
 
     if (!planDoc.exists) {
       return res.status(404).json({

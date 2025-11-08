@@ -1,53 +1,252 @@
 /* Container spacing */
 .plans-container {
-    padding: 0;
-    background-color: #f9f9f9;
-    min-height: calc(100vh - 64px); /* Full height minus navbar */
-    /* height: calc(100vh - 64px); */
-    height: auto;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding-top: 30px;
+  padding: 0;
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 64px); /* Full height minus navbar */
+  height: auto;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding-top: 30px;
 }
 
 /* Card styling */
 .plans-card {
-    padding: 24px;
-    width: 70%;
-    justify-self: center;
-    border-radius: 12px;
-    border-top: 6px solid #861F41;
+  padding: 32px;
+  width: 80%;
+  justify-self: center;
+  border-radius: 12px;
+  border-top: 6px solid #861f41;
+  margin: 0 auto;
 }
 
-/* Row with title + add button */
-.header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Title styling */
+.plans-title {
+  margin-bottom: 24px !important;
+  color: #861f41;
 }
 
-/* Add button styling */
-.add-plan-btn {
-    border: solid 2px #600020;
-    color: #800000;
-    transition: transform 0.2s ease;
+/* Gray box container with add button and plans grid */
+.plans-grid-container {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  min-height: 200px;
 }
 
-.add-plan-btn:hover {
-    transform: scale(1.15);
-    color: #600020;
+/* Add plan section - left side */
+.add-plan-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  flex-shrink: 0;
+  padding-top: 8px;
 }
 
-/* Description */
-.plans-description {
-    margin-bottom: 24px;
+/* Large add button */
+.add-plan-btn-large {
+  width: 100px !important;
+  height: 100px !important;
+  border: 3px solid #630031 !important;
+  border-radius: 12px !important;
+  background-color: #ffffff !important;
+  transition: all 0.3s ease !important;
 }
 
-/* Test button styling */
-.test-plan-btn {
-    background-color: #800000 !important;
+.add-plan-btn-large:hover {
+  background-color: #630031 !important;
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(99, 0, 49, 0.3);
 }
 
-.test-plan-btn:hover {
-    background-color: #600020 !important;
+.add-plan-btn-large:hover .add-icon-large {
+  color: #ffffff;
+}
+
+/* Large add icon */
+.add-icon-large {
+  font-size: 52px !important;
+  color: #630031;
+  transition: color 0.3s ease;
+}
+
+/* Text under add button */
+.add-plan-text {
+  color: #630031;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  text-align: center;
+}
+
+/* Plans grid - right side */
+.plans-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Scrollbar styling for grid */
+.plans-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.plans-grid::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.plans-grid::-webkit-scrollbar-thumb {
+  background: #630031;
+  border-radius: 4px;
+}
+
+.plans-grid::-webkit-scrollbar-thumb:hover {
+  background: #861f41;
+}
+
+/* Individual plan card in grid */
+.plan-card {
+  padding: 16px;
+  border-radius: 8px;
+  border-top: 4px solid #630031;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(99, 0, 49, 0.25);
+  border-top-color: #e87722;
+}
+
+/* Plan card header with name and delete button */
+.plan-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* Plan name in card */
+.plan-name {
+  color: #630031 !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+}
+
+/* Delete plan button */
+.delete-plan-btn {
+  color: #666 !important;
+  transition: all 0.2s ease !important;
+  opacity: 0.6;
+  padding: 4px !important;
+}
+
+.delete-plan-btn:hover {
+  color: #dc3545 !important;
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* No plans text */
+.no-plans-text {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Delete button styling */
+.modal-delete-btn {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  padding: 8px 24px !important;
+}
+
+.modal-delete-btn:hover {
+  background-color: #c82333 !important;
+}
+
+/* Modal Styling */
+.create-plan-modal {
+  border-radius: 12px !important;
+}
+
+.modal-title {
+  background-color: #630031 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  padding: 20px 24px !important;
+}
+
+/* Delete Modal Title */
+.delete-modal-title {
+  color: #dc3545 !important;
+  font-weight: 600 !important;
+  padding: 20px 24px !important;
+}
+
+.modal-content {
+  padding: 24px !important;
+  padding-top: 20px !important;
+}
+
+.modal-input {
+  margin-top: 16px !important;
+  margin-bottom: 8px !important;
+}
+
+.modal-input
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #630031 !important;
+}
+
+.modal-input .MuiInputLabel-root.Mui-focused {
+  color: #630031 !important;
+}
+
+.modal-actions {
+  padding: 16px 24px !important;
+  gap: 12px;
+}
+
+.modal-cancel-btn {
+  color: #666 !important;
+}
+
+.modal-cancel-btn:hover {
+  background-color: #f5f5f5 !important;
+}
+
+.modal-create-btn {
+  background-color: #630031 !important;
+  color: #ffffff !important;
+  padding: 8px 24px !important;
+}
+
+.modal-create-btn:hover {
+  background-color: #861f41 !important;
+}
+
+.modal-create-btn:disabled {
+  background-color: #cccccc !important;
+  color: #999999 !important;
 }

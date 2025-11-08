@@ -1,5 +1,5 @@
 import "./dashboard.styles.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Course from "../course/course.component";
 import SemesterBox from "../semester/semester.component";
 import axios from "axios";
@@ -17,8 +17,10 @@ import {
   IconButton,
 } from "@mui/material";
 import { ExpandMore, Close } from "@mui/icons-material";
+import { UserContext } from "../../contexts/user.content";
 
 const Dashboard = ({ plan, setPlan }) => {
+  const { currentUser } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [courses, setCourses] = useState([]);
   const [activeCourse, setActiveCourse] = useState(null);
@@ -29,6 +31,29 @@ const Dashboard = ({ plan, setPlan }) => {
   useEffect(() => {
     setSemesters(plan.semesters || {});
   }, [plan.semesters]);
+
+  // Auto-save immediately when semesters change
+  useEffect(() => {
+    // Don't auto-save if plan doesn't have an ID yet
+    if (!plan.id || !currentUser) return;
+
+    // Save immediately
+    const savePlan = async () => {
+      try {
+        await axios.put(
+          `${process.env.REACT_APP_BACKEND}/plans/${plan.id}`,
+          {
+            userId: currentUser.uid,
+            semesters: semesters,
+          }
+        );
+      } catch (error) {
+        console.error("Error auto-saving plan:", error);
+      }
+    };
+
+    savePlan();
+  }, [semesters, plan.id, currentUser]);
 
   useEffect(() => {
     if (courses.length > 0) {
@@ -396,9 +421,11 @@ const Dashboard = ({ plan, setPlan }) => {
         onClose={() => setProgressModalOpen(false)}
         maxWidth="md"
         fullWidth
-        PaperProps={{
-          sx: {
-            borderRadius: 2,
+        slotProps={{
+          paper: {
+            sx: {
+              borderRadius: 2,
+            },
           },
         }}
       >
