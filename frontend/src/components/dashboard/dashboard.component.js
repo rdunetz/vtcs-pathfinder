@@ -381,7 +381,7 @@ const Dashboard = ({ plan, setPlan }) => {
                         {violation.course}
                       </Typography>
                       <Typography variant="caption" display="block">
-                        Missing: {violation.missingPrerequisites.join(", ")}
+                        Missing: {violation.missingPrerequisites}
                       </Typography>
                     </Alert>
                   ))}

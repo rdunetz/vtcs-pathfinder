@@ -57,6 +57,11 @@ export const getCompletedCoursesBysemester = (semesters, targetSemester) => {
 
 /**
  * Check if a course's prerequisites are met
+ * Supports both AND and OR logic:
+ * - Simple array ["CS1114", "CS2064"] = ALL required (AND)
+ * - Array of arrays [["CS1114", "CS2064", "ECE2514"]] = at least ONE from group (OR)
+ * - Mixed [["CS1114"], ["CS2064", "CS2505"]] = CS1114 AND (CS2064 OR CS2505)
+ *
  * @param {Object} course - Course object with prerequisites array
  * @param {string[]} completedCourses - Array of completed course codes
  * @returns {Object} { canEnroll: boolean, missingPrerequisites: string[] }
@@ -66,13 +71,48 @@ export const checkPrerequisites = (course, completedCourses) => {
     return { canEnroll: true, missingPrerequisites: [] };
   }
 
-  const missingPrerequisites = course.prerequisites.filter(
-    (prereq) => !completedCourses.includes(prereq)
-  );
+  const prereqs = course.prerequisites;
+
+  // Check if it's the new format (array of arrays) or old format (simple array)
+  const isGroupFormat = Array.isArray(prereqs[0]);
+
+  if (!isGroupFormat) {
+    // Old format: simple array - ALL required (AND logic)
+    const missingPrerequisites = prereqs.filter(
+      (prereq) => !completedCourses.includes(prereq)
+    );
+
+    return {
+      canEnroll: missingPrerequisites.length === 0,
+      missingPrerequisites,
+    };
+  }
+
+  // New format: array of arrays
+  // Each inner array is an OR group, outer array is AND
+  const missingGroups = [];
+  let canEnroll = true;
+
+  for (const group of prereqs) {
+    // Check if at least ONE course in this group is completed
+    const hasCompletedOne = group.some((prereq) =>
+      completedCourses.includes(prereq)
+    );
+
+    if (!hasCompletedOne) {
+      // This entire group is missing
+      canEnroll = false;
+      missingGroups.push(group);
+    }
+  }
+
+  // Flatten missing groups for display
+  const missingPrerequisites = missingGroups.flat();
 
   return {
-    canEnroll: missingPrerequisites.length === 0,
+    canEnroll,
     missingPrerequisites,
+    missingGroups, // Include groups for better error messages
   };
 };
 
@@ -88,7 +128,7 @@ export const canAddCourseToSemester = (course, targetSemester, semesters) => {
     semesters,
     targetSemester
   );
-  const { canEnroll, missingPrerequisites } = checkPrerequisites(
+  const { canEnroll, missingPrerequisites, missingGroups } = checkPrerequisites(
     course,
     completedCourses
   );
@@ -101,9 +141,23 @@ export const canAddCourseToSemester = (course, targetSemester, semesters) => {
     };
   }
 
+  // Build a better error message for OR groups
+  let reason;
+  if (missingGroups && missingGroups.length > 0) {
+    const groupMessages = missingGroups.map((group) => {
+      if (group.length === 1) {
+        return group[0];
+      }
+      return `(${group.join(" OR ")})`;
+    });
+    reason = `Missing prerequisites: ${groupMessages.join(" AND ")}`;
+  } else {
+    reason = `Missing prerequisites: ${missingPrerequisites.join(", ")}`;
+  }
+
   return {
     allowed: false,
-    reason: `Missing prerequisites: ${missingPrerequisites.join(", ")}`,
+    reason,
     missingPrerequisites,
   };
 };
@@ -138,17 +192,29 @@ export const validatePlanPrerequisites = (semesters) => {
     );
 
     courses.forEach((course) => {
-      const { canEnroll, missingPrerequisites } = checkPrerequisites(
-        course,
-        completedCourses
-      );
+      const { canEnroll, missingPrerequisites, missingGroups } =
+        checkPrerequisites(course, completedCourses);
 
       if (!canEnroll) {
+        // Format the missing prerequisites message for OR groups
+        let missingMessage;
+        if (missingGroups && missingGroups.length > 0) {
+          const groupMessages = missingGroups.map((group) => {
+            if (group.length === 1) {
+              return group[0];
+            }
+            return `(${group.join(" OR ")})`;
+          });
+          missingMessage = groupMessages.join(" AND ");
+        } else {
+          missingMessage = missingPrerequisites.join(", ");
+        }
+
         violations.push({
           semester: semesterKey,
           course: course.id || course.code,
           courseName: course.name || course.title,
-          missingPrerequisites,
+          missingPrerequisites: missingMessage,
         });
       }
     });
