@@ -325,13 +325,14 @@ from enum import Enum
 
 # Try package import first; fallback to sys.path injection
 try:
-    from pythonTimetables.timeTablesVTT import searchID, searchCRNData
+    from pythonTimetables.timeTablesVTT import searchIDData, searchCRNData
 except ModuleNotFoundError:
     base = os.getcwd()
     pkg = os.path.join(base, "pythonTimetables")
     if pkg not in sys.path:
         sys.path.insert(0, pkg)
-    from timeTablesVTT import searchID, searchCRNData
+    from timeTablesVTT import searchIDData, searchCRNData
+
 
 def to_jsonable(obj):
     # Normalize float NaN/Inf from pandas to None to keep strict JSON
@@ -354,10 +355,11 @@ def to_jsonable(obj):
     # Primitives/other -> string or unchanged
     return obj
 
+
 args = json.loads(sys.stdin.read())
 try:
-    if "${funcName}" == "searchID":
-        res = searchID(args["year"], args["semester"], args["courseId"], True)
+    if "${funcName}" == "searchIDData":
+        res = searchIDData(args["courseId"], args.get("fetch_banner", True))
     elif "${funcName}" == "searchCRNData":
         res = searchCRNData(args["year"], args["semester"], args["crn"])
     else:
@@ -394,16 +396,16 @@ except Exception as e:
   });
 }
 
-// GET /api/courses/search/by-id?year=2026&semester=Fall&courseId=CS-2114
+// GET /api/courses/search/by-id?courseId=CS-2114
 const searchCourseID = async (req, res) => {
   try {
-    let { year, semester, courseId } = req.query;
-    if (!year || !semester || !courseId) {
-      return res.status(400).json({ success: false, error: "year, semester, and courseId are required" });
+    let { courseId } = req.query;
+    if (!courseId) {
+      return res.status(400).json({ success: false, error: "courseId is required" });
     }
     // Normalize courseId like "CS2114" or "CS-2114"
     courseId = String(courseId).trim();
-    const data = await callTimetablePython("searchID", { year, semester, courseId });
+    const data = await callTimetablePython("searchIDData", { courseId });
     if (data?.error) return res.status(502).json({ success: false, error: data.error });
     return res.json({ success: true, data });
   } catch (error) {
@@ -412,7 +414,6 @@ const searchCourseID = async (req, res) => {
   }
 };
 
-// GET /api/courses/search/by-crn?year=2026&semester=Fall&crn=91234
 // GET /api/courses/search/by-crn?year=2026&semester=Fall&crn=91234
 const searchCourseCRN = async (req, res) => {
   try {

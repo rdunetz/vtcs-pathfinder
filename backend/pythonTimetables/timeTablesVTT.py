@@ -696,3 +696,163 @@ def searchID(year: str, semester_str: str, course_id: str, fetch_banner: bool = 
         "pathways": pathways,
         "sections": section_entries,
     }
+
+
+from datetime import datetime
+
+def _get_next_semester() -> tuple[str, str]:
+    """
+    Determine the next semester based on current date.
+    
+    Fall semester: typically August-December
+    Spring semester: typically January-May
+    
+    Returns:
+        tuple: (year, semester_string) for the next semester
+    """
+    now = datetime.now()
+    current_month = now.month
+    current_year = now.year
+    
+    # If current date is in Fall semester (August-December), return Spring of next year
+    if 8 <= current_month <= 12:
+        return str(current_year + 1), "Spring"
+    # If current date is in Spring semester (January-May) or Summer (June-July), return Fall of current year
+    else:
+        return str(current_year), "Fall"
+
+
+def searchIDData(course_id: str, fetch_banner: bool = True) -> dict:
+    """
+    Optimized:
+      - Reuses a persistent requests.Session.
+      - Avoids repeated parsing work via minimal changes.
+      - Caches Banner comments per course/CRN.
+      - Optional fetch_banner to skip Banner call when not needed.
+      - Returns only core course metadata without section details.
+      - Automatically determines next semester based on current date.
+
+    Args:
+        course_id: Course identifier (e.g., 'CS3414' or 'CS-3414')
+        fetch_banner: Whether to fetch detailed metadata from Banner
+
+    Returns:
+      dict with keys:
+        year, semester, courseId, subject, code, name, creditHours,
+        prerequisites, catalogDescription, comments, pathways
+    """
+    # Automatically determine next semester
+    year, semester_str = _get_next_semester()
+    
+    sem = parse_semester(semester_str)
+    m = re.fullmatch(r'([A-Za-z]+)\s*[-:]?\s*(\d{4})', course_id.strip())
+    if not m:
+        raise ValueError(f"Invalid course_id: {course_id!r}. Expected like 'CS3414' or 'CS-3414'.")
+    subject, code = m.group(1).upper(), m.group(2)
+
+    # Ensure timetable requests use the pooled session-backed request helper
+    global _make_request
+    _make_request = _make_request_with_session
+
+    sections = search_timetable(
+        year=year,
+        semester=sem,
+        subject=subject,
+        code=code,
+        campus=Campus.BLACKSBURG,
+        status=Status.ALL,
+        modality=Modality.ALL,
+        section_type=SectionType.ALL,
+    )
+
+    if not sections:
+        return {
+            "year": year,
+            "semester": semester_str,
+            "courseId": course_id,
+            "subject": subject,
+            "code": f"{subject}{code}",
+            "name": None,
+            "creditHours": None,
+            "prerequisites": None if fetch_banner else None,
+            "catalogDescription": None if fetch_banner else None,
+            "comments": None if fetch_banner else None,
+            "pathways": [],
+        }
+
+    first = sections[0]
+
+    # Conditionally fetch Banner metadata once (cached)
+    if fetch_banner:
+        bc = _banner_comments_cached(
+            first.get_crn(),
+            first.get_year(),
+            first.get_semester().value,
+            first.get_subject(),
+            first.get_code()
+        )
+        prereqs = _parse_prerequisites(bc["prerequisites"])
+        catalog_desc = bc["catalogDescription"]
+        comments = bc["comments"]
+    else:
+        prereqs = None
+        catalog_desc = None
+        comments = None
+
+    # Pathways for this course (across its listings)
+    pathways = _get_pathways_for_course(year, sem, subject, code)
+
+    return {
+        "year": year,
+        "semester": semester_str,
+        "courseId": course_id,
+        "subject": subject,
+        "code": f"{first.get_subject()}{first.get_code()}",
+        "name": first.get_name(),
+        "creditHours": first.get_credit_hours(),
+        "prerequisites": prereqs,
+        "catalogDescription": catalog_desc,
+        "comments": comments,
+        "pathways": pathways,
+    }
+
+import re
+from typing import List
+
+def _parse_prerequisites(prereq_string: str) -> List[List[str]]:
+    """
+    Parse a prerequisite string and extract course alternatives.
+    
+    Args:
+        prereq_string: A string formatted like:
+            "CS 1944 (MIN grade of P), (CS 2114 (MIN grade of C) or ECE 3514) (MIN grade of C), ..."
+    
+    Returns:
+        A list of lists, where each inner list contains alternative course codes.
+        Single courses are returned as single-item lists.
+        Example: [['CS1944'], ['CS2114', 'ECE3514'], ['COMM2004', 'COMM2014']]
+    """
+    # Remove the "Prerequisites Enforced" suffix if present
+    prereq_string = re.sub(r'\s*Prerequisites Enforced:.*$', '', prereq_string)
+    
+    # Split by comma to get individual prerequisite groups
+    groups = prereq_string.split(',')
+    
+    result = []
+    
+    for group in groups:
+        group = group.strip()
+        if not group:
+            continue
+            
+        # Extract all course codes (subject + number) from the group
+        course_pattern = r'([A-Z]+)\s+(\d+)'
+        courses = re.findall(course_pattern, group)
+        
+        # Combine subject and number, removing spaces
+        course_list = [f"{subject}{number}" for subject, number in courses]
+        
+        if course_list:
+            result.append(course_list)
+    
+    return result
