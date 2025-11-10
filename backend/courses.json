@@ -126,9 +126,11 @@
       1
     ],
     "prerequisites": [
-      "CS1114",
-      "CS2064",
-      "ECE2514"
+      [
+        "CS1114",
+        "CS2064",
+        "ECE2514"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -156,7 +158,9 @@
       3
     ],
     "prerequisites": [
-      "CS1064"
+      [
+        "CS1064"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -184,12 +188,16 @@
       3
     ],
     "prerequisites": [
-      "MATH1205",
-      "MATH1225",
-      "MATH1526",
-      "CS1114",
-      "CS2064",
-      "ECE2514"
+      [
+        "MATH1205",
+        "MATH1225",
+        "MATH1526"
+      ],
+      [
+        "CS1114",
+        "CS2064",
+        "ECE2514"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -217,8 +225,10 @@
       3
     ],
     "prerequisites": [
-      "CS1114",
-      "CS2064"
+      [
+        "CS1114",
+        "CS2064"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -288,7 +298,9 @@
       1
     ],
     "prerequisites": [
-      "CS2114"
+      [
+        "CS2114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -316,7 +328,9 @@
       3
     ],
     "prerequisites": [
-      "CS2114"
+      [
+        "CS2114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -344,12 +358,18 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "ECE3514",
-      "CS2505",
-      "ECE2564",
-      "MATH2534",
-      "MATH3034"
+      [
+        "CS2114",
+        "ECE3514"
+      ],
+      [
+        "CS2505",
+        "ECE2564"
+      ],
+      [
+        "MATH2534",
+        "MATH3034"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -448,12 +468,18 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "ECE3514",
-      "CS2505",
-      "ECE2564",
-      "MATH2534",
-      "MATH3034"
+      [
+        "CS2114",
+        "ECE3514"
+      ],
+      [
+        "CS2505",
+        "ECE2564"
+      ],
+      [
+        "MATH2534",
+        "MATH3034"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -481,10 +507,16 @@
       3
     ],
     "prerequisites": [
-      "CS2506",
-      "CS2114",
-      "ECE2564",
-      "ECE3574"
+      [
+        "CS2506"
+      ],
+      [
+        "CS2114",
+        "ECE2564"
+      ],
+      [
+        "ECE3574"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -512,10 +544,16 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "CS2506",
-      "ECE2534",
-      "ECE3514"
+      [
+        "CS2114"
+      ],
+      [
+        "CS2506",
+        "ECE2534"
+      ],
+      [
+        "ECE3514"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -543,7 +581,9 @@
       3
     ],
     "prerequisites": [
-      "CS3114"
+      [
+        "CS3114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -587,14 +627,25 @@
       3
     ],
     "prerequisites": [
-      "CS1044",
-      "CS1705",
-      "CS1114",
-      "CS1124",
-      "CMDA2005",
-      "CMDA2006",
-      "MATH2214",
-      "MATH2204"
+      [
+        "CS1044",
+        "CS1705",
+        "CS1114",
+        "CS1124"
+      ],
+      [
+        "MATH2406",
+        "CMDA2005"
+      ],
+      [
+        "CMDA2006",
+        "MATH2214",
+        "MATH2214"
+      ],
+      [
+        "MATH2204",
+        "MATH2204"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -622,11 +673,17 @@
       3
     ],
     "prerequisites": [
-      "CS1944",
-      "CS2114",
-      "ECE3514",
-      "COMM2004",
-      "COMM2014"
+      [
+        "CS1944"
+      ],
+      [
+        "CS2114",
+        "ECE3514"
+      ],
+      [
+        "COMM2004",
+        "COMM2014"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -654,7 +711,9 @@
       3
     ],
     "prerequisites": [
-      "CS2114"
+      [
+        "CS2114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -682,17 +741,25 @@
       3
     ],
     "prerequisites": [
-      "CS1114",
-      "CS1044",
-      "CS1054",
-      "CS1064",
-      "MATH2204",
-      "CMDA2005",
-      "STAT3006",
-      "STAT4105",
-      "STAT4705",
-      "STAT4714",
-      "CMDA2006"
+      [
+        "CS1114",
+        "CS1044",
+        "CS1054",
+        "CS1064"
+      ],
+      [
+        "MATH2204",
+        "MATH2204",
+        "MATH2406",
+        "CMDA2005"
+      ],
+      [
+        "STAT3006",
+        "STAT4105",
+        "STAT4705",
+        "STAT4714",
+        "CMDA2006"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -720,7 +787,9 @@
       3
     ],
     "prerequisites": [
-      "CS2114"
+      [
+        "CS2114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -748,8 +817,10 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "ECE3514"
+      [
+        "CS2114",
+        "ECE3514"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -777,10 +848,12 @@
       3
     ],
     "prerequisites": [
-      "CS1114",
-      "CS1044",
-      "CS1054",
-      "CS1064"
+      [
+        "CS1114",
+        "CS1044",
+        "CS1054",
+        "CS1064"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -808,12 +881,18 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "ECE3514",
-      "MATH1114",
-      "MATH2114",
-      "MATH1224",
-      "MATH2204"
+      [
+        "CS2114",
+        "ECE3514"
+      ],
+      [
+        "MATH1114",
+        "MATH2114"
+      ],
+      [
+        "MATH1224",
+        "MATH2204"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -841,8 +920,10 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "ECE3514"
+      [
+        "CS2114",
+        "ECE3514"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -981,8 +1062,12 @@
       3
     ],
     "prerequisites": [
-      "CS2506",
-      "CS3114"
+      [
+        "CS2506"
+      ],
+      [
+        "CS3114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1010,9 +1095,13 @@
       3
     ],
     "prerequisites": [
-      "CS3114",
-      "MATH3034",
-      "MATH3134"
+      [
+        "CS3114"
+      ],
+      [
+        "MATH3034",
+        "MATH3134"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1040,8 +1129,10 @@
       3
     ],
     "prerequisites": [
-      "MATH3134",
-      "MATH3034"
+      [
+        "MATH3134",
+        "MATH3034"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1085,7 +1176,10 @@
       3
     ],
     "prerequisites": [
-      "MATH2114"
+      [
+        "MATH2114",
+        "MATH2114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1129,9 +1223,11 @@
       3
     ],
     "prerequisites": [
-      "PSCI2164",
-      "BIT2164",
-      "CS2164"
+      [
+        "PSCI2164",
+        "BIT2164",
+        "CS2164"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1159,7 +1255,9 @@
       3
     ],
     "prerequisites": [
-      "CS3744"
+      [
+        "CS3744"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1187,8 +1285,10 @@
       3
     ],
     "prerequisites": [
-      "ECE3574",
-      "CS3114"
+      [
+        "ECE3574",
+        "CS3114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1248,9 +1348,13 @@
       3
     ],
     "prerequisites": [
-      "CS3214",
-      "ECE3504",
-      "ECE3574"
+      [
+        "CS3214",
+        "ECE3504"
+      ],
+      [
+        "ECE3574"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1342,9 +1446,11 @@
       3
     ],
     "prerequisites": [
-      "ECE2500",
-      "CS3214",
-      "ECE3504"
+      [
+        "ECE2500",
+        "CS3214",
+        "ECE3504"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1372,7 +1478,9 @@
       3
     ],
     "prerequisites": [
-      "CS3114"
+      [
+        "CS3114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1448,13 +1556,17 @@
       3
     ],
     "prerequisites": [
-      "STAT3654",
-      "CMDA3654",
-      "CS3654",
-      "CMDA2006",
-      "STAT3104",
-      "STAT4106",
-      "STAT4706"
+      [
+        "STAT3654",
+        "CMDA3654",
+        "CS3654"
+      ],
+      [
+        "CMDA2006",
+        "STAT3104",
+        "STAT4106",
+        "STAT4706"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1514,11 +1626,17 @@
       3
     ],
     "prerequisites": [
-      "CS3724",
-      "HIST2604",
-      "SOC2604",
-      "STS2604",
-      "COMM2084"
+      [
+        "CS3724"
+      ],
+      [
+        "HIST2604",
+        "SOC2604",
+        "STS2604"
+      ],
+      [
+        "COMM2084"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1562,7 +1680,9 @@
       3
     ],
     "prerequisites": [
-      "CS3114"
+      [
+        "CS3114"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1590,14 +1710,18 @@
       3
     ],
     "prerequisites": [
-      "ECE3514",
-      "CS2114",
-      "STAT3704",
-      "STAT4105",
-      "STAT4604",
-      "STAT4705",
-      "STAT4714",
-      "CMDA2006"
+      [
+        "ECE3514",
+        "CS2114"
+      ],
+      [
+        "STAT3704",
+        "STAT4105",
+        "STAT4604",
+        "STAT4705",
+        "STAT4714",
+        "CMDA2006"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1641,8 +1765,12 @@
       3
     ],
     "prerequisites": [
-      "CS2114",
-      "CS2505"
+      [
+        "CS2114"
+      ],
+      [
+        "CS2505"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1670,7 +1798,9 @@
       1
     ],
     "prerequisites": [
-      "CS3604"
+      [
+        "CS3604"
+      ]
     ],
     "corequisites": [],
     "category": "CS",
@@ -1813,7 +1943,14 @@
       4
     ],
     "prerequisites": [
-      "MATH1214"
+      [
+        "AB4",
+        "SUB4",
+        "AB4",
+        "BC3",
+        "BC3",
+        "MATH1214"
+      ]
     ],
     "corequisites": [],
     "category": "MATH",
@@ -1841,7 +1978,9 @@
       4
     ],
     "prerequisites": [
-      "MATH1225"
+      [
+        "MATH1225"
+      ]
     ],
     "corequisites": [],
     "category": "MATH",
@@ -1869,8 +2008,14 @@
       3
     ],
     "prerequisites": [
-      "MATH2114",
-      "MATH1226"
+      [
+        "MATH2114",
+        "MATH2114",
+        "MATH2405"
+      ],
+      [
+        "MATH1226"
+      ]
     ],
     "corequisites": [],
     "category": "MATH",
@@ -1898,10 +2043,12 @@
       3
     ],
     "prerequisites": [
-      "CS1114",
-      "ECE1574",
-      "ECE1004",
-      "CS2064"
+      [
+        "CS1114",
+        "ECE1574",
+        "ECE1004",
+        "CS2064"
+      ]
     ],
     "corequisites": [],
     "category": "MATH",
@@ -1929,9 +2076,14 @@
       2
     ],
     "prerequisites": [
-      "MATH2224",
-      "MATH2204",
-      "CMDA2005"
+      [
+        "MATH2224",
+        "MATH2224",
+        "MATH2204",
+        "MATH2204",
+        "MATH2406",
+        "CMDA2005"
+      ]
     ],
     "corequisites": [],
     "category": "STAT",
@@ -1959,7 +2111,9 @@
       3
     ],
     "prerequisites": [
-      "MATH1226"
+      [
+        "MATH1226"
+      ]
     ],
     "corequisites": [],
     "category": "MATH",

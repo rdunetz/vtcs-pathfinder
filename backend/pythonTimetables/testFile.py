@@ -59,7 +59,7 @@ courses = search_timetable(
 
 print("="*100)
 
-dict1 = searchID("2026", "Spring", "CS4944")
+dict1 = searchID("2026", "Spring", "CS3604")
 print(dict1)
 if not dict1["sections"]:
     print("No sections found.")
@@ -67,10 +67,10 @@ else:
     # Print top-level once
     print(f"{dict1['code']} - {dict1['name']}")
     print(f"Credits: {dict1['creditHours']}")
-    print(f"Prerequisites: {dict1['prerequisites']}")
+    print(f"\n\nPrerequisites: {dict1['prerequisites']}\n\n")
     print(f"Description: {dict1['catalogDescription']}")
-    print("Sections:")
-    for sec in dict1["sections"]:
-        print(f"  CRN: {sec['crn']}, Type: {sec['type']}, Modality: {sec['modality']}, Instructor: {sec['instructor']}, Capacity: {sec['capacity']}")
-        for mtg in sec["schedule"]:
-            print(f"    {mtg['day']}: {mtg['start']}–{mtg['end']} @ {mtg['location']}")
+
+    
+dict2 = searchIDData("CS2506")
+
+print(f'\n====\n{dict2["prerequisites"]}')
