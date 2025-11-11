@@ -1,18 +1,27 @@
 [
   {
-    "code": "CS1014",
-    "name": "Intro Computational Thinking",
+    "code": "MATH1225",
+    "name": "Calculus of a Single Variable",
     "credits": [
-      3
+      4
     ],
-    "prerequisites": [],
+    "prerequisites": [
+      [
+        "AB4",
+        "SUB4",
+        "AB4",
+        "BC3",
+        "BC3",
+        "MATH1214"
+      ]
+    ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core Mathematics",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "An exploration of basic ideas of computational thinking focusing on the perspectives, thought processes, and skills that underlie computational approaches to problem formulation and problem solving. Applications of computational tools to investigate complex, large-scale problems in a variety of knowledge domains. Basic introduction to algorithms and a practical programming language. Examination of the societal and ethical implications of computational systems.",
+    "description": "1225-1226: CALCULUS OF A SINGLE VARIABLE Quantitative and computational thinking to address relevant intercultural and global issues. Unified calculus course covering techniques of differential and integral calculus for functions of one variable. Constitutes the standard first-year mathematics courses for science and engineering. 1225: limits, continuity, differentiation, transcendental functions, applications of differentiation, introduction to integration. Assumes 2 units of high school algebra, 1 unit of geometry, 1/2 unit each of trigonometry and precalculus, and placement by Math Dept. 1226: techniques and applications of integration, trapezoidal and Simpson’s rules, improper integrals, sequences and series, power series, parametric curves and polar coordinates, software-based techniques. A student can earn credit for at most one of 1025 and 1225. A student can earn credit for at most one of 1525 and 1225. A student can earn credit for at most one of 1026 and 1226. Pre: Grade of at least C- in 1225 for 1226.",
     "pathways": [
       "G01F",
       "G01A",
@@ -26,19 +35,23 @@
     ]
   },
   {
-    "code": "CS1044",
-    "name": "Intro Prog in C",
+    "code": "MATH1226",
+    "name": "Calculus of a Single Variable",
     "credits": [
-      3
+      4
     ],
-    "prerequisites": [],
+    "prerequisites": [
+      [
+        "MATH1225"
+      ]
+    ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core Mathematics",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "Fundamental concepts underlying software solutions of many problems. Structured data, statement sequencing, logic control, input/output, and functions. The course will be taught using a structured approach to programming. Partially duplicates 1344.",
+    "description": "1225-1226: CALCULUS OF A SINGLE VARIABLE Quantitative and computational thinking to address relevant intercultural and global issues. Unified calculus course covering techniques of differential and integral calculus for functions of one variable. Constitutes the standard first-year mathematics courses for science and engineering. 1225: limits, continuity, differentiation, transcendental functions, applications of differentiation, introduction to integration. Assumes 2 units of high school algebra, 1 unit of geometry, 1/2 unit each of trigonometry and precalculus, and placement by Math Dept. 1226: techniques and applications of integration, trapezoidal and Simpson’s rules, improper integrals, sequences and series, power series, parametric curves and polar coordinates, software-based techniques. A student can earn credit for at most one of 1025 and 1225. A student can earn credit for at most one of 1525 and 1225. A student can earn credit for at most one of 1026 and 1226. Pre: Grade of at least C- in 1225 for 1226.",
     "pathways": [
       "G01F",
       "G01A",
@@ -52,35 +65,158 @@
     ]
   },
   {
-    "code": "CS1054",
-    "name": "Introduction to Programming in Java",
+    "code": "MATH2214",
+    "name": "Intro Diff Equations",
     "credits": [
       3
     ],
-    "prerequisites": [],
+    "prerequisites": [
+      [
+        "MATH2114",
+        "MATH2114",
+        "MATH2405"
+      ],
+      [
+        "MATH1226"
+      ]
+    ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core Mathematics",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "",
-    "pathways": []
+    "description": "Unified course in ordinary differential equations. First-order equations, second-and-higher-order constant coefficient linear equations, systems of first-order linear equations, and numerical methods. Mathematical models describing motion and cooling, predator-prey population models, SIR-models, mechanical vibrations, electric circuits, rates of chemical reactions, radioactive decay. Quantitative and computational thinking to address relevant intercultural and global issues. A student can earn credit for at most one of 2214 and 2406H. A student can earn credit for at most one of 2214 and CMDA 2006.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
   },
   {
-    "code": "CS1064",
-    "name": "Intro to Programming in Python",
+    "code": "MATH2534",
+    "name": "Intro Discrete Math",
     "credits": [
       3
     ],
-    "prerequisites": [],
+    "prerequisites": [
+      [
+        "CS1114",
+        "ECE1574",
+        "ECE1004",
+        "CS2064"
+      ]
+    ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core Mathematics",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "Introduction to programming in Python contextualized with scientific and engineering problems. Computational problem-solving skills and software solutions in addition to Python language fundamentals. The basics of control flow with loops and conditionals, state tracing and manipulation, simple and complex types, organization of code using functional and object-oriented coding strategies, and data processing. Create, interpret, and debug programs. Ethically debate important issues in computing culture.",
+    "description": "Emphasis on topics relevant to computer science. Topics include logic, propositional calculus, set theory, relations, functions, mathematical induction, elementary number theory and Boolean algebra. Does not carry credit for mathematics majors, but may be used as though it were a 3000-level elective course for the mathematics minor. Two units of high school algebra, one unit of geometry, one-half unit each of trigonometry and precalculus mathematics required. 2534 may not be taken by math majors for credit without special permission. A student can earn credit for at most one of 2534 and 3034.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "STAT3704",
+    "name": "Stat for Eng Apps",
+    "credits": [
+      2
+    ],
+    "prerequisites": [
+      [
+        "MATH2224",
+        "MATH2224",
+        "MATH2204",
+        "MATH2204",
+        "MATH2406",
+        "CMDA2005"
+      ]
+    ],
+    "corequisites": [],
+    "category": "Core Mathematics",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Introduction to statistical methodology with emphasis on engineering experimentation: probability distributions, estimation, hypothesis testing, regression, and analysis of variance. Only one of the courses 3704, 4604, 4705, and 4714 may be taken for credit.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH2204",
+    "name": "Intro Multivariable Calculus",
+    "credits": [
+      3
+    ],
+    "prerequisites": [
+      [
+        "MATH1226"
+      ]
+    ],
+    "corequisites": [],
+    "category": "Core Mathematics",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Calculus for functions for several variables. Planes and surfaces, continuity, differentiation, chain rule, extreme values, Lagrange multipliers, double and triple integrals and applications, software-based techniques. A student can earn credit for at most one of 2204 and 2406H. A student can earn credit for at most one of 2024 and 2204. A student can earn credit for at most one of 2204 and CMDA 2005.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "MATH2114",
+    "name": "Introduction to Linear Algebra",
+    "credits": [
+      3
+    ],
+    "prerequisites": [
+      [
+        "MATH1225",
+        "MATH1226",
+        "AB5"
+      ]
+    ],
+    "corequisites": [],
+    "category": "Core Mathematics",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "Vector and matrix algebra systems of linear equations, linear equations, linear independence, bases, orthonormal bases, rank, linear transformations, diagonalization, implementation with contemporary software. Math 1226 or a grade of at least B in VT MATH 1225. A student can earn credit for at most one of 2114 and 2405H.",
     "pathways": [
       "G01F",
       "G01A",
@@ -101,74 +237,12 @@
     ],
     "prerequisites": [],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
     ],
     "description": "Fundamental concepts of programming from an object-oriented perspective. Basic software engineering principles and programming skills in a programming language that supports the object-oriented paradigm. Simple data types, control structures, array and string data structures, basic algorithms, testing and debugging. A basic model of the computer as an abstract machine. Modeling and problem-solving skills applicable to programming at this level. Partially duplicates 1054, 1124, and 1705.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS1944",
-    "name": "Computer Science 1st Yr Sem",
-    "credits": [
-      1
-    ],
-    "prerequisites": [
-      [
-        "CS1114",
-        "CS2064",
-        "ECE2514"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "An introduction to academic and career planning for computer science majors.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2064",
-    "name": "Intermediate Prog in Python",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS1064"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Advanced uses of control flow and data processing, data structures, computational techniques, object-oriented programming, and modern data science pipelines. Creating, interpreting, and debugging complex programs. Problems and projects contextualized for scientists and engineers. Implementation of Python programs in data science and production environments, production of object-oriented solutions to complex problems, and ethical implications of technological change.",
     "pathways": [
       "G01F",
       "G01A",
@@ -200,115 +274,12 @@
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
     ],
     "description": "This course introduces the student to a broad range of heuristics for solving problems in a range of settings that are relevant to computation. Emphasis on problem-solving techniques that aid programmers and computer scientists. Heuristics for solving problems in the small (classical math and word problems), generating potential solutions to real-life problems encountered in the profession, problem solving through computation, and problem solving in teams.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2114",
-    "name": "Softw Des & Data Structures",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS1114",
-        "CS2064"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "A programming-intensive exploration of software design concepts and implementation techniques. Builds on knowledge of fundamental object-oriented programming. Advanced object-oriented software design, ethics in computing, algorithm development and analysis, and classic data structures. Includes a team-based software project.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2144",
-    "name": "Competitive Problem Solving I",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS2164",
-    "name": "Foundations Security Environ",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Introduction to multiple analytical perspectives on contemporary security environments, including political, legal, ethical, technical, environmental and historical and cultural perspectives relative to the conception, design and implementation of security solutions, practices, and policies. Emphasizes applying and analyzing the effectiveness of diverse procedures, tools and policies used in security and privacy solutions, decision-making, risk management and operational policy to mitigate local, national, international and global threats.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2304",
-    "name": "Topics in Programming Systems",
-    "credits": [
-      1
-    ],
-    "prerequisites": [
-      [
-        "CS2114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Guided self-study in a specific programming system, its syntax and applications. Based on prior knowledge of the programming process and experience in programming with some high-level language. Systems include JavaScript, C++, CUDA, Ruby, SQL, FORTRAN, UNIX, etc. May be taken three times for credit with different system each time. May be taken only twice for CS major or minor credit.",
     "pathways": [
       "G01F",
       "G01A",
@@ -333,7 +304,7 @@
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
@@ -372,122 +343,12 @@
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
     ],
     "description": "An introduction to the design and operation of digital computers. Instruction formats and construction, addressing modes, instruction execution, memory hierarchy operation and performance, pipelining, input/output, and the relationships between high level programming languages and machine language. A grade of C or better is required in CS pre-requisite 2505 and 2114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2964",
-    "name": "Field Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2974",
-    "name": "Independent Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS2984",
-    "name": "Special Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS3114",
-    "name": "Data Structures and Algorithms",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114",
-        "ECE3514"
-      ],
-      [
-        "CS2505",
-        "ECE2564"
-      ],
-      [
-        "MATH2534",
-        "MATH3034"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Advanced data structures and analysis of data structure and algorithm performance. Sorting, searching, hashing, and advanced tree structures and algorithms. File system organization and access methods. Ethical issues in the context of data analysis and software performance. Course projects require advanced problem-solving, design, and implementation skills.",
     "pathways": [
       "G01F",
       "G01A",
@@ -519,49 +380,12 @@
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
     ],
     "description": "Introduction to computer systems as they are relevant to application programmers today, with emphasis on operating system principles. Operating system design and architectures; processes; threads, synchronization techniques, deadlock; CPU scheduling; system call interfaces, system level I/O and file management; shell programming; separate compilation, loading and linking; inter-process communication (IPC); virtual and physical memory management and garbage collection; network protocols and programming; virtualization; performance analysis and optimization. A grade of C or better is required in CS pre-requisites 2506 and 2114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3274",
-    "name": "Software Reverse Engineering",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114"
-      ],
-      [
-        "CS2506",
-        "ECE2534"
-      ],
-      [
-        "ECE3514"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Theory and practice of software reverse engineering, static and dynamic analysis techniques and tools, reverse engineering of malware, obfuscated binaries, communications and command and control analysis, reverse engineering of non-binary software.",
     "pathways": [
       "G01F",
       "G01A",
@@ -586,74 +410,12 @@
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
     ],
     "description": "This course in programming language constructs emphasizes the run-time behavior of programs. The languages are studied from two points of view: (1) the fundamental elements of languages and their inclusion in commercially available systems; and (2) the differences between implementations of common elements in languages. A grade of C or better required in CS prerequisite 3114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3314",
-    "name": "Programming Language Theory  and  Practice",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS3414",
-    "name": "Numerical Methods",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS1044",
-        "CS1705",
-        "CS1114",
-        "CS1124"
-      ],
-      [
-        "MATH2406",
-        "CMDA2005"
-      ],
-      [
-        "CMDA2006",
-        "MATH2214",
-        "MATH2214"
-      ],
-      [
-        "MATH2204",
-        "MATH2204"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Computational methods for numerical solution of non-linear equations, differential equations, approximations, iterations, methods of least squares, and other topics. A grade of C or better required in CS prerequisite 1044 or 1705. A student can earn credit for at most one of 3414 and MATH 4404.",
     "pathways": [
       "G01F",
       "G01A",
@@ -686,7 +448,7 @@
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Core CS",
     "semesters": [
       "Fall",
       "Spring"
@@ -705,23 +467,34 @@
     ]
   },
   {
-    "code": "CS3634",
-    "name": "Comp Sci Foundations for CMDA",
+    "code": "CHEM1035",
+    "name": "General Chemistry",
     "credits": [
       3
     ],
     "prerequisites": [
       [
-        "CS2114"
+        "AP4",
+        "AB4",
+        "AB4",
+        "BC3",
+        "BC3",
+        "CHEM1014",
+        "MATH1014",
+        "MATH1025",
+        "MATH1536",
+        "MATH1225",
+        "MATH1214",
+        "MATH1524"
       ]
     ],
     "corequisites": [],
-    "category": "CS",
+    "category": "Foundation",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "Survey of computer science concepts and tools that enable computational science and data analytics. Data structure design and implementation. Analysis of data structure and algorithm performance. Introduction to high-performance computer architectures and parallel computation. Basic operating systems concepts that influence the performance of large-scale computational modeling and data analytics. Software development and software tools for computational modeling. Not for CS major credit.",
+    "description": "First chemistry course for students in science curricula. Applications of reasoning in the natural sciences using chemical laws in an applied context and in the student’s own discipline. Overview of the universal aspects of chemistry and of application of chemistry to address global challenges. 1035: Problem-solving, elements and periodic table, stoichiometry of chemical reactions, gas phase of matter, energy flow and chemical change, atomic structure, and theories of chemical bonding. 1036: Properties of the three states of matter alone and in mixtures, kinetics, aqueous equilibrium, thermodynamics, electrochemistry. (Duplicates 1015-1016.) Students may bypass prerequisites for 1035 through testing alternatives listed in the Registrar’s Timetable.",
     "pathways": [
       "G01F",
       "G01A",
@@ -735,1230 +508,34 @@
     ]
   },
   {
-    "code": "CS3654",
-    "name": "Intro Data Analytics & Visual",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS1114",
-        "CS1044",
-        "CS1054",
-        "CS1064"
-      ],
-      [
-        "MATH2204",
-        "MATH2204",
-        "MATH2406",
-        "CMDA2005"
-      ],
-      [
-        "STAT3006",
-        "STAT4105",
-        "STAT4705",
-        "STAT4714",
-        "CMDA2006"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Basic principles and techniques in data analytics; methods for the collection of, storing, accessing, and manipulating standard-size and large datasets; data visualization; and identifying sources of bias.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3704",
-    "name": "Intermed Software Des",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Explores the principles of software design in detail, with an emphasis on software engineering aspects. Includes exposure of software lifecycle activities including design, coding, testing, debugging, and maintenance, highlighting how design affects these activities. Peer reviews, designing for software reuse, CASE tools, and writing software to specifications are also covered. A grade of C or better required in CS prerequisite 3114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3714",
-    "name": "Mobile Software Development",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114",
-        "ECE3514"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Technologies and concepts underlying software development for mobile devices (handheld computers). Mobile computing platforms, including architecture, operating system, and programming environment. Software design patterns and structuring for mobile applications. Network-centric mobile software development. Data persistence. Programming for mobile device components such as cameras, recorders, accelerometer, gyroscope and antennas. Location-aware software development. A grade of C or better required in CS prerequisite.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3724",
-    "name": "Human-Computr Intrctn",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS1114",
-        "CS1044",
-        "CS1054",
-        "CS1064"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Survey of human-computer interaction concepts, theory, and practice. Basic components of human-computer interaction. Interdisciplinary underpinnings. Informed and critical evaluation of computer-based technology. User-oriented perspective, rather than system-oriented, with two thrusts: human (cognitive, social) and technological (input/output, interactions styles, devices). Design guidelines, evaluation methods, participatory design, communication between users and system developers. A grade of C or better required in CS prerequisite 2114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3744",
-    "name": "Intro GUI Programming/Graphics",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114",
-        "ECE3514"
-      ],
-      [
-        "MATH1114",
-        "MATH2114"
-      ],
-      [
-        "MATH1224",
-        "MATH2204"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Design and implementation of object-oriented graphical user interfaces (GUI) and two-dimensional computer graphics systems. Implementation methodologies including callbacks, handlers, event listeners, design patterns, layout managers, and architectural models. Mathematical foundations of computer graphics applied to fundamental algorithms for clipping, scan conversion, affine and convex linear transformations, projections, viewing, structuring, and modeling. A grade of C or better is required in CS pre-requisite 2114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3754",
-    "name": "Cloud Software Development",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114",
-        "ECE3514"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Fundamentals of cloud software development, including design patterns, application programming interfaces, and underlying middleware technologies. Development of distributed multi-tiered enterprise software applications that run on a server computer and are accessed using a web browser over the Internet on a network-connected computer such as desktop, laptop, or handheld computer (tablet, smartphone, or mobile device. A grade of C or better is required in prerequisite.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3824",
-    "name": "Introduction to Computational Biology and Bioinformatics",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS3900",
-    "name": "Bridge Experience",
-    "credits": [
-      0
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Application of academic knowledge and skills to in a work-based experience aligned with post-graduation goals using research-based learning processes. Satisfactory completion of work-based experience often in the form of internship, undergraduate research, co-op, or study abroad; self-evaluation; reflection; and showcase of learning. Pre: Departmental approval of 3900 plan.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3954",
-    "name": "Study Abroad",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS3984",
-    "name": "Special Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4014",
-    "name": "Algorithms & Society",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "This course focuses on social perspectives of algorithms and implications to factors such as class, gender, race, ethnicity, geography, and disability status. Students will be guided to think critically about the impacts of computing in society, as well as the role of social values in their design. Topics will focus on computing technologies involved in critical contemporary and global concerns including machine learning, privacy, and the infrastructure that describes the social and technical context for algorithms. Pre: Junior Standing",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4094",
-    "name": "Computer Science Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2506"
-      ],
-      [
-        "CS3114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Senior capstone project course integrating computer science knowledge and skills acquired in previous courses. Team-based approach to solving open-ended computer science problems that address real-world problems in a variety of application areas, including approaches to problem formulation, requirements definition, design, and implementation. Communicating and presenting team results using both written and oral methods.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4104",
-    "name": "Data and Algorithm Analysis",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS3114"
-      ],
-      [
-        "MATH3034",
-        "MATH3134"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Data structures and algorithms from an analytical perspective. Theoretical analysis of algorithm efficiency. Comparing algorithms with respect to space and run-time requirements. Analytical methods for describing theoretical and practical bounds on performance. Constraints affecting problem solvability. A grade of C or better is required in CS prerequisite 3114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4114",
-    "name": "Formal Languages",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "MATH3134",
-        "MATH3034"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "The course presents a study of formal languages and the correspondence between language classes and the automata that recognize them. Formal definitions of grammars and acceptors, deterministic and nondeterministic systems, grammar ambiguity, finite state and push-down automata, and normal forms will be discussed.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4124",
-    "name": "Theory of Computation",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4134",
-    "name": "Quantum Comp & Info Proc",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "MATH2114",
-        "MATH2114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Quantum states and quantum phenomena. Quantum communication concepts such as superdense coding, teleportation, and complexity. Classical and quantum circuits and gate sets for computation. Quantum algorithms and comparison to classical algorithms. Quantum computational complexity theory and complexity classes. Quantum information concepts such as density operators, measurements, and quantum channels. Error correction, the stabilizer formalism, and fault-tolerance. The adiabatic theorem and adiabatic quantum computation. Entanglement and entanglement measures.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4144",
-    "name": "Competitive Problem Solving II",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4164",
-    "name": "Future of Security",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "PSCI2164",
-        "BIT2164",
-        "CS2164"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Identification and analysis of complex, real-world security problems and threats to people, organizations, and nations across multiple domains, roles and future scenarios. Crisis communication, decision making tools, ethical principles and problem-solving methods to respond, assess options, plan, scope, and communicate before, during and after conflicts, disasters and attacks. Use of an experiential learning facility, and participation in a reality-based team simulation of cascading security and disaster events.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4204",
-    "name": "Computer Graphics",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS3744"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Hardware and software techniques for the display of graphical information. 2D and 3D geometry and transformations, clipping and windowing, software systems. Interactive graphics, shading, hidden surface elimination, perspective depth. Modeling and realism.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4224",
-    "name": "Linux Kernel Programming",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "ECE3574",
-        "CS3114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Design and internal organization of the Linux operating system kernel. Kernel subsystems, boot process, memory management, process and thread model, scheduling, interrupt and exception handling, virtual file system and the concrete file system, block I/O and I/O scheduler, network stack, and device drivers. Modification of existing kernel code. Design, implementation, test and evaluation of new kernel modules. Kernel and full software stack debugging techniques, and virtualization as an aid for operating system development and debug. Software engineering techniques to analyze, modify and run a large, complex open-source code base.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4234",
-    "name": "Parallel Computation",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4254",
-    "name": "Computer Network Architecture and Programming",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4264",
-    "name": "Principles Computer Security",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS3214",
-        "ECE3504"
-      ],
-      [
-        "ECE3574"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Survey of computer problems and fundamental computer security design principles and models for software systems. Cryptographic models and methods. Modern cyber security techniques for robust computer operating systems, software, web applications, large-scale networks and data protection. Privacy models and techniques. Contemporary computer and network security examples. A grade of C or better is required in prerequisites.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4274",
-    "name": "Secure Computing Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4284",
-    "name": "Systems & Networking Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4304",
-    "name": "Compiler Design and Implementation",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4414",
-    "name": "Issues in Scientific Computing",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4504",
-    "name": "Computer Organization",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "ECE2500",
-        "CS3214",
-        "ECE3504"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Overview of the structure, elements and analysis of modern enterprise computers. Performance evaluation of commercial computing. Past and emerging technology trends. Impact of parallelism at multiple levels of computer architecture. Memory and storage. Fundamental computer system descriptions, Amdahls Law, Flynns Taxonomy. A grade of C or better required in prerequisites.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4604",
-    "name": "Int Data Base Mgt Sys",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS3114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Emphasis on introduction of the basic data base models, corresponding logical and physical data structures, comparisons of models, logical data design, and data base usage. Terminology, historical evolution, relationships, implementation, data base personnel, future trends, applications, performance considerations, data integrity. Senior standing required. A grade of C or better required in CS prerequisite 3114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4624",
-    "name": "Multimedia, Hypertext and Information Access",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4634",
-    "name": "Design Of Information",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4644",
-    "name": "Creative Computing Studio",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4654",
-    "name": "Intermed Data Analytics & ML",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "STAT3654",
-        "CMDA3654",
-        "CS3654"
-      ],
-      [
-        "CMDA2006",
-        "STAT3104",
-        "STAT4106",
-        "STAT4706"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "A technical analytics course. Covers supervised and unsupervised learning strategies, including regression, generalized linear models, regulations, dimension reduction methods, tree-based methods for classification, and clustering. Upper-level analytical methods shown in practice: e.g., advanced naive Bayes and neural networks.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4664",
-    "name": "Data-Centric Computing Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4704",
-    "name": "Software Engineering Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4774",
-    "name": "HCI Design Experience",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS3724"
-      ],
-      [
-        "HIST2604",
-        "SOC2604",
-        "STS2604"
-      ],
-      [
-        "COMM2084"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Project-based design course in human-computer interaction. Team-based, end-to-end, integrative interface design project drawn from interdisciplinary areas of student expertise, e.g., virtual reality, augmented reality, embodied cognition, visualization, semiotic engineering, game design, personal information management, mobile computing, design tools, educational technology, and digital democracy. Not for CS major credit. Senior standing.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4784",
-    "name": "Human-Computer Interaction Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4804",
-    "name": "Introduction to AI",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS3114"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Overview of the areas of problem solving, game playing, and computer vision. Search trees and/or graphs, game trees, block world vision, syntactic pattern recognition, object matching, natural language, and robotics. Senior standing required. A grade of C or better required in CS prerequisite 3114.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4824",
-    "name": "Machine Learning",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "ECE3514",
-        "CS2114"
-      ],
-      [
-        "STAT3704",
-        "STAT4105",
-        "STAT4604",
-        "STAT4705",
-        "STAT4714",
-        "CMDA2006"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Algorithms and principles involved in machine learning; focus on perception problems arising in computer vision, natural language processing and robotics; fundamentals of representing uncertainty, learning from data, supervised learning, ensemble methods, unsupervised learning, structured models, learning theory and reinforcement learning; design and analysis of machine perception systems; design and implementation of a technical project applied to real-world datasets (images, text, robotics). A grade of C- or better in prerequisites.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4884",
-    "name": "Computational Biology  and  Bioinformatics Capstone",
-    "credits": [
-      3
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4894",
-    "name": "Spec Topics in Comp Science",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "CS2114"
-      ],
-      [
-        "CS2505"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Advanced undergraduate topics in the design, development, use, and impact of computer science solutions or software systems. Topics may include blockchain systems, DevOps, new programming languages, social media software, software as a service, micro-services, and end user programming systems. May be repeated 2 times with different content for a maximum of 9 credits.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4944",
-    "name": "Seminar",
+    "code": "CHEM1045",
+    "name": "General Chemistry Laboratory",
     "credits": [
       1
     ],
     "prerequisites": [
       [
-        "CS3604"
-      ]
-    ],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4954",
-    "name": "Study Abroad",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4964",
-    "name": "Field Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4974",
-    "name": "Independent Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "CS4984",
-    "name": "Special Study",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "",
-    "pathways": []
-  },
-  {
-    "code": "CS4994",
-    "name": "Undergraduate Research",
-    "credits": [
-      1,
-      19
-    ],
-    "prerequisites": [],
-    "corequisites": [],
-    "category": "CS",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Description Not Found",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "MATH1225",
-    "name": "Calculus of a Single Variable",
-    "credits": [
-      4
-    ],
-    "prerequisites": [
-      [
+        "AP4",
         "AB4",
-        "SUB4",
         "AB4",
         "BC3",
         "BC3",
-        "MATH1214"
+        "CHEM1014",
+        "MATH1014",
+        "MATH1025",
+        "MATH1536",
+        "MATH1225",
+        "MATH1214",
+        "MATH1524"
       ]
     ],
     "corequisites": [],
-    "category": "MATH",
+    "category": "Foundation",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "1225-1226: CALCULUS OF A SINGLE VARIABLE Quantitative and computational thinking to address relevant intercultural and global issues. Unified calculus course covering techniques of differential and integral calculus for functions of one variable. Constitutes the standard first-year mathematics courses for science and engineering. 1225: limits, continuity, differentiation, transcendental functions, applications of differentiation, introduction to integration. Assumes 2 units of high school algebra, 1 unit of geometry, 1/2 unit each of trigonometry and precalculus, and placement by Math Dept. 1226: techniques and applications of integration, trapezoidal and Simpson’s rules, improper integrals, sequences and series, power series, parametric curves and polar coordinates, software-based techniques. A student can earn credit for at most one of 1025 and 1225. A student can earn credit for at most one of 1525 and 1225. A student can earn credit for at most one of 1026 and 1226. Pre: Grade of at least C- in 1225 for 1226.",
+    "description": "Hands-on, real-world activities that illustrate and elaborate on concepts taught in general chemistry lecture (1035-1036), including acids and bases, heat capacity, ideal gases, states of matter, concentration, mixtures, energy flow and spontaneity in processes, equilibrium, kinetics, colligative properties, and electrochemistry. Use of instrumentation to analyze water and soil contaminants, biofuel mixtures, nanoparticles, and polymer properties. Laboratory safety, chemical hygiene, hazard mitigation, waste management, and the influence of procedure on experimental outcomes. Global challenges, including recycling and sustainable energy sources, water resource management, global warming, and environmentally friendly reagents in chemical contexts. Use of computers in data analysis, collaboration, and report-writing.",
     "pathways": [
       "G01F",
       "G01A",
@@ -1972,10 +549,10 @@
     ]
   },
   {
-    "code": "MATH1226",
-    "name": "Calculus of a Single Variable",
+    "code": "PHYS2305",
+    "name": "Foundations of Physics",
     "credits": [
-      4
+      0
     ],
     "prerequisites": [
       [
@@ -1983,12 +560,12 @@
       ]
     ],
     "corequisites": [],
-    "category": "MATH",
+    "category": "Foundation",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "1225-1226: CALCULUS OF A SINGLE VARIABLE Quantitative and computational thinking to address relevant intercultural and global issues. Unified calculus course covering techniques of differential and integral calculus for functions of one variable. Constitutes the standard first-year mathematics courses for science and engineering. 1225: limits, continuity, differentiation, transcendental functions, applications of differentiation, introduction to integration. Assumes 2 units of high school algebra, 1 unit of geometry, 1/2 unit each of trigonometry and precalculus, and placement by Math Dept. 1226: techniques and applications of integration, trapezoidal and Simpson’s rules, improper integrals, sequences and series, power series, parametric curves and polar coordinates, software-based techniques. A student can earn credit for at most one of 1025 and 1225. A student can earn credit for at most one of 1525 and 1225. A student can earn credit for at most one of 1026 and 1226. Pre: Grade of at least C- in 1225 for 1226.",
+    "description": "Introductory sequence for students in physical sciences, mathematics, and engineering. Overview of intercultural contributions to physics and universal aspects of physics, and of human benefits of physics to address world-wide challenges. 2305: classical mechanics of translational and rotational motion, Newtonian gravitation, and thermal physics. 2306: oscillations, waves, electricity, magnetism, and optics.",
     "pathways": [
       "G01F",
       "G01A",
@@ -2002,28 +579,49 @@
     ]
   },
   {
-    "code": "MATH2214",
-    "name": "Intro Diff Equations",
+    "code": "ENGL1105",
+    "name": "First-Year Writing",
+    "credits": [
+      3
+    ],
+    "prerequisites": [],
+    "corequisites": [],
+    "category": "Foundation",
+    "semesters": [
+      "Fall",
+      "Spring"
+    ],
+    "description": "1105: Introduction to rhetorical analysis, visual rhetoric, critical writing, and critical thinking; intensive reading of works in multiple genres; practice in writing and revision; fundamentals of oral presentations. 1106: Continued study in rhetorical analysis and the conventions of various genres; intensive instruction in writing and revision of work that incorporates research; experience in oral presentations.",
+    "pathways": [
+      "G01F",
+      "G01A",
+      "G02",
+      "G03",
+      "G04",
+      "G05F",
+      "G05A",
+      "G06D",
+      "G06A"
+    ]
+  },
+  {
+    "code": "ENGL1106",
+    "name": "First-Year Writing",
     "credits": [
       3
     ],
     "prerequisites": [
       [
-        "MATH2114",
-        "MATH2114",
-        "MATH2405"
-      ],
-      [
-        "MATH1226"
+        "ENGL1105"
       ]
     ],
     "corequisites": [],
-    "category": "MATH",
+    "category": "Foundation",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "Unified course in ordinary differential equations. First-order equations, second-and-higher-order constant coefficient linear equations, systems of first-order linear equations, and numerical methods. Mathematical models describing motion and cooling, predator-prey population models, SIR-models, mechanical vibrations, electric circuits, rates of chemical reactions, radioactive decay. Quantitative and computational thinking to address relevant intercultural and global issues. A student can earn credit for at most one of 2214 and 2406H. A student can earn credit for at most one of 2214 and CMDA 2006.",
+    "description": "1105: Introduction to rhetorical analysis, visual rhetoric, critical writing, and critical thinking; intensive reading of works in multiple genres; practice in writing and revision; fundamentals of oral presentations. 1106: Continued study in rhetorical analysis and the conventions of various genres; intensive instruction in writing and revision of work that incorporates research; experience in oral presentations.",
     "pathways": [
       "G01F",
       "G01A",
@@ -2037,26 +635,19 @@
     ]
   },
   {
-    "code": "MATH2534",
-    "name": "Intro Discrete Math",
+    "code": "ENGE1215",
+    "name": "Foundations of Engineering",
     "credits": [
-      3
+      2
     ],
-    "prerequisites": [
-      [
-        "CS1114",
-        "ECE1574",
-        "ECE1004",
-        "CS2064"
-      ]
-    ],
+    "prerequisites": [],
     "corequisites": [],
-    "category": "MATH",
+    "category": "Foundation",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "Emphasis on topics relevant to computer science. Topics include logic, propositional calculus, set theory, relations, functions, mathematical induction, elementary number theory and Boolean algebra. Does not carry credit for mathematics majors, but may be used as though it were a 3000-level elective course for the mathematics minor. Two units of high school algebra, one unit of geometry, one-half unit each of trigonometry and precalculus mathematics required. 2534 may not be taken by math majors for credit without special permission. A student can earn credit for at most one of 2534 and 3034.",
+    "description": "A ﬁrst-year sequence to introduce general engineering students to the profession. 1215 (2 credit) Engineering problem-solving, contemporary programming tools, professional practices and expectations (e.g. effective communication, time management, working in teams, ethics), the diversity of ﬁelds and majors within engineering, and reflective and corrective practices. 1216 (2 credits): Engineering design, criteria and constraints, data collection and analysis, testing and iteration of design solutions, contemporary CAD tools, professional practices and expectations (e.g. communication, teamwork, ethics), and reflective and corrective practices. Students must complete both ENGE 1215 and ENGE 1216 to earn Pathways credit. 1215: Design Lab/Studio, 1216: Design Lab/Studio. Duplicates ENGE 1414.",
     "pathways": [
       "G01F",
       "G01A",
@@ -2070,58 +661,23 @@
     ]
   },
   {
-    "code": "STAT3704",
-    "name": "Stat for Eng Apps",
+    "code": "ENGE1216",
+    "name": "Foundations of Engineering",
     "credits": [
       2
     ],
     "prerequisites": [
       [
-        "MATH2224",
-        "MATH2224",
-        "MATH2204",
-        "MATH2204",
-        "MATH2406",
-        "CMDA2005"
+        "ENGE1215"
       ]
     ],
     "corequisites": [],
-    "category": "STAT",
+    "category": "Foundation",
     "semesters": [
       "Fall",
       "Spring"
     ],
-    "description": "Introduction to statistical methodology with emphasis on engineering experimentation: probability distributions, estimation, hypothesis testing, regression, and analysis of variance. Only one of the courses 3704, 4604, 4705, and 4714 may be taken for credit.",
-    "pathways": [
-      "G01F",
-      "G01A",
-      "G02",
-      "G03",
-      "G04",
-      "G05F",
-      "G05A",
-      "G06D",
-      "G06A"
-    ]
-  },
-  {
-    "code": "MATH2204",
-    "name": "Intro Multivariable Calculus",
-    "credits": [
-      3
-    ],
-    "prerequisites": [
-      [
-        "MATH1226"
-      ]
-    ],
-    "corequisites": [],
-    "category": "MATH",
-    "semesters": [
-      "Fall",
-      "Spring"
-    ],
-    "description": "Calculus for functions for several variables. Planes and surfaces, continuity, differentiation, chain rule, extreme values, Lagrange multipliers, double and triple integrals and applications, software-based techniques. A student can earn credit for at most one of 2204 and 2406H. A student can earn credit for at most one of 2024 and 2204. A student can earn credit for at most one of 2204 and CMDA 2005.",
+    "description": "A ﬁrst-year sequence to introduce general engineering students to the profession. 1215 (2 credit) Engineering problem-solving, contemporary programming tools, professional practices and expectations (e.g. effective communication, time management, working in teams, ethics), the diversity of ﬁelds and majors within engineering, and reflective and corrective practices. 1216 (2 credits): Engineering design, criteria and constraints, data collection and analysis, testing and iteration of design solutions, contemporary CAD tools, professional practices and expectations (e.g. communication, teamwork, ethics), and reflective and corrective practices. Students must complete both ENGE 1215 and ENGE 1216 to earn Pathways credit. 1215: Design Lab/Studio, 1216: Design Lab/Studio. Duplicates ENGE 1414.",
     "pathways": [
       "G01F",
       "G01A",

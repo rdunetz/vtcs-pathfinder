@@ -67,12 +67,13 @@ def to_credits_list(credits: Optional[Union[int, float, Tuple[int, int], str]]) 
 def course_from_search(
     search_dict: Dict[str, Any],
     fallback_title: str,
-    catalog_credits: Optional[Union[int, float, Tuple[int, int], str]]
+    catalog_credits: Optional[Union[int, float, Tuple[int, int], str]],
+    override_category: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Convert the searchIDData aggregated dict + catalog fallbacks into the target schema.
     Credits source-of-truth: search_dict['creditHours'] if present/valid; fallback to catalog_credits.
-    Category: use search_dict['subject'] if available, otherwise extract from code.
+    Category: use override_category if provided, otherwise search_dict['subject'], otherwise extract from code.
     Includes 'pathways' passthrough from searchIDData output.
     Prerequisites: stored exactly as returned from searchIDData (nested list format).
     """
@@ -99,17 +100,20 @@ def course_from_search(
     description = search_dict.get("catalogDescription") or ""
 
 
-    # Extract category from subject field, or fallback to parsing from code
-    category = search_dict.get("subject")
-    if not category and code:
-        # Fallback: extract subject prefix from code (e.g., "CS3414" -> "CS")
-        m = re.match(r'^([A-Z]{2,4})', code.upper())
-        if m:
-            category = m.group(1)
-        else:
-            category = "CS"  # ultimate fallback
-    elif not category:
-        category = "CS"  # default if nothing else available
+    # Category priority: override_category > search_dict['subject'] > extract from code > default
+    if override_category:
+        category = override_category
+    else:
+        category = search_dict.get("subject")
+        if not category and code:
+            # Fallback: extract subject prefix from code (e.g., "CS3414" -> "CS")
+            m = re.match(r'^([A-Z]{2,4})', code.upper())
+            if m:
+                category = m.group(1)
+            else:
+                category = "N/A"  # ultimate fallback
+        elif not category:
+            category = "N/A"  # default if nothing else available
 
 
     # Pathways list from searchIDData (default to [])
@@ -133,18 +137,60 @@ def course_from_search(
 
 def main() -> None:
     print(f"Starting course generation for next semester (auto-detected)...")
-    catalog_courses = getAllCSVTCourses()
-    print(f"Discovered {len(catalog_courses)} CS catalog courses to process.")
-    MATH_courses = [{"code": "MATH1225", "title": "Calculus of a Single Variable", "credits": 3}, 
-                    {"code": "MATH1226", "title": "Calculus of a Single Variable II", "credits": 3},
-                    {"code": "MATH2214", "title": "Introduction to Differential Equations", "credits": 3},
-                    {"code": "MATH2534", "title": "Introduction to Linear Algebra", "credits": 3},
-                    {"code": "STAT3704", "title": "Descriptive statistics, probability, and inference.", "credits": 3},
-                    {"code": "MATH2204", "title": "multi", "credits": None}]
+    # catalog_courses = getAllCSVTCourses()
+    # print(f"Discovered {len(catalog_courses)} CS catalog courses to process.")
+    MATH_courses = [{"code": "MATH1225", "title": "Calculus of a Single Variable", "credits": 3, "category": "Core Mathematics"}, 
+                    {"code": "MATH1226", "title": "Calculus of a Single Variable II", "credits": 3, "category": "Core Mathematics"},
+                    {"code": "MATH2214", "title": "Introduction to Differential Equations", "credits": 3, "category": "Core Mathematics"},
+                    {"code": "MATH2534", "title": "Introduction to Linear Algebra", "credits": 3, "category": "Core Mathematics"},
+                    {"code": "STAT3704", "title": "Descriptive statistics, probability, and inference.", "credits": 3, "category": "Core Mathematics"},
+                    {"code": "MATH2204", "title": "multi", "credits": None, "category": "Core Mathematics"},
+                    {"code": "MATH2114", "title": "Introduction to Ordinary and Partial Differential Equations", "credits": 3, "category": "Core Mathematics"}]
     print("Adding MATH & STATS Courses")
+
+
+    checksheet_courses = [{"code": "CS1114", "category": "Core CS"},
+                         {"code": "CS2104", "category": "Core CS"},
+                         {"code": "CS2505", "category": "Core CS"},
+                         {"code": "CS2506", "category": "Core CS"},
+                         {"code": "CS3214", "category": "Core CS"},
+                         {"code": "CS3304", "category": "Core CS"},
+                         {"code": "CS3604", "category": "Core CS"},
+                         {"code": "CHEM1035", "category": "Foundation"},
+                         {"code": "CHEM1045", "category": "Foundation"},
+                         {"code": "PHYS2305", "category": "Foundation"},
+                         {"code": "ENGL1105", "category": "Foundation"},
+                         {"code": "ENGL1106", "category": "Foundation"},
+                         {"code": "ENGE1215", "category": "Foundation"},
+                         {"code": "ENGE1216", "category": "Foundation"}]
+    
+    '''
+    Core CS (Maroon) - Required CS courses
+    CS 1114, 2104, 2505, 2506, 3214, 3304, 3604
+
+    CS Electives (Orange) - All upper-level CS choices
+    CS Theory Elective + CS 4/5XXX Electives + Capstone
+
+    Mathematics (Blue/Green) - All math requirements
+    MATH 1225, 1226, 2204, 2534, 2114
+
+    Foundation (Gray) - First-year essentials
+    CHEM 1035/1045, PHYS 2305, ENGL 1105/1106, ENGE 1215/1216
+
+    Pathways (Teal/Light Green) - Gen ed requirements
+    All Pathways Concepts 1-7 + Free Electives 
+    the checksheet pathways are weird because it includes CS3114 and some MATH/Sciences, i say we seperate those
+    and colors we can change however
+    '''
+
+
+    catalog_courses = []
     for c in MATH_courses:
         catalog_courses.append(c)
-        print(f'Added: {c["code"]}')
+        print(f'Added: {c["code"]} - {c.get("category", "N/A")}')
+    for c in checksheet_courses:
+        catalog_courses.append(c)
+        print(f'Added: {c["code"]} - {c.get("category", "N/A")}')
 
 
     total = len(catalog_courses)
@@ -159,6 +205,7 @@ def main() -> None:
             course_code = item.get("code")
             course_title = item.get("title", "")
             catalog_credits = item.get("credits", None)
+            input_category = item.get("category")  # Get category from input dictionary
 
 
             if not course_code:
@@ -181,11 +228,12 @@ def main() -> None:
                 continue
 
 
-            # Build final normalized record
+            # Build final normalized record, passing the category from input
             record = course_from_search(
                 data,
                 fallback_title=course_title,
-                catalog_credits=catalog_credits
+                catalog_credits=catalog_credits,
+                override_category=input_category  # Pass the category from input
             )
             results.append(record)
             written += 1
