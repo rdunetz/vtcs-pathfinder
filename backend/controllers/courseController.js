@@ -6,6 +6,32 @@ const PY_INTERPRETER = process.env.PY_INTERPRETER || "python"; // 'python3' on m
 const PYTHONPATH = process.env.PYTHONPATH || ""; // e.g., ".;./pythonTimetables" on Windows, ".:./pythonTimetables" on Linux/Mac
 
 /**
+ * Parse prerequisites from JSON string to nested array
+ * Firestore stores as string, but we want to send arrays to frontend
+ */
+const parsePrerequisites = (prereqString) => {
+  if (!prereqString || prereqString === "[]") return [];
+
+  try {
+    const parsed = JSON.parse(prereqString);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    console.warn(`Failed to parse prerequisites: ${prereqString}`);
+    return [];
+  }
+};
+
+/**
+ * Format course data by parsing prerequisites from JSON strings to arrays
+ */
+const formatCourseData = (courseData) => {
+  return {
+    ...courseData,
+    prerequisites: parsePrerequisites(courseData.prerequisites),
+  };
+};
+
+/**
  * Get all courses with optional filtering
  */
 const getAllCourses = async (req, res) => {
@@ -24,7 +50,7 @@ const getAllCourses = async (req, res) => {
 
     let courses = [];
     snapshot.forEach((doc) => {
-      courses.push({ id: doc.id, ...doc.data() });
+      courses.push(formatCourseData({ id: doc.id, ...doc.data() }));
     });
 
     // Filter by semester availability if provided
@@ -76,7 +102,7 @@ const getCourseById = async (req, res) => {
 
     res.json({
       success: true,
-      data: { id: doc.id, ...doc.data() },
+      data: formatCourseData({ id: doc.id, ...doc.data() }),
     });
   } catch (error) {
     console.error("Error getting course:", error);
@@ -232,7 +258,7 @@ const getCoursesByCategory = async (req, res) => {
     const coursesByCategory = {};
 
     snapshot.forEach((doc) => {
-      const course = { id: doc.id, ...doc.data() };
+      const course = formatCourseData({ id: doc.id, ...doc.data() });
       const category = course.category || "Uncategorized";
 
       if (!coursesByCategory[category]) {
@@ -284,25 +310,19 @@ const checkPrerequisites = async (req, res) => {
       });
     }
 
-    const course = { id: doc.id, ...doc.data() };
+    const course = formatCourseData({ id: doc.id, ...doc.data() });
     const prerequisites = course.prerequisites || [];
     const corequisites = course.corequisites || [];
 
-    const missingPrerequisites = prerequisites.filter(
-      (prereq) => !completedCourses.includes(prereq)
-    );
-
-    const canEnroll = missingPrerequisites.length === 0;
-
+    // Note: Detailed prerequisite checking with OR logic is handled on frontend
+    // This endpoint provides basic info for API compatibility
     res.json({
       success: true,
       data: {
-        canEnroll,
         courseCode: course.code,
         courseName: course.name,
-        prerequisites,
+        prerequisites, // Nested array format: [['CS2114', 'ECE3514'], ...]
         corequisites,
-        missingPrerequisites,
         completedCourses,
       },
     });
@@ -372,22 +392,35 @@ except Exception as e:
     const env = { ...process.env };
     if (PYTHONPATH) {
       const sep = process.platform === "win32" ? ";" : ":";
-      env.PYTHONPATH = env.PYTHONPATH ? `${PYTHONPATH}${sep}${env.PYTHONPATH}` : PYTHONPATH;
+      env.PYTHONPATH = env.PYTHONPATH
+        ? `${PYTHONPATH}${sep}${env.PYTHONPATH}`
+        : PYTHONPATH;
     }
 
     const py = spawn(PY_INTERPRETER, ["-c", code], { env });
 
     let out = "";
     let err = "";
-    const timer = setTimeout(() => { try { py.kill("SIGKILL"); } catch (_) {} }, 20000);
+    const timer = setTimeout(() => {
+      try {
+        py.kill("SIGKILL");
+      } catch (_) {}
+    }, 20000);
 
-    py.stdout.on("data", d => out += d.toString());
-    py.stderr.on("data", d => err += d.toString());
-    py.on("close", code => {
+    py.stdout.on("data", (d) => (out += d.toString()));
+    py.stderr.on("data", (d) => (err += d.toString()));
+    py.on("close", (code) => {
       clearTimeout(timer);
-      if (code !== 0 && !out) return reject(new Error(err || `Python exited ${code}`));
-      try { resolve(JSON.parse(out)); } catch (e) {
-        reject(new Error(`Failed to parse Python output: ${e.message}. Raw: ${out || err}`));
+      if (code !== 0 && !out)
+        return reject(new Error(err || `Python exited ${code}`));
+      try {
+        resolve(JSON.parse(out));
+      } catch (e) {
+        reject(
+          new Error(
+            `Failed to parse Python output: ${e.message}. Raw: ${out || err}`
+          )
+        );
       }
     });
 
@@ -401,16 +434,23 @@ const searchCourseID = async (req, res) => {
   try {
     let { courseId } = req.query;
     if (!courseId) {
-      return res.status(400).json({ success: false, error: "courseId is required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "courseId is required" });
     }
     // Normalize courseId like "CS2114" or "CS-2114"
     courseId = String(courseId).trim();
     const data = await callTimetablePython("searchIDData", { courseId });
-    if (data?.error) return res.status(502).json({ success: false, error: data.error });
+    if (data?.error)
+      return res.status(502).json({ success: false, error: data.error });
     return res.json({ success: true, data });
   } catch (error) {
     console.error("Error searchCourseID:", error);
-    return res.status(500).json({ success: false, error: "Failed to search by courseId", message: error.message });
+    return res.status(500).json({
+      success: false,
+      error: "Failed to search by courseId",
+      message: error.message,
+    });
   }
 };
 
@@ -419,18 +459,29 @@ const searchCourseCRN = async (req, res) => {
   try {
     let { year, semester, crn } = req.query;
     if (!year || !semester || !crn) {
-      return res.status(400).json({ success: false, error: "year, semester, and crn are required" });
+      return res.status(400).json({
+        success: false,
+        error: "year, semester, and crn are required",
+      });
     }
     crn = String(crn).trim();
-    const data = await callTimetablePython("searchCRNData", { year, semester, crn });
-    if (data?.error) return res.status(502).json({ success: false, error: data.error });
+    const data = await callTimetablePython("searchCRNData", {
+      year,
+      semester,
+      crn,
+    });
+    if (data?.error)
+      return res.status(502).json({ success: false, error: data.error });
     return res.json({ success: true, data });
   } catch (error) {
     console.error("Error searchCourseCRN:", error);
-    return res.status(500).json({ success: false, error: "Failed to search by CRN", message: error.message });
+    return res.status(500).json({
+      success: false,
+      error: "Failed to search by CRN",
+      message: error.message,
+    });
   }
 };
-
 
 module.exports = {
   getAllCourses,
