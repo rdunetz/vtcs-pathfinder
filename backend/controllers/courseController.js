@@ -12,11 +12,18 @@ const PYTHONPATH = process.env.PYTHONPATH || ""; // e.g., ".;./pythonTimetables"
 const parsePrerequisites = (prereqString) => {
   if (!prereqString || prereqString === "[]") return [];
 
+  // If it's already an array (shouldn't happen but just in case)
+  if (Array.isArray(prereqString)) return prereqString;
+
   try {
     const parsed = JSON.parse(prereqString);
     return Array.isArray(parsed) ? parsed : [];
   } catch (e) {
-    console.warn(`Failed to parse prerequisites: ${prereqString}`);
+    // If parsing fails, assume it's a single course code stored as plain string
+    // This handles legacy data like "CS3214" -> convert to [["CS3214"]]
+    if (typeof prereqString === "string" && prereqString.trim().length > 0) {
+      return [[prereqString.trim()]];
+    }
     return [];
   }
 };
