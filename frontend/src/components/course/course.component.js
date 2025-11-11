@@ -208,43 +208,53 @@ const Course = ({
               {course.description || "No description available."}
             </Typography>
 
-            {course.prerequisites && course.prerequisites.length > 0 && (
-              <>
-                <Divider sx={{ my: 2 }} />
-                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                  Prerequisites
-                </Typography>
-                <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                  {course.prerequisites.map((prereq, idx) => (
-                    <Chip
-                      key={idx}
-                      label={prereq}
-                      size="small"
-                      variant="outlined"
-                    />
-                  ))}
-                </Box>
-              </>
-            )}
+            {Array.isArray(course.prerequisites) &&
+              course.prerequisites.length > 0 && (
+                <>
+                  <Divider sx={{ my: 2 }} />
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Prerequisites
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                    {course.prerequisites.flat().map((prereq, idx) => (
+                      <Chip
+                        key={idx}
+                        label={prereq}
+                        size="small"
+                        variant="outlined"
+                      />
+                    ))}
+                  </Box>
+                </>
+              )}
 
-            {course.corequisites && course.corequisites.length > 0 && (
-              <>
-                <Divider sx={{ my: 2 }} />
-                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                  Corequisites
-                </Typography>
-                <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                  {course.corequisites.map((coreq, idx) => (
-                    <Chip
-                      key={idx}
-                      label={coreq}
-                      size="small"
-                      variant="outlined"
-                    />
-                  ))}
-                </Box>
-              </>
-            )}
+            {Array.isArray(course.corequisites) &&
+              course.corequisites.length > 0 && (
+                <>
+                  <Divider sx={{ my: 2 }} />
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Corequisites
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                    {course.corequisites.map((coreq, idx) => (
+                      <Chip
+                        key={idx}
+                        label={coreq}
+                        size="small"
+                        variant="outlined"
+                      />
+                    ))}
+                  </Box>
+                </>
+              )}
           </Box>
         </DialogContent>
         <DialogActions>

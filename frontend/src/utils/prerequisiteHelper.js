@@ -73,6 +73,15 @@ export const checkPrerequisites = (course, completedCourses) => {
 
   const prereqs = course.prerequisites;
 
+  // Ensure prereqs is an array
+  if (!Array.isArray(prereqs)) {
+    console.warn(
+      `Invalid prerequisites format for course ${course.id || course.code}:`,
+      prereqs
+    );
+    return { canEnroll: true, missingPrerequisites: [] };
+  }
+
   // Check if it's the new format (array of arrays) or old format (simple array)
   const isGroupFormat = Array.isArray(prereqs[0]);
 
