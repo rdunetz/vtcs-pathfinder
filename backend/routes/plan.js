@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const bodyParser = require("body-parser");
+const { spawn } = require("child_process");
+router.use(bodyParser.json({ limit: "10mb" }));
 const {
   getUserPlans,
   getPlanById,
@@ -10,6 +13,7 @@ const {
   removeCourseFromPlan,
   moveCourseBetweenSemesters,
   validatePlan,
+  exportPDF,
 } = require("../controllers/planController");
 
 // GET all plans for a user
@@ -38,5 +42,7 @@ router.post("/:id/remove-course", removeCourseFromPlan);
 
 // POST move a course between semesters
 router.post("/:id/move-course", moveCourseBetweenSemesters);
+
+router.post("/export-pdf", exportPDF);
 
 module.exports = router;

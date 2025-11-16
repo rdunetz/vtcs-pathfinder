@@ -50,11 +50,26 @@ const Navigation = ({ plan }) => {
     navigate('/plans');
   }
 
-  const handleExportPlan = () => {
-    // TODO: Implement export to PDF functionality
-    console.log("Export plan clicked");
-    alert("Export to PDF coming soon!");
-    // Future: Generate and download PDF of the plan
+  const handleExportPlan = async () => {
+    
+    try {
+      const response = await axios.post(process.env.REACT_APP_BACKEND + "/plans/export-pdf",
+        { plan },               // <-- your JSON data sent to backend
+        { responseType: "blob" } // <-- required for PDF
+      );
+
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(pdfBlob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "checksheet.pdf";
+      link.click();
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("PDF download failed:", err);
+    }
   }
 
   return (
