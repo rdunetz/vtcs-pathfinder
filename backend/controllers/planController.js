@@ -1,4 +1,5 @@
 const { db } = require("../db");
+const { spawn } = require("child_process");
 
 /**
  * Get all plans for a user
@@ -625,6 +626,38 @@ const validatePlan = async (req, res) => {
   }
 };
 
+const exportPDF = async (req, res) => {
+  try {
+    const python = spawn("python3", ["pdf_generator.py"]);
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=checksheet.pdf"
+    );
+
+    // Send JSON payload to Python
+    python.stdin.write(JSON.stringify(req.body));
+    python.stdin.end();
+
+    // Stream Python PDF output back to frontend
+    python.stdout.pipe(res);
+
+    python.stderr.on("data", (data) => {
+      console.error("Python error:", data.toString());
+    });
+
+    python.on("close", (code) => {
+      if (code !== 0) {
+        console.error("Python script exited with code:", code);
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed generating PDF.");
+  }
+};
+
 module.exports = {
   getUserPlans,
   getPlanById,
@@ -635,4 +668,5 @@ module.exports = {
   removeCourseFromPlan,
   moveCourseBetweenSemesters,
   validatePlan,
+  exportPDF,
 };
