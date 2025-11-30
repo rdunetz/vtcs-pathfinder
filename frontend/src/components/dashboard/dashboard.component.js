@@ -1,5 +1,5 @@
 import "./dashboard.styles.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Course from "../course/course.component";
 import SemesterBox from "../semester/semester.component";
 import axios from "axios";
@@ -14,8 +14,18 @@ import {
   Alert,
   Snackbar,
   Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
 } from "@mui/material";
-import { Warning, CheckCircle, Lock } from "@mui/icons-material";
+import {
+  Warning,
+  CheckCircle,
+  Lock,
+  ExpandMore,
+  Close,
+} from "@mui/icons-material";
 import {
   getCompletedCoursesBysemester,
   checkPrerequisites,
@@ -23,8 +33,10 @@ import {
   getPrerequisiteStatus,
   validatePlanPrerequisites,
 } from "../../utils/prerequisiteHelper";
+import { UserContext } from "../../contexts/user.content";
 
 const Dashboard = ({ plan, setPlan }) => {
+  const { currentUser } = useContext(UserContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [courses, setCourses] = useState([]);
   const [activeCourse, setActiveCourse] = useState(null);
@@ -36,21 +48,67 @@ const Dashboard = ({ plan, setPlan }) => {
     severity: "warning",
   });
   const [violations, setViolations] = useState([]);
+  const [progressModalOpen, setProgressModalOpen] = useState(false);
 
   useEffect(() => {
-    setSemesters(plan.semesters || {});
+    // Parse prerequisites from strings (Firebase format) to arrays (for validation)
+    const parsedSemesters = {};
+    const rawSemesters = plan.semesters || {};
+
+    Object.entries(rawSemesters).forEach(([semesterKey, courses]) => {
+      parsedSemesters[semesterKey] = courses.map((course) => {
+        // If prerequisites is a string, parse it back to array
+        if (typeof course.prerequisites === "string") {
+          try {
+            return {
+              ...course,
+              prerequisites:
+                course.prerequisites === "[]"
+                  ? []
+                  : JSON.parse(course.prerequisites),
+            };
+          } catch (e) {
+            console.error("Error parsing prerequisites for", course.id, e);
+            return { ...course, prerequisites: [] };
+          }
+        }
+        return course;
+      });
+    });
+
+    setSemesters(parsedSemesters);
   }, [plan.semesters]);
 
-  // Sync local semesters changes back to parent plan
+  // Auto-save immediately when semesters change
   useEffect(() => {
-    // Only update if semesters has content and is different from plan.semesters
-    if (Object.keys(semesters).length > 0 && semesters !== plan.semesters) {
-      setPlan((prevPlan) => ({
-        ...prevPlan,
-        semesters: semesters,
-      }));
-    }
-  }, [semesters, plan.semesters, setPlan]);
+    // Don't auto-save if plan doesn't have an ID yet
+    if (!plan.id || !currentUser) return;
+
+    const savePlan = async () => {
+      try {
+        // Convert prerequisites arrays to JSON strings to match Firebase format
+        const semestersForFirebase = {};
+        Object.entries(semesters).forEach(([semesterKey, courses]) => {
+          semestersForFirebase[semesterKey] = courses.map((course) => ({
+            ...course,
+            // Convert prerequisites array to string like Firebase stores it
+            prerequisites: course.prerequisites
+              ? JSON.stringify(course.prerequisites)
+              : "[]",
+          }));
+        });
+
+        await axios.put(`${process.env.REACT_APP_BACKEND}/plans/${plan.id}`, {
+          userId: currentUser.uid,
+          semesters: semestersForFirebase,
+        });
+      } catch (error) {
+        console.error("Error auto-saving plan:", error);
+      }
+    };
+
+    savePlan();
+  }, [semesters, plan.id, currentUser]);
 
   // Recalculate violations whenever the local semesters state changes
   useEffect(() => {
@@ -130,22 +188,41 @@ const Dashboard = ({ plan, setPlan }) => {
       });
     }
 
-    setSemesters((prev) => ({
-      ...prev,
-      [over.id]: [...prev[over.id], droppedCourse],
-    }));
+    setSemesters((prev) => {
+      const updated = {
+        ...prev,
+        [over.id]: [...prev[over.id], droppedCourse], // Keep full course with prerequisites for validation
+      };
+
+      // Update plan here using the newly computed semesters
+      setPlan((prevPlan) => ({
+        ...prevPlan,
+        semesters: updated,
+      }));
+
+      return updated;
+    });
 
     setCourses((prev) => prev.filter((c) => c.id !== active.id));
   };
 
   const handleDeleteCourse = (semesterKey, courseToDelete) => {
     // Remove course from semester
-    setSemesters((prev) => ({
-      ...prev,
-      [semesterKey]: prev[semesterKey].filter(
-        (c) => c.id !== courseToDelete.id
-      ),
-    }));
+    setSemesters((prev) => {
+      const updated = {
+        ...prev,
+        [semesterKey]: prev[semesterKey].filter(
+          (c) => c.id !== courseToDelete.id
+        ),
+      };
+
+      setPlan((prevPlan) => ({
+        ...prevPlan,
+        semesters: updated,
+      }));
+
+      return updated;
+    });
 
     setCourses((prev) => {
       const newCourses = [...prev];
@@ -193,6 +270,101 @@ const Dashboard = ({ plan, setPlan }) => {
     100
   );
 
+  // Calculate detailed progress by category
+  const calculateDetailedProgress = () => {
+    // Define core CS courses
+    const CORE_CS_COURSES = [
+      "CS1114",
+      "CS2114",
+      "CS1944",
+      "CS2104",
+      "CS2505",
+      "CS2506",
+      "CS3114",
+      "CS3214",
+      "CS3604",
+      "CS3304",
+      "CS4944",
+    ];
+
+    // Define category mapping
+    const CATEGORY_MAPPING = {
+      MATH: "Mathematics",
+      ENGLISH: "Foundation",
+      CHEM: "Foundation",
+      PHYS: "Foundation",
+      ENGE: "Foundation",
+      Foundation: "Foundation",
+      // CS courses handled separately based on CORE_CS_COURSES list
+      // All other categories default to Pathways
+    };
+
+    const categories = {
+      CoreCS: {
+        name: "Core CS",
+        required: 29,
+        completed: 0,
+        color: "#861F41",
+        description: "Required CS courses",
+      },
+      CSElectives: {
+        name: "CS Electives",
+        required: 18,
+        completed: 0,
+        color: "#E5751F",
+        description: "CS Theory + Upper-level CS + Capstone",
+      },
+      Mathematics: {
+        name: "Mathematics",
+        required: 20,
+        completed: 0,
+        color: "#1a8f1e",
+        description: "MATH 1225, 1226, 2204, 2534, 2114, 3134",
+      },
+      Foundation: {
+        name: "Foundation",
+        required: 22,
+        completed: 0,
+        color: "#757575",
+        description: "CHEM, PHYS, ENGL, ENGE requirements",
+      },
+      Pathways: {
+        name: "Pathways",
+        required: 34,
+        completed: 0,
+        color: "#4FC3F7",
+        description: "Pathways Concepts 1-7 + Free Electives + Other",
+      },
+    };
+
+    if (semesters && Object.keys(semesters).length > 0) {
+      Object.values(semesters).forEach((semesterCourses) => {
+        semesterCourses.forEach((course) => {
+          const credits = parseInt(course.credits) || 0;
+          const category = course.category || "Pathways";
+          const courseCode = course.id || course.code || "";
+
+          // Differentiate between CS Core vs Electives
+          if (category === "CS") {
+            if (CORE_CS_COURSES.includes(courseCode)) {
+              categories["CoreCS"].completed += credits;
+            } else {
+              categories["CSElectives"].completed += credits;
+            }
+          } else {
+            // Map course category to progress category
+            const targetCategory = CATEGORY_MAPPING[category] || "Pathways";
+            categories[targetCategory].completed += credits;
+          }
+        });
+      });
+    }
+
+    return categories;
+  };
+
+  const detailedProgress = calculateDetailedProgress();
+
   return (
     <DndContext
       onDragStart={(event) => {
@@ -204,6 +376,7 @@ const Dashboard = ({ plan, setPlan }) => {
     >
       <Container maxWidth="xl" className="dashboard-container">
         <Container className="dashboard-grid">
+          {/* Left Panel: Available Courses (Full Height) */}
           <Paper className="dashboard-panel panel-maroon">
             <Typography variant="h6" className="panel-header">
               Available Courses
@@ -247,173 +420,150 @@ const Dashboard = ({ plan, setPlan }) => {
             </div>
           </Paper>
 
-          <Paper className="dashboard-panel panel-orange">
-            <Typography variant="h6" className="panel-header">
-              Plan Semesters (Drag courses here)
-            </Typography>
+          {/* Right Side: Progress Bar + Semesters */}
+          <div className="right-side-container">
+            {/* Progress Bar at Top - Clickable */}
+            <Paper
+              className="progress-bar-right clickable-progress"
+              onClick={() => setProgressModalOpen(true)}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 700,
+                    color: "#861F41",
+                    minWidth: "fit-content",
+                  }}
+                >
+                  Progress Overview
+                </Typography>
 
-            <div className="semesters">
-              {semesters &&
-                Object.keys(semesters).length !== 0 &&
-                Object.entries(semesters).map(([semesterKey, courseList]) => {
-                  // Calculate total credits for this semester
-                  const semesterCredits = courseList.reduce((total, course) => {
-                    const credits = parseInt(course.credits);
-                    return total + credits;
-                  }, 0);
-
-                  const semesterTitle = semesterKey.replace(
-                    /(\D+)(\d+)/,
-                    (_, s, y) =>
-                      `${s.charAt(0).toUpperCase() + s.slice(1)} ${y}`
-                  );
-
-                  return (
-                    <SemesterBox
-                      key={semesterKey}
-                      id={semesterKey}
-                      title={semesterTitle}
-                      credits={semesterCredits}
-                      creditLimit={19}
-                    >
-                      {courseList.map((course, idx) => (
-                        <Course
-                          key={idx}
-                          course={course}
-                          draggable={false}
-                          overlay={false}
-                          onDelete={() =>
-                            handleDeleteCourse(semesterKey, course)
-                          }
-                        />
-                      ))}
-                    </SemesterBox>
-                  );
-                })}
-            </div>
-          </Paper>
-
-          <Paper className="dashboard-panel panel-maroon">
-            <Typography variant="h6" className="panel-header">
-              Progress Overview
-            </Typography>
-
-            <Box className="progress-section">
-              <Typography variant="subtitle1" className="progress-title">
-                Overall Progress
-              </Typography>
-
-              <Box sx={{ display: "flex", alignItems: "center", mt: 2, mb: 1 }}>
-                <Box sx={{ width: "100%", mr: 1 }}>
-                  <LinearProgress
-                    variant="determinate"
-                    value={progressPercentage}
-                    sx={{
-                      height: 12,
-                      borderRadius: 6,
-                      backgroundColor: "rgba(134, 31, 65, 0.15)",
-                      "& .MuiLinearProgress-bar": {
-                        backgroundColor: "#861F41",
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flex: 1,
+                    gap: 2,
+                  }}
+                >
+                  <Box sx={{ flex: 1, maxWidth: "400px" }}>
+                    <LinearProgress
+                      variant="determinate"
+                      value={progressPercentage}
+                      sx={{
+                        height: 12,
                         borderRadius: 6,
-                      },
-                    }}
-                  />
-                </Box>
-                <Box sx={{ minWidth: 50 }}>
+                        backgroundColor: "rgba(134, 31, 65, 0.15)",
+                        "& .MuiLinearProgress-bar": {
+                          backgroundColor: "#861F41",
+                          borderRadius: 6,
+                        },
+                      }}
+                    />
+                  </Box>
+
                   <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontWeight: 600 }}
+                    variant="body1"
+                    sx={{ fontWeight: 600, minWidth: "fit-content" }}
                   >
                     {Math.round(progressPercentage)}%
                   </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ minWidth: "fit-content" }}
+                  >
+                    <strong>{totalCredits}</strong> / {TOTAL_REQUIRED_CREDITS}{" "}
+                    credits
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ minWidth: "fit-content" }}
+                  >
+                    {TOTAL_REQUIRED_CREDITS - totalCredits > 0
+                      ? `(${TOTAL_REQUIRED_CREDITS - totalCredits} remaining)`
+                      : "🎉 Complete!"}
+                  </Typography>
+
+                  <ExpandMore sx={{ color: "#861F41", ml: 1 }} />
                 </Box>
               </Box>
 
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                <strong>{totalCredits}</strong> / {TOTAL_REQUIRED_CREDITS}{" "}
-                credits
-              </Typography>
-
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ mt: 2, display: "block" }}
-              >
-                {TOTAL_REQUIRED_CREDITS - totalCredits > 0
-                  ? `${TOTAL_REQUIRED_CREDITS - totalCredits} credits remaining`
-                  : "Degree requirements met! 🎉"}
-              </Typography>
-            </Box>
-
-            {/* Prerequisite Violations Summary */}
-            {violations.length > 0 && (
-              <Box
-                className="progress-section"
-                sx={{
-                  mt: 2,
-                  backgroundColor: "rgba(244, 67, 54, 0.05)",
-                  borderColor: "rgba(244, 67, 54, 0.3)",
-                }}
-              >
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: 700,
-                    color: "#f44336",
-                    mb: 1,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
+              {/* Prerequisite Violations in Progress Bar */}
+              {violations.length > 0 && (
+                <Box
+                  sx={{ mt: 2, display: "flex", alignItems: "center", gap: 1 }}
                 >
-                  <Warning sx={{ fontSize: 20, mr: 0.5 }} />
-                  Prerequisite Issues ({violations.length})
-                </Typography>
-                <Box sx={{ maxHeight: "200px", overflowY: "auto" }}>
-                  {violations.map((violation, idx) => (
-                    <Alert
-                      key={idx}
-                      severity="warning"
-                      sx={{ mb: 1, py: 0.5 }}
-                      icon={<Lock fontSize="small" />}
-                    >
-                      <Typography variant="caption" sx={{ fontWeight: 600 }}>
-                        {violation.course}
-                      </Typography>
-                      <Typography variant="caption" display="block">
-                        Missing: {violation.missingPrerequisites}
-                      </Typography>
-                    </Alert>
-                  ))}
+                  <Chip
+                    icon={<Warning />}
+                    label={`${violations.length} Prerequisite Issue${
+                      violations.length > 1 ? "s" : ""
+                    }`}
+                    color="warning"
+                    size="small"
+                    sx={{ fontWeight: 600 }}
+                  />
+                  <Typography variant="caption" color="text.secondary">
+                    Click to view details
+                  </Typography>
                 </Box>
-              </Box>
-            )}
+              )}
+            </Paper>
 
-            {violations.length === 0 && (
-              <Box
-                sx={{
-                  mt: 2,
-                  p: 2,
-                  backgroundColor: "rgba(76, 175, 80, 0.05)",
-                  borderRadius: 2,
-                  border: "1px solid rgba(76, 175, 80, 0.2)",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#4caf50",
-                    fontWeight: 600,
-                  }}
-                >
-                  <CheckCircle sx={{ fontSize: 18, mr: 0.5 }} />
-                  No prerequisite violations
-                </Typography>
-              </Box>
-            )}
-          </Paper>
+            {/* Semesters Below */}
+            <Paper className="dashboard-panel panel-orange semesters-panel">
+              <Typography variant="h6" className="panel-header">
+                Plan Semesters (Drag courses here)
+              </Typography>
+
+              <div className="semesters">
+                {semesters &&
+                  Object.keys(semesters).length !== 0 &&
+                  Object.entries(semesters).map(([semesterKey, courseList]) => {
+                    // Calculate total credits for this semester
+                    const semesterCredits = courseList.reduce(
+                      (total, course) => {
+                        const credits = parseInt(course.credits);
+                        return total + credits;
+                      },
+                      0
+                    );
+
+                    const semesterTitle = semesterKey.replace(
+                      /(\D+)(\d+)/,
+                      (_, s, y) =>
+                        `${s.charAt(0).toUpperCase() + s.slice(1)} ${y}`
+                    );
+
+                    return (
+                      <SemesterBox
+                        key={semesterKey}
+                        id={semesterKey}
+                        title={semesterTitle}
+                        credits={semesterCredits}
+                        creditLimit={19}
+                      >
+                        {courseList.map((course, idx) => (
+                          <Course
+                            key={idx}
+                            course={course}
+                            draggable={false}
+                            overlay={false}
+                            onDelete={() =>
+                              handleDeleteCourse(semesterKey, course)
+                            }
+                          />
+                        ))}
+                      </SemesterBox>
+                    );
+                  })}
+              </div>
+            </Paper>
+          </div>
         </Container>
       </Container>
 
@@ -436,6 +586,210 @@ const Dashboard = ({ plan, setPlan }) => {
           {prerequisiteWarning.message}
         </Alert>
       </Snackbar>
+
+      {/* Detailed Progress Modal */}
+      <Dialog
+        open={progressModalOpen}
+        onClose={() => setProgressModalOpen(false)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+          },
+        }}
+      >
+        <DialogTitle>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h5" sx={{ fontWeight: 700, color: "#861F41" }}>
+              Detailed Progress Breakdown
+            </Typography>
+            <IconButton
+              onClick={() => setProgressModalOpen(false)}
+              size="small"
+            >
+              <Close />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ mt: 2 }}>
+            {/* Overall Progress */}
+            <Box
+              sx={{
+                mb: 4,
+                p: 3,
+                backgroundColor: "rgba(134, 31, 65, 0.05)",
+                borderRadius: 2,
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 600, mb: 2, color: "#861F41" }}
+              >
+                Overall Progress
+              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                <Box sx={{ flex: 1, mr: 2 }}>
+                  <LinearProgress
+                    variant="determinate"
+                    value={progressPercentage}
+                    sx={{
+                      height: 16,
+                      borderRadius: 8,
+                      backgroundColor: "rgba(134, 31, 65, 0.15)",
+                      "& .MuiLinearProgress-bar": {
+                        backgroundColor: "#861F41",
+                        borderRadius: 8,
+                      },
+                    }}
+                  />
+                </Box>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: 700, minWidth: "60px" }}
+                >
+                  {Math.round(progressPercentage)}%
+                </Typography>
+              </Box>
+              <Typography variant="body1" sx={{ mt: 1 }}>
+                <strong>{totalCredits}</strong> of {TOTAL_REQUIRED_CREDITS}{" "}
+                credits completed
+                {TOTAL_REQUIRED_CREDITS - totalCredits > 0 && (
+                  <span style={{ color: "#666", marginLeft: "8px" }}>
+                    ({TOTAL_REQUIRED_CREDITS - totalCredits} remaining)
+                  </span>
+                )}
+              </Typography>
+            </Box>
+
+            {/* Prerequisite Violations in Modal */}
+            {violations.length > 0 && (
+              <Box
+                sx={{
+                  mb: 4,
+                  p: 3,
+                  backgroundColor: "rgba(244, 67, 54, 0.05)",
+                  borderRadius: 2,
+                  border: "1px solid rgba(244, 67, 54, 0.2)",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 2,
+                    color: "#f44336",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Warning sx={{ fontSize: 22, mr: 1 }} />
+                  Prerequisite Issues ({violations.length})
+                </Typography>
+                <Box sx={{ maxHeight: "200px", overflowY: "auto" }}>
+                  {violations.map((violation, idx) => (
+                    <Alert
+                      key={idx}
+                      severity="warning"
+                      sx={{ mb: 1.5 }}
+                      icon={<Lock fontSize="small" />}
+                    >
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        {violation.course}
+                      </Typography>
+                      <Typography variant="caption" display="block">
+                        Missing: {violation.missingPrerequisites}
+                      </Typography>
+                    </Alert>
+                  ))}
+                </Box>
+              </Box>
+            )}
+
+            {/* Category Breakdown */}
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 600, mb: 3, color: "#861F41" }}
+            >
+              Progress by Category
+            </Typography>
+
+            {Object.entries(detailedProgress).map(([key, category]) => {
+              const percentage = Math.min(
+                (category.completed / category.required) * 100,
+                100
+              );
+              return (
+                <Box
+                  key={key}
+                  sx={{
+                    mb: 3,
+                    p: 2,
+                    backgroundColor: "rgba(0, 0, 0, 0.02)",
+                    borderRadius: 2,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mb: 0.5,
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                      {category.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {category.completed} / {category.required} credits
+                    </Typography>
+                  </Box>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ display: "block", mb: 1.5 }}
+                  >
+                    {category.description}
+                  </Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box sx={{ flex: 1 }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={percentage}
+                        sx={{
+                          height: 10,
+                          borderRadius: 5,
+                          backgroundColor: "rgba(0, 0, 0, 0.1)",
+                          "& .MuiLinearProgress-bar": {
+                            backgroundColor: category.color,
+                            borderRadius: 5,
+                          },
+                        }}
+                      />
+                    </Box>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 600,
+                        minWidth: "50px",
+                        textAlign: "right",
+                      }}
+                    >
+                      {Math.round(percentage)}%
+                    </Typography>
+                  </Box>
+                </Box>
+              );
+            })}
+          </Box>
+        </DialogContent>
+      </Dialog>
 
       <DragOverlay>
         {activeCourse ? (
