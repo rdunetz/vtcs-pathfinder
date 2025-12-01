@@ -18,6 +18,8 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  Button,
+  CircularProgress,
 } from "@mui/material";
 import {
   Warning,
@@ -49,6 +51,8 @@ const Dashboard = ({ plan, setPlan }) => {
   });
   const [violations, setViolations] = useState([]);
   const [progressModalOpen, setProgressModalOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(null);
 
   useEffect(() => {
     // Parse prerequisites from strings (Firebase format) to arrays (for validation)
@@ -152,6 +156,139 @@ const Dashboard = ({ plan, setPlan }) => {
   // const filteredCourses = courses.filter(course =>
   //     course.id.toLowerCase().includes(searchTerm.toLowerCase())
   // );
+
+  // Helper function to validate course code format
+  const validateCourseCode = (code) => {
+    if (!code || typeof code !== "string") return false;
+    // Accept formats like: CS2114, CS-2114, CS 2114, MATH2114, etc.
+    const courseCodeRegex = /^[A-Z]{2,4}\s*[-:]?\s*\d{4}$/i;
+    return courseCodeRegex.test(code.trim());
+  };
+
+  // Helper function to determine category from subject
+  const determineCategory = (subject) => {
+    if (!subject) return "General";
+    const subjectUpper = subject.toUpperCase();
+    const categoryMap = {
+      CS: "CS",
+      MATH: "MATH",
+      ENGL: "ENGLISH",
+      ENGLISH: "ENGLISH",
+      ECE: "ECE",
+      COMM: "COMM",
+      PHYS: "PHYS",
+      CHEM: "CHEM",
+      BIOL: "BIOL",
+    };
+    return categoryMap[subjectUpper] || "General";
+  };
+
+  // Transform search result from API to course format
+  const transformSearchResultToCourse = (searchResult) => {
+    if (!searchResult || !searchResult.code) {
+      throw new Error("Invalid search result: missing course code");
+    }
+
+    // Normalize course code (remove dashes/spaces)
+    const normalizedCode = searchResult.code.replace(/[\s-:]/g, "");
+
+    return {
+      id: normalizedCode,
+      code: normalizedCode,
+      name: searchResult.name || "Unknown Course",
+      credits: searchResult.creditHours || null,
+      category: determineCategory(searchResult.subject),
+      prerequisites: searchResult.prerequisites || [],
+      semesters: ["Fall", "Spring"], // Default, could be enhanced later
+      description: searchResult.catalogDescription || "",
+    };
+  };
+
+  // Handle adding course from search
+  const handleAddCourseFromSearch = async () => {
+    if (!searchTerm.trim()) {
+      setSearchError("Please enter a course code");
+      return;
+    }
+
+    // Validate course code format
+    if (!validateCourseCode(searchTerm)) {
+      setSearchError(
+        "Invalid course code format. Please use format like CS2114 or CS-2114"
+      );
+      return;
+    }
+
+    // Check if course already exists
+    const normalizedSearchTerm = searchTerm.replace(/[\s-:]/g, "").toUpperCase();
+    const courseExists = courses.some(
+      (c) => (c.id || c.code || "").toUpperCase() === normalizedSearchTerm
+    );
+
+    if (courseExists) {
+      setSearchError("This course is already in the list");
+      return;
+    }
+
+    setIsSearching(true);
+    setSearchError(null);
+
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/courses/search/by-id`,
+        {
+          params: { courseId: searchTerm.trim() },
+        }
+      );
+
+      if (response.data.success && response.data.data) {
+        const searchData = response.data.data;
+
+        // Check if course was found (has code and name)
+        if (!searchData.code || !searchData.name) {
+          setSearchError(
+            `Course "${searchTerm}" not found. Please check the course code.`
+          );
+          setIsSearching(false);
+          return;
+        }
+
+        // Transform and add course
+        const newCourse = transformSearchResultToCourse(searchData);
+        setCourses((prev) => [...prev, newCourse]);
+        setOriginalCoursesOrder((prev) => [...prev, newCourse]);
+
+        // Show success message
+        setPrerequisiteWarning({
+          open: true,
+          message: `✓ Course ${newCourse.id} added successfully`,
+          severity: "success",
+        });
+
+        // Clear search term
+        setSearchTerm("");
+      } else {
+        setSearchError(
+          `Course "${searchTerm}" not found. Please check the course code.`
+        );
+      }
+    } catch (error) {
+      console.error("Error searching for course:", error);
+      if (error.response?.status === 502) {
+        setSearchError(
+          "Unable to search for course. The timetable service may be unavailable."
+        );
+      } else if (error.response?.data?.error) {
+        setSearchError(error.response.data.error);
+      } else {
+        setSearchError(
+          `Failed to search for course: ${error.message || "Unknown error"}`
+        );
+      }
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const handleDragEnd = (event) => {
     const { over, active } = event;
@@ -388,10 +525,56 @@ const Dashboard = ({ plan, setPlan }) => {
               variant="outlined"
               size="small"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setSearchError(null); // Clear error when user types
+              }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && filteredCourses.length === 0 && validateCourseCode(searchTerm)) {
+                  handleAddCourseFromSearch();
+                }
+              }}
+              error={!!searchError}
+              helperText={searchError}
               sx={{ mb: 2 }}
             />
+            {/* Show "Add Course" button when no results and valid course code format */}
+            {filteredCourses.length === 0 &&
+              searchTerm.trim() &&
+              validateCourseCode(searchTerm) && (
+                <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleAddCourseFromSearch}
+                    disabled={isSearching}
+                    startIcon={
+                      isSearching ? (
+                        <CircularProgress size={16} color="inherit" />
+                      ) : null
+                    }
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: "none",
+                      px: 3,
+                    }}
+                  >
+                    {isSearching
+                      ? "Searching..."
+                      : `Add Course ${searchTerm.trim().toUpperCase()}`}
+                  </Button>
+                </Box>
+              )}
             <div className="course-scroll">
+              {filteredCourses.length === 0 && !searchTerm.trim() && (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ textAlign: "center", mt: 2 }}
+                >
+                  No courses available. Search for a course to add it.
+                </Typography>
+              )}
               {filteredCourses.map((course, index) => {
                 // Get all completed courses from all semesters to show prerequisite status
                 const allCompletedCourses = Object.values(semesters)
