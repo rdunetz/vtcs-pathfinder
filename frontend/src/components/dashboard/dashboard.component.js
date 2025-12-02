@@ -149,8 +149,10 @@ const Dashboard = ({ plan, setPlan }) => {
   );
 
   // Apply search filter to *availableCourses*, not `courses`
+  // Normalize both search term and course IDs to handle spaces/dashes (e.g., "ARCH 1044" matches "ARCH1044")
+  const normalizedSearchTerm = searchTerm.toLowerCase().replace(/[\s-:]/g, "");
   const filteredCourses = availableCourses.filter((course) =>
-    course.id.toLowerCase().includes(searchTerm.toLowerCase())
+    course.id.toLowerCase().replace(/[\s-:]/g, "").includes(normalizedSearchTerm)
   );
 
   // const filteredCourses = courses.filter(course =>
@@ -265,8 +267,9 @@ const Dashboard = ({ plan, setPlan }) => {
           severity: "success",
         });
 
-        // Clear search term
-        setSearchTerm("");
+        // Keep search term so user doesn't need to search again
+        // The newly added course will now appear in filtered results
+        // setSearchTerm("");
       } else {
         setSearchError(
           `Course "${searchTerm}" not found. Please check the course code.`
