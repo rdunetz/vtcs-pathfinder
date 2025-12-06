@@ -67,7 +67,7 @@
 /* Left panel - full height */
 .dashboard-panel:nth-child(1) {
     width: 25%;
-    height: calc(100vh - 96px);
+    height: 200vh;
 }
 
 /* Semesters panel on right - adjusted height */

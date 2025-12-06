@@ -169,7 +169,7 @@ const Navigation = ({ plan }) => {
                     }}
                     sx={{
                       '& .MuiPaper-root': {
-                        top: '16px !important',
+                        top: '32px !important',
                         left: 'auto !important',
                         right: '60px !important',
                       },
@@ -180,7 +180,7 @@ const Navigation = ({ plan }) => {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
                     <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
                   </Menu>
                 </div>
