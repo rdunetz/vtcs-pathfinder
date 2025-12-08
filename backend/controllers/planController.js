@@ -1,6 +1,9 @@
 const { db } = require("../db");
 const { spawn } = require("child_process");
 
+// Use same Python interpreter config as courseController
+const PY_INTERPRETER = process.env.PY_INTERPRETER || "python";
+
 /**
  * Get all plans for a user
  */
@@ -628,7 +631,7 @@ const validatePlan = async (req, res) => {
 
 const exportPDF = async (req, res) => {
   try {
-    const python = spawn("python3", ["pdf_generator.py"]);
+    const python = spawn(PY_INTERPRETER, ["pdf_generator.py"]);
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(

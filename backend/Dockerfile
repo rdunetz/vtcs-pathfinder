@@ -1,6 +1,9 @@
 # Backend Dockerfile for VTCS PathFinder
 FROM node:18-alpine
 
+# Install Python and pip
+RUN apk add --no-cache python3 py3-pip
+
 # Set working directory
 WORKDIR /app
 
@@ -10,8 +13,17 @@ COPY package*.json ./
 # Install dependencies (production only)
 RUN npm ci --only=production
 
+# Copy Python requirements first (for better caching)
+COPY pythonTimetables/requirements.txt ./pythonTimetables/
+
+# Install Python dependencies 
+RUN pip3 install --no-cache-dir --break-system-packages -r pythonTimetables/requirements.txt
+
 # Copy application code
 COPY . .
+
+# Set Python interpreter environment variable
+ENV PY_INTERPRETER=python3
 
 # Expose port
 EXPOSE 5001
