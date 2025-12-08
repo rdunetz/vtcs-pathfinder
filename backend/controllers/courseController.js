@@ -412,7 +412,7 @@ except Exception as e:
       try {
         py.kill("SIGKILL");
       } catch (_) {}
-    }, 20000);
+    }, 60000); // 60 second timeout for VT timetable queries
 
     py.stdout.on("data", (d) => (out += d.toString()));
     py.stderr.on("data", (d) => (err += d.toString()));

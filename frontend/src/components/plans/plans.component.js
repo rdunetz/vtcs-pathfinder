@@ -30,7 +30,6 @@ const Plans = ({ setPlan }) => {
   const [planName, setPlanName] = useState("");
   const [startingSemester, setStartingSemester] = useState("Fall");
   const [startingYear, setStartingYear] = useState(new Date().getFullYear());
-  const [templatePlan, setTemplatePlan] = useState("none");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [planToDelete, setPlanToDelete] = useState(null);
 
@@ -40,8 +39,14 @@ const Plans = ({ setPlan }) => {
     axios
       .get(process.env.REACT_APP_BACKEND + "/plans/user/" + currentUser.uid)
       .then((res) => {
-        setPlans(res.data.data);
-        console.log(res.data.data);
+        // Sort plans by createdAt date (newest first)
+        const sortedPlans = res.data.data.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA; // Descending order (newest first)
+        });
+        setPlans(sortedPlans);
+        console.log(sortedPlans);
       })
       .catch((err) => {
         console.error("Failed to fetch plans", err);
@@ -58,7 +63,6 @@ const Plans = ({ setPlan }) => {
     setPlanName("");
     setStartingSemester("Fall");
     setStartingYear(new Date().getFullYear());
-    setTemplatePlan("none");
   };
 
   const createNewPlan = async () => {
@@ -99,7 +103,6 @@ const Plans = ({ setPlan }) => {
         userId: currentUser.uid,
         name: planName || "Untitled Plan",
         semesters: semestersObject,
-        template: templatePlan,
       };
 
       // POST to backend to create plan in Firebase (now using subcollections)
@@ -111,8 +114,8 @@ const Plans = ({ setPlan }) => {
       if (response.data.success) {
         const createdPlan = response.data.data;
 
-        // Add to local plans state
-        setPlans((prevPlans) => [...prevPlans, createdPlan]);
+        // Add to local plans state (at the beginning since it's newest)
+        setPlans((prevPlans) => [createdPlan, ...prevPlans]);
 
         // Set as current plan
         setPlan(createdPlan);
@@ -214,8 +217,9 @@ const Plans = ({ setPlan }) => {
                     </IconButton>
                   </div>
                   <Typography variant="caption" color="textSecondary">
-                    {/* You can add actual dates when available */}
-                    Created recently
+                    {plan.createdAt
+                      ? `Created ${new Date(plan.createdAt).toLocaleDateString()}`
+                      : "Created recently"}
                   </Typography>
                 </Paper>
               ))
@@ -292,35 +296,6 @@ const Plans = ({ setPlan }) => {
                 ))}
               </Select>
             </FormControl>
-
-            {/* Template Plan (Placeholder) */}
-            <FormControl
-              fullWidth
-              margin="dense"
-              variant="outlined"
-              className="modal-input"
-            >
-              <InputLabel>Template Plan</InputLabel>
-              <Select
-                value={templatePlan}
-                onChange={(e) => setTemplatePlan(e.target.value)}
-                label="Template Plan"
-              >
-                <MenuItem value="none">None (Start from scratch)</MenuItem>
-                <MenuItem value="standard" disabled>
-                  Core CS Track (Coming Soon)
-                </MenuItem>
-              </Select>
-            </FormControl>
-
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              sx={{ display: "block", marginTop: 2 }}
-            >
-              Templates will automatically populate required courses for your
-              selected track.
-            </Typography>
           </DialogContent>
           <DialogActions className="modal-actions">
             <Button onClick={handleCloseModal} className="modal-cancel-btn">

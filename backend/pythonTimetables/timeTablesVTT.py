@@ -2,6 +2,7 @@ from collections import defaultdict
 from enum import Enum
 import re
 from typing import Dict, List, Set, Tuple
+from io import StringIO
 
 from pandas import read_html
 import pandas.core.series
@@ -401,7 +402,7 @@ def search_timetable(year: str, semester: Semester,
     if request == '':
         return []
 
-    request_data = read_html(request)[4]
+    request_data = read_html(StringIO(request))[4]
     course_list = []
     for i in range(1, request_data.shape[0]):
         if isinstance(request_data.iloc[i][0], str):
